@@ -12,7 +12,7 @@ Translator: David Sarkies
 Version: 
 Date: 
 Source: https://archive.org/details/Computer_Spy_Games
-This game can be found on page 4 of Creepy Computer Games, and it a python3 translation.
+This game can be found on page {} of Computer Spy Games, and it a python3 translation.
 
 """
 

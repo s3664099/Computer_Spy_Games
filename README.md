@@ -37,4 +37,5 @@ The issue regarding getting the INKEY to work properly is still present.
 
 ## Updates
 **20 March 2024**
-Created the initial folder to hold the contents on the game and configured the loader program
+Created the initial folder to hold the contents on the game and configured the loader program.
+Started adding Spy Eyes
