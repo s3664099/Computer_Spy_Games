@@ -2,14 +2,7 @@
 
 import util
 import time
-import computer_nightmare
-import number_wizard
-import ghost_guzzler
-import spiderwoman
-import gravedigger
-import mad_house
-import ghost_maze
-import sceance
+import spy_eyes
 
 #Function that displays the games available, and allows the user to select them
 def select_game():
@@ -19,14 +12,13 @@ def select_game():
 	#Creates a while loops to hold the menu to select the game
 	while (selecting):
 		util.clear_screen()
-		print("1) Computer Nightmare")
-		print("2) The Number Wizard")
-		print("3) Ghost Guzzler")
-		print("4) Spiderwoman")
-		print("5) Gravedigger")
-		print("6) Mad House")
-		print("7) Ghost Maze")
-		print("8) Seance")
+		print("1) Spy Eyes")
+		print("2) Search Light")
+		print("3) Robospy")
+		print("4) Spy Q Test")
+		print("5) Secret Message Maker")
+		print("6) Rendezvous")
+		print("7) Morse Coder")
 		print("X) Exit")
 		print()
 		response = input()
@@ -38,21 +30,7 @@ def select_game():
 			selecting = False
 
 		elif response == "1":
-			start_game("Computer Nightmare",computer_nightmare)
-		elif response == "2":
-			start_game("Number Wizard",number_wizard)
-		elif response == "3":
-			start_game("Ghost Guzzler",ghost_guzzler)
-		elif response == "4":
-			start_game("Spiderwoman",spiderwoman)
-		elif response == "5":
-			start_game("Gravedigger",gravedigger)	
-		elif response == "6":
-			start_game("Mad House",mad_house)
-		elif response == "7":
-			start_game("Ghost Maze",ghost_maze)
-		elif response == "8":
-			start_game("Sceance",sceance)
+			start_game("Spy Eyes",spy_eyes)
 		else:
 			print("You have entered an incorrect option")
 			time.sleep(5)
