@@ -39,3 +39,6 @@ The issue regarding getting the INKEY to work properly is still present.
 **20 March 2024**
 Created the initial folder to hold the contents on the game and configured the loader program.
 Started adding Spy Eyes
+
+**22 March 2024**
+Finished set up and display for Spy Eyes.
