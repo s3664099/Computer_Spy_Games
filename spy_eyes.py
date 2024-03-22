@@ -9,8 +9,8 @@ from random import randint
 Title: Spy Eyes
 Author: Jenny Tyler & Chris Oxlade
 Translator: David Sarkies
-Version: 0.0
-Date: 20 March 2024
+Version: 0.1
+Date: 21 March 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 4 of Computer Spy Games, and it a python3 translation.
 
@@ -23,51 +23,90 @@ instructions = "{}When you think you know, press a key again and tell the comput
 instructions = "{}  Bet your powers of observation aren't as good as you thought.\n".format(instructions)
 
 number_size = 9
-numbers = []
-used_coords = []
 screen_size = 9
 
 def main_game():
 
+	numbers = []
+	used_coords = []
 	score = 0
 	
 	for x in range(number_size):
 
-		numbers.append(generate_tupple(x+1))
+		numbers.append(generate_tuple(x+1,used_coords))
 
-#Selects random numbers and confirms they have not been used
-def generate_tupple(num):
+	display_screen(numbers)
+
+#Generates the tuple for the numbers
+def generate_tuple(num,used_coords):
 
 	available_coord = False
 
 	while (available_coord == False):
 
+		#Generated random coordinate
 		found_coord = False
-		x_coord = randint(4,screen_size+4)
-		y_coord = randint(4,screen_size+4)
+		x_coord = randint(0,screen_size)
+		y_coord = randint(0,screen_size)
 
+		#Checks if coordinate already used
 		for x in used_coords:
-
 			if x_coord == x[0] and y_coord == x[1]:
 				found_coord == True
 
-
-
+		#If not marks as used
 		if found_coord == False:
 			available_coord = True
 			used_coords.append((x_coord,y_coord))
 
 	return ([x_coord,y_coord],num)
 
+def display_screen(numbers):
 
-	#Set up an array holding nine tuples which holds the x,y positions and the number
-	#Randomly assigns the positions (though they cannot be the same, or within 2 points)
+	util.clear_screen()
+	edge = "    "
+	screen = "{}".format(edge)
+
+	#Displays top border
+	for x in range(screen_size+3):
+		screen = "{}=".format(screen)
+
+	screen = "{}\n{}=".format(screen,edge)
+
+	#Builds in main screen
+	for x in range(0,screen_size+1):
+		for y in range(0,screen_size+1):
+
+			match_coord = False
+			picked_num = 0
+
+			#Checks whether the coordinate is a number or a space
+			for z in numbers:
+				if (z[0][0] == x and z[0][1] == y):
+					match_coord = True
+					picked_num = z[1]
+
+			if(match_coord == True):
+				screen = "{}{}".format(screen,picked_num)
+			else:
+				screen = "{} ".format(screen)
+
+		screen = "{}=\n{}=".format(screen,edge)
+
+	#Displays bottom border
+	for x in range(screen_size+2):
+		screen = "{}=".format(screen)
+
+	print(screen)
+
+
 	#Randomly selects one and moves it
 	#Asks the player which one was moved
 	#If correct gets a point, if not doesn't
 	#After three shots game over
 	#Saves a high score
 	#Makes High Score persistant
+	#Consider creating it so numbers won't clash
 
 	"""
 	*10 DIM X(9): DIM Y(9)
@@ -75,7 +114,7 @@ def generate_tupple(num):
 	*30 FOR I=1 TO 9
 	*40 GOSUB 340: LET X(I)=N+3
 	*50 GOSUB 340: LET Y(I)=N+3
-	60 NEXT I
+	*60 NEXT I
 	70 GOSUB 360
 	80 GOSUB 310
 	90 GOSUB 340
@@ -104,12 +143,12 @@ def generate_tupple(num):
 	320 IF I$="" THEN GOTO 310
 	330 RETURN
 	*340 LET N=INT(RND(1)*9)+1
-	350 RETURN
-	360 CLS
-	370 FOR I=1 TO 9
-	380 PRINT TAB(X(I),Y(I));STR$(I)
-	390 NEXT I
-	400 RETURN
+	*350 RETURN
+	*360 CLS
+	*370 FOR I=1 TO 9
+	*380 PRINT TAB(X(I),Y(I));STR$(I)
+	*390 NEXT I
+	*400 RETURN
 	"""
 
 #Passes the current file as a module to the loader
