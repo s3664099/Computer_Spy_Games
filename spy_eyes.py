@@ -59,7 +59,6 @@ def query_move(number):
 
 	util.clear_screen()
 	result = 0
-	print(number)
 	guess = input("What number moved: ")
 
 	if (guess == str(number)):
