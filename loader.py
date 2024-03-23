@@ -48,8 +48,14 @@ def start_game(title,game):
 
 	#Loop for replaying the game
 	while replay:
-		game.main_game()
-		replay = util.play_again(replay)
+
+		ask_replay = True
+		ask_replay = game.main_game()
+
+		if (ask_replay):
+			replay = util.play_again(replay)
+		else:
+			replay = False
 
 if __name__ == '__main__':
 

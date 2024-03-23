@@ -103,7 +103,13 @@ def yes_or_no(answer):
 	while not correct:
 
 		print()	
+		reply = ""
+
 		reply = input()
+
+		#Makes sure it doesn't crash if the enter hit
+		if (len(reply)==0):
+			reply = " "
 
 		#When using the inkey function, this is the way to flush the
 		#inputs that have been stored

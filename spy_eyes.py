@@ -16,6 +16,9 @@ This game can be found on page 4 of Computer Spy Games, and it a python3 transla
 
 """
 
+#Makes High Score persistant
+#Consider creating it so numbers won't clash
+
 instructions = "If you think you're a good spy, try this.\n"
 instructions = "{}  The computer will print the numbers 1 to 9 on your screen. Watch them like\n".format(instructions)
 instructions = "{}a hawk while you press a key (any one will do). One of them moves, but which?\n".format(instructions)
@@ -28,18 +31,45 @@ timeout_length = 5
 
 def main_game():
 
-	numbers = []
-	used_coords = []
 	score = 0
+	replay = True
+
+	while(replay == True):
+		numbers = []
+		used_coords = []
+		
+		for x in range(number_size):
+			numbers.append(generate_tuple(x+1,used_coords))
+
+		display_screen(numbers)
+		input()
+		moved_number = shift_number(numbers)
+		display_screen(numbers)
+		input()
+
+		score += query_move(numbers[moved_number][1])
+
+		print("Your score is now {}".format(score))
+
+		replay = util.play_again(replay)
+
+	return replay
+
+def query_move(number):
+
+	util.clear_screen()
+	result = 0
+	print(number)
+	guess = input("What number moved: ")
+
+	if (guess == str(number)):
+		print("Well spied, you are correct")
+		result = 1
+	else:
+		print("Unfortunately the correct number was {}".format(number))
+
+	return result
 	
-	for x in range(number_size):
-
-		numbers.append(generate_tuple(x+1,used_coords))
-
-	display_screen(numbers)
-	input()
-	shift_number(numbers)
-
 #Generates the tuple for the numbers
 def generate_tuple(num,used_coords):
 
@@ -64,14 +94,28 @@ def generate_tuple(num,used_coords):
 
 	return ([x_coord,y_coord],num)
 
+#Selects a random number and moves it
 def shift_number(numbers):
 
+	moved_number = randint(0,len(numbers))
+	movement = sgn(moved_number-5.1)
+	numbers[moved_number][0][0] = numbers[moved_number][0][0]+movement
 
+	return moved_number
 
-	#Select Random Number
-	#Select direction
-	#Check if off board or hits another number
-	#If not, then moves it
+#So, the actually program selects the number and then uses that number to move it up or down
+#Might do it that way since that is the original, but we need to make sure that it doesn't
+#Overright anything. This is the function that is used to determine the move
+def sgn(number):
+
+	new_number = 0
+
+	if (number<0):
+		new_number = -1
+	elif (number>0):
+		new_number = 1
+
+	return new_number
 
 def display_screen(numbers):
 
@@ -110,60 +154,6 @@ def display_screen(numbers):
 		screen = "{}=".format(screen)
 
 	print(screen)
-
-
-	#Randomly selects one and moves it
-	#Asks the player which one was moved
-	#If correct gets a point, if not doesn't
-	#After three shots game over
-	#Saves a high score
-	#Makes High Score persistant
-	#Consider creating it so numbers won't clash
-
-	"""
-	*10 DIM X(9): DIM Y(9)
-	*20 LET P=0
-	*30 FOR I=1 TO 9
-	*40 GOSUB 340: LET X(I)=N+3
-	*50 GOSUB 340: LET Y(I)=N+3
-	*60 NEXT I
-	*70 GOSUB 360
-	*80 GOSUB 310
-
-	90 GOSUB 340
-	100 LET M=N:GOSUB 340
-	110 LET X(M)=X(M)+SGN(N-5.1)
-	120 GOSUB 360
-	130 GOSUB 310
-	140 CLS:PRINT
-	150 PRINT "WHICH NUMBER MOVED"
-	160 INPUT A
-	170 IF A<>M THEN GOTO 250
-	180 CLS:PRINT
-	190 PRINT "WELL SPIED!"
-	200 LET P=P+!
-	210 PRINT "YOU NOW HAVE ";P;" POINTS"
-	220 PRINT: PRINT "PRESS A KEY"
-	230 GOSUB 310
-	240 GOTO 30
-	250 CLS:PRINT:PRINT "WRONG - END OF GO"
-	260 PRINT "CORRECT ANSWER WAS ";M
-	270 PRINT "YOU SCORED ";P;" POINTS"
-	280 PRINT "ANOTHER GO? (Y/N)"
-	290 INPUT A$:IF A$="Y" THEN RUN
-	300 STOP
-	
-	*310 LET I$=INKEY$
-	*320 IF I$="" THEN GOTO 310
-	*330 RETURN
-	*340 LET N=INT(RND(1)*9)+1
-	*350 RETURN
-	*360 CLS
-	*370 FOR I=1 TO 9
-	*380 PRINT TAB(X(I),Y(I));STR$(I)
-	*390 NEXT I
-	*400 RETURN
-	"""
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
