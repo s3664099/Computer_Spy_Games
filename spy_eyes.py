@@ -24,6 +24,7 @@ instructions = "{}  Bet your powers of observation aren't as good as you thought
 
 number_size = 9
 screen_size = 9
+timeout_length = 5
 
 def main_game():
 
@@ -36,6 +37,8 @@ def main_game():
 		numbers.append(generate_tuple(x+1,used_coords))
 
 	display_screen(numbers)
+	input()
+	shift_number(numbers)
 
 #Generates the tuple for the numbers
 def generate_tuple(num,used_coords):
@@ -60,6 +63,15 @@ def generate_tuple(num,used_coords):
 			used_coords.append((x_coord,y_coord))
 
 	return ([x_coord,y_coord],num)
+
+def shift_number(numbers):
+
+
+
+	#Select Random Number
+	#Select direction
+	#Check if off board or hits another number
+	#If not, then moves it
 
 def display_screen(numbers):
 
@@ -115,8 +127,9 @@ def display_screen(numbers):
 	*40 GOSUB 340: LET X(I)=N+3
 	*50 GOSUB 340: LET Y(I)=N+3
 	*60 NEXT I
-	70 GOSUB 360
-	80 GOSUB 310
+	*70 GOSUB 360
+	*80 GOSUB 310
+
 	90 GOSUB 340
 	100 LET M=N:GOSUB 340
 	110 LET X(M)=X(M)+SGN(N-5.1)
@@ -139,9 +152,10 @@ def display_screen(numbers):
 	280 PRINT "ANOTHER GO? (Y/N)"
 	290 INPUT A$:IF A$="Y" THEN RUN
 	300 STOP
-	310 LET I$=INKEY$
-	320 IF I$="" THEN GOTO 310
-	330 RETURN
+	
+	*310 LET I$=INKEY$
+	*320 IF I$="" THEN GOTO 310
+	*330 RETURN
 	*340 LET N=INT(RND(1)*9)+1
 	*350 RETURN
 	*360 CLS

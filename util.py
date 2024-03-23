@@ -75,7 +75,6 @@ def input_with_timeout_02(prompt,timeout):
 
 	try:
 		inputimeout(prompt,timeout)
-
 	except:
 		return False
 	return True
