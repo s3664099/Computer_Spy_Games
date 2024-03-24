@@ -39,12 +39,14 @@ def main_game():
 		high_score = f.read()
 		f.close()
 
-		if (high_score == ""):
+		#Makes sure that the high score is a number
+		try:
+			int(high_score)
+		except:
 			high_score = 0
 
 	except:
 		high_score = 0
-
 
 	score = 0
 	replay = True
