@@ -28,20 +28,20 @@ instructions = "{}  Bet your powers of observation aren't as good as you thought
 number_size = 9
 screen_size = 9
 timeout_length = 5
-high_score = 0
 
 def main_game():
+
+	high_score = 0
 
 	#Loads the high score (if there is one)
 	try:
 		f = open("se_high_score.txt", "r")
-		print(f.read())		
 		high_score = f.read()
 		f.close()
 
 		#Makes sure that the high score is a number
 		try:
-			int(high_score)
+			print(int(high_score))
 		except:
 			high_score = 0
 
@@ -122,7 +122,7 @@ def generate_tuple(num,used_coords):
 #Selects a random number and moves it
 def shift_number(numbers):
 
-	moved_number = randint(0,len(numbers))
+	moved_number = randint(0,len(numbers)-1)
 	movement = sgn(moved_number-5.1)
 	numbers[moved_number][0][0] = numbers[moved_number][0][0]+movement
 
