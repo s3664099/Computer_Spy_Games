@@ -28,8 +28,23 @@ instructions = "{}  Bet your powers of observation aren't as good as you thought
 number_size = 9
 screen_size = 9
 timeout_length = 5
+high_score = 0
 
 def main_game():
+
+	#Loads the high score (if there is one)
+	try:
+		f = open("se_high_score.txt", "r")
+		print(f.read())		
+		high_score = f.read()
+		f.close()
+
+		if (high_score == ""):
+			high_score = 0
+
+	except:
+		high_score = 0
+
 
 	score = 0
 	replay = True
@@ -48,8 +63,17 @@ def main_game():
 		input()
 
 		score += query_move(numbers[moved_number][1])
-
 		print("Your score is now {}".format(score))
+
+		#Checks if the player has a high score, and saves it.
+		if (score > int(high_score)):
+			high_score = score
+			print("Your score is currently the high score")
+			f = open("se_high_score.txt", "w")
+			f.write(str(high_score))
+			f.close()
+		else:
+			print("The high score is {}".format(high_score))
 
 		replay = util.play_again(replay)
 
