@@ -16,7 +16,17 @@ This game can be found on page 4 of Computer Spy Games, and it a python3 transla
 
 """
 
-instructions = ""
+instructions = "A mission most secret and desperately dangerous must be undertaken this\n"
+instructions = "{}very night - by you.\n".format(instructions)
+instructions = "{}You must cross a closely watched section of enemy territory and return,\n".format(instructions)
+instructions = "{}avoiding their gigantic and very powerful searchlight. There are rocks,\n".format(instructions)
+instructions = "{}bushes and other obstacles to hide behind, but there are no second chances -\n".format(instructions)
+instructions = "{}once they've seen you, you've had it. When you have completed one mission\n".format(instructions)
+instructions = "{}successfully, there is another, even more difficult, to undertake. Keep\n".format(instructions)
+instructions = "{}going, we are all depending on your success.\n".format(instructions)
+instructions = "{}Use key M to move right and N to move left. To complete one mission you\n".format(instructions)
+instructions = "{}must go right across from left to right and back again.".format(instructions)
+
 
 def main_game():
 	
