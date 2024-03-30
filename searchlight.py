@@ -29,13 +29,48 @@ instructions = "{}must go right across from left to right and back again.".forma
 
 
 def main_game():
+
+	#Create game map
+	gameMap = ["== = = ==  == = = ==",
+				"==  = ==  == =  == =",
+				"==  = ==  == =  == =",
+				"=  ==  = =  =   =  =",
+				"=  =  =   =   ==   =",
+				"=   =   = =   =    =",
+				"=    =  =    =   = =",
+				"=   =    =    =    ="]
 	
-	print("Main Game")
+	a=1
+	g=0
+	s=0
+
+	util.clear_screen()
+
+	x_pos=0
+	y_pos=12
+	position  = gameMap[a]
+
+	print(gameMap)
+
+def display_screen(x_pos,y_pos,position):
+
+	display = ""
+
+	for i in range(y_pos):
+		display = "{}\n".format(display)
+
+	for i in range(x_pos):
+		display = "{} ".format(display)
+
+	print("{}{}".format(display,position))
+
+
+
 """
-10 GOSUB 450
-20 LET A=1:LET G=0:LET S=0
-30 CLS
-40 LET X=0:LET Y=12:LET B$=A$(A)
+*10 GOSUB 450
+*20 LET A=1:LET G=0:LET S=0
+*30 CLS
+*40 LET X=0:LET Y=12:LET B$=A$(A)
 50 GOSUB 380
 60 LET F=0:LET N=9:LET NN=0:GOSUB 340
 70 LET L=0:LET C=0:LET TC=10:LET C1=0
@@ -69,23 +104,23 @@ def main_game():
 350 GOSUB 380
 360 LET X=NN:LET B$="S"
 370 GOSUB 380:RETURN
-380 PRINT TAB(X,Y):B$
-390 RETURN
+*380 PRINT TAB(X,Y):B$
+*390 RETURN
 400 IF L=1 THEN LET C=C+1
 410 IF C=TC THEN LET L=0:LET C=0:LET TC=INT(RND(1)*8+(12-A)):GOSUB 320
 420 IF L=0 THEN LET C1=C1+1
 430 IF C1=TC THEN LET L=1:LET C1=0:LET TC=INT(RND(1)*10+(8+A)):GOSUB 300
 440 RETURN
-450 DIM A$(7)
-460 FOR I=1 TO 7:READ A$(I):NEXT I
-470 RETURN
-480 DATA "== = = ==  == = = =="
-490 DATA "==  = ==  == =  == ="
-500 DATA "=  ==  = =  =   =  ="
-510 DATA "=  =  =   =   ==   ="
-520 DATA "=   =   = =   =    ="
-530 DATA "=    =  =    =   = ="
-540 DATA "=   =    =    =    ="
+*450 DIM A$(7)
+*460 FOR I=1 TO 7:READ A$(I):NEXT I
+*470 RETURN
+*480 DATA "== = = ==  == = = =="
+*490 DATA "==  = ==  == =  == ="
+*500 DATA "=  ==  = =  =   =  ="
+*510 DATA "=  =  =   =   ==   ="
+*520 DATA "=   =   = =   =    ="
+*530 DATA "=    =  =    =   = ="
+*540 DATA "=   =    =    =    ="
 """
 
 
