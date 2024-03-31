@@ -27,42 +27,55 @@ instructions = "{}going, we are all depending on your success.\n".format(instruc
 instructions = "{}Use key M to move right and N to move left. To complete one mission you\n".format(instructions)
 instructions = "{}must go right across from left to right and back again.".format(instructions)
 
+game_level = 1
+map_pos = 12
+player_ypos = 13
+screen_size = 15
+
+#Create game map
+gameMap = ["== = = ==  == = = ==",
+			"==  = ==  == =  == =",
+			"==  = ==  == =  == =",
+			"=  ==  = =  =   =  =",
+			"=  =  =   =   ==   =",
+			"=   =   = =   =    =",
+			"=    =  =    =   = =",
+			"=   =    =    =    ="]
 
 def main_game():
 
-	#Create game map
-	gameMap = ["== = = ==  == = = ==",
-				"==  = ==  == =  == =",
-				"==  = ==  == =  == =",
-				"=  ==  = =  =   =  =",
-				"=  =  =   =   ==   =",
-				"=   =   = =   =    =",
-				"=    =  =    =   = =",
-				"=   =    =    =    ="]
-	
-	a=1
+	score = 0
+	have_file = 0
+	player_xpos = 0	
 	g=0
-	s=0
+	map_level  = gameMap[game_level]
 
 	util.clear_screen()
 
-	x_pos=0
-	y_pos=12
-	position  = gameMap[a]
+	#The who screen will need to be printed at once
+	#Will also need the timeout input to raise the number of goes
 
-	print(gameMap)
+	display_screen(map_level,player_xpos)
 
-def display_screen(x_pos,y_pos,position):
+def display_screen(map_level,player_xpos):
 
 	display = ""
 
-	for i in range(y_pos):
-		display = "{}\n".format(display)
+	for i in range(screen_size):
 
-	for i in range(x_pos):
-		display = "{} ".format(display)
+		if (i == map_pos):
+			display = "{}{}\n".format(display,map_level)
+		elif (i == player_ypos):
+			for j in range(10):
+				if (j==player_xpos):
+					display = "{}{}".format(display,'X')
+				else:
+					display = "{} ".format(display)
+			display = "{}\n".format(display)
+		else:
+			display = "{}\n".format(display)
 
-	print("{}{}".format(display,position))
+	print(display)
 
 
 
@@ -71,8 +84,8 @@ def display_screen(x_pos,y_pos,position):
 *20 LET A=1:LET G=0:LET S=0
 *30 CLS
 *40 LET X=0:LET Y=12:LET B$=A$(A)
-50 GOSUB 380
-60 LET F=0:LET N=9:LET NN=0:GOSUB 340
+*50 GOSUB 380
+*60 LET F=0:LET N=9:LET NN=0:GOSUB 340
 70 LET L=0:LET C=0:LET TC=10:LET C1=0
 80 LET I$=INKEY$
 90 IF I$="N" THEN LET NN=N-1
@@ -100,10 +113,10 @@ def display_screen(x_pos,y_pos,position):
 310 GOSUB 380:RETURN
 320 LET X=10:LET Y=3:LET B$=" "
 330 GOSUB 380:RETURN
-340 LET X=N:LET Y=13:LET B$=" "
-350 GOSUB 380
-360 LET X=NN:LET B$="S"
-370 GOSUB 380:RETURN
+*340 LET X=N:LET Y=13:LET B$=" "
+*350 GOSUB 380
+*360 LET X=NN:LET B$="S"
+*370 GOSUB 380:RETURN
 *380 PRINT TAB(X,Y):B$
 *390 RETURN
 400 IF L=1 THEN LET C=C+1
@@ -126,4 +139,4 @@ def display_screen(x_pos,y_pos,position):
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
-	loader.start_game("Spy Eyes",sys.modules[__name__])
+	loader.start_game("Searchlight",sys.modules[__name__])
