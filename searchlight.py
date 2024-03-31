@@ -31,6 +31,7 @@ game_level = 1
 map_pos = 12
 player_ypos = 13
 screen_size = 15
+screen_width = 20
 
 #Create game map
 gameMap = ["== = = ==  == = = ==",
@@ -50,12 +51,37 @@ def main_game():
 	g=0
 	map_level  = gameMap[game_level]
 
-	util.clear_screen()
+	#Main Game loop
+	while (have_file < 2):
+		util.clear_screen()
+		display_screen(map_level,player_xpos)
+		action = util.input_with_timeout_no_comment("",5)
+		player_xpos,have_file = process_action(action,player_xpos,have_file)
 
-	#The who screen will need to be printed at once
-	#Will also need the timeout input to raise the number of goes
+def process_action(action,player_xpos,have_file):
 
-	display_screen(map_level,player_xpos)
+	new_pos = player_xpos
+
+	#moves player, and sets the boundaries that the player cannot move beyond
+	if (action.lower() == "m"):
+		new_pos += 1
+		if (new_pos > screen_width):
+			new_pos = player_xpos
+
+	elif (action.lower() == "n"):
+		new_pos -=1
+		if (new_pos<0):
+			new_pos = player_xpos
+
+	#Checks if the player has made it to the edge of the screen
+	if ((new_pos == screen_width) and (have_file == 0)):
+		have_file = 1
+	elif ((new_pos == 0) and (have_file == 1)):
+		have_file = 2
+
+	player_xpos = new_pos
+
+	return player_xpos,have_file
 
 def display_screen(map_level,player_xpos):
 
@@ -66,7 +92,7 @@ def display_screen(map_level,player_xpos):
 		if (i == map_pos):
 			display = "{}{}\n".format(display,map_level)
 		elif (i == player_ypos):
-			for j in range(10):
+			for j in range(screen_width):
 				if (j==player_xpos):
 					display = "{}{}".format(display,'X')
 				else:
@@ -86,14 +112,14 @@ def display_screen(map_level,player_xpos):
 *40 LET X=0:LET Y=12:LET B$=A$(A)
 *50 GOSUB 380
 *60 LET F=0:LET N=9:LET NN=0:GOSUB 340
-70 LET L=0:LET C=0:LET TC=10:LET C1=0
-80 LET I$=INKEY$
-90 IF I$="N" THEN LET NN=N-1
-100 IF I$="M" THEN LET NN=N+1
-110 IF NN>19 THEN LET NN=19
-120 IF NN<0 THEN LET NN=0
-130 IF NN=19 AND F=0 THEN LET F=1
-140 IF NN=0 AND F=1 THEN LET F=2
+*70 LET L=0:LET C=0:LET TC=10:LET C1=0
+*80 LET I$=INKEY$
+*90 IF I$="N" THEN LET NN=N-1
+*100 IF I$="M" THEN LET NN=N+1
+*110 IF NN>19 THEN LET NN=19
+*120 IF NN<0 THEN LET NN=0
+*130 IF NN=19 AND F=0 THEN LET F=1
+*140 IF NN=0 AND F=1 THEN LET F=2
 150 GOSUB 340
 160 IF N<>NN THEN LET S=S+1
 170 LET N=NN:LET G=G+1
