@@ -48,17 +48,44 @@ def main_game():
 	score = 0
 	have_file = 0
 	player_xpos = 0	
-	g=0
+	timer=0
 	map_level  = gameMap[game_level]
+	light_on = False
+	light_counter = 0
+	light_timer = 0
 
 	#Main Game loop
 	while (have_file < 2):
 		util.clear_screen()
-		display_screen(map_level,player_xpos)
-		action = util.input_with_timeout_no_comment("",5)
-		player_xpos,have_file = process_action(action,player_xpos,have_file)
+		display_screen(map_level,player_xpos,light_on)
+		action = util.input_with_timeout_no_comment("",1)
+		player_xpos,have_file,score = process_action(action,player_xpos,have_file,score)
 
-def process_action(action,player_xpos,have_file):
+		#Checks if player has been spotted
+
+		timer += 1
+		light_on,light_counter,light_timer = search_light(light_on,light_counter,light_timer,game_level)
+
+#Function for determining when the light turns on and off
+def search_light(light_on,light_counter,light_timer,level):
+
+	print(level)
+	print(4-(6-level))
+
+	if (light_counter == light_timer):
+		light_on = not light_on
+		light_counter = 0
+
+		if (light_on == True):
+			light_timer = randint(0,4+(6-level))
+		else:
+			light_timer = randint(0,5+(4-level))
+	else:
+		light_counter += 1
+
+	return light_on,light_counter,light_timer
+
+def process_action(action,player_xpos,have_file,score):
 
 	new_pos = player_xpos
 
@@ -79,11 +106,15 @@ def process_action(action,player_xpos,have_file):
 	elif ((new_pos == 0) and (have_file == 1)):
 		have_file = 2
 
+	#If the player moves, then the score is increased
+	if (player_xpos != new_pos):
+		score +=1
+
 	player_xpos = new_pos
 
-	return player_xpos,have_file
+	return player_xpos,have_file,score
 
-def display_screen(map_level,player_xpos):
+def display_screen(map_level,player_xpos,light_on):
 
 	display = ""
 
@@ -98,12 +129,12 @@ def display_screen(map_level,player_xpos):
 				else:
 					display = "{} ".format(display)
 			display = "{}\n".format(display)
+		elif ((i == 3) and (light_on == True)):
+			display = "{}          *           \n".format(display)
 		else:
 			display = "{}\n".format(display)
 
 	print(display)
-
-
 
 """
 *10 GOSUB 450
@@ -120,10 +151,10 @@ def display_screen(map_level,player_xpos):
 *120 IF NN<0 THEN LET NN=0
 *130 IF NN=19 AND F=0 THEN LET F=1
 *140 IF NN=0 AND F=1 THEN LET F=2
-150 GOSUB 340
-160 IF N<>NN THEN LET S=S+1
-170 LET N=NN:LET G=G+1
-180 GOSUB 400
+*150 GOSUB 340
+*160 IF N<>NN THEN LET S=S+1
+*170 LET N=NN:LET G=G+1
+*180 GOSUB 400
 190 IF MID$(A$(A),N+1,1)=" " AND L=1 THEN GOTO 240
 200 FOR T=1 TO 50:NEXT T
 210 IF F<2  THEN GOTO 80
@@ -135,21 +166,23 @@ def display_screen(map_level,player_xpos):
 270 PRINT:PRINT "ANOTHER GO? (Y/N)"
 280 INPUT C$:IF C$="Y" THEN RUN
 290 PRINT "BYE.....":STOP
+
 300 LET Y=3:LET X=10:LET B$="*"
 310 GOSUB 380:RETURN
 320 LET X=10:LET Y=3:LET B$=" "
 330 GOSUB 380:RETURN
+
 *340 LET X=N:LET Y=13:LET B$=" "
 *350 GOSUB 380
 *360 LET X=NN:LET B$="S"
 *370 GOSUB 380:RETURN
 *380 PRINT TAB(X,Y):B$
 *390 RETURN
-400 IF L=1 THEN LET C=C+1
-410 IF C=TC THEN LET L=0:LET C=0:LET TC=INT(RND(1)*8+(12-A)):GOSUB 320
-420 IF L=0 THEN LET C1=C1+1
-430 IF C1=TC THEN LET L=1:LET C1=0:LET TC=INT(RND(1)*10+(8+A)):GOSUB 300
-440 RETURN
+*400 IF L=1 THEN LET C=C+1
+*410 IF C=TC THEN LET L=0:LET C=0:LET TC=INT(RND(1)*8+(12-A)):GOSUB 320
+*420 IF L=0 THEN LET C1=C1+1
+*430 IF C1=TC THEN LET L=1:LET C1=0:LET TC=INT(RND(1)*10+(8+A)):GOSUB 300
+*440 RETURN
 *450 DIM A$(7)
 *460 FOR I=1 TO 7:READ A$(I):NEXT I
 *470 RETURN
