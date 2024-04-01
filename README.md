@@ -32,8 +32,16 @@ The issue regarding getting the INKEY to work properly is still present.
 
 ## Games
 
-**Spy Eyes**
+**Spy Eyes**: This game involves the player noticing a slight change in the
+board. One of the numbers will move, and the player must then advise what
+number moved. A high score function has been added that saves the high score
+and reloads it whenever a new game is started.
 
+**Searchlight**: In this game the player has to travel from one side of the
+board to the other and avoid being spotted. A searchlight will turn on and off.
+If the player is not behind cover when the searchlight is on, the then player
+is spotted and loses. Due to the complexity of this game, a graphical interface
+will be added.
 
 ## Updates
 **20 March 2024**
@@ -42,3 +50,9 @@ Started adding Spy Eyes
 
 **22 March 2024**
 Finished set up and display for Spy Eyes.
+
+**24 March 2024**
+Completed Spy Eyes with the suggested added functions
+
+**1 April 2024**
+Completed the command line version of Searchlight
