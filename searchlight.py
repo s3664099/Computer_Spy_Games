@@ -55,22 +55,48 @@ def main_game():
 	light_timer = 0
 
 	#Main Game loop
-	while (have_file < 2):
+	while (have_file < 3):
 		util.clear_screen()
 		display_screen(map_level,player_xpos,light_on)
 		action = util.input_with_timeout_no_comment("",1)
 		player_xpos,have_file,score = process_action(action,player_xpos,have_file,score)
 
 		#Checks if player has been spotted
-
 		timer += 1
 		light_on,light_counter,light_timer = search_light(light_on,light_counter,light_timer,game_level)
 
+		if (light_on):
+			have_file = check_light(map_level[player_xpos],have_file)
+
+		#Checks to see if player moves up a level
+		if (have_file == 2):
+			have_file,map_level = next_level()
+
+
+#Moves the player to the next level
+def next_level():
+
+	global game_level
+	game_level += 1
+
+	if (game_level == 8):
+		game_level = 7
+
+	map_level = gameMap[game_level]
+	have_file = 0
+
+	return have_file,map_level
+
+#Function to check if the player has been spotted
+def check_light(cover,have_file):
+
+	if (cover == " "):
+		have_file = 3
+
+	return have_file
+
 #Function for determining when the light turns on and off
 def search_light(light_on,light_counter,light_timer,level):
-
-	print(level)
-	print(4-(6-level))
 
 	if (light_counter == light_timer):
 		light_on = not light_on
@@ -92,7 +118,7 @@ def process_action(action,player_xpos,have_file,score):
 	#moves player, and sets the boundaries that the player cannot move beyond
 	if (action.lower() == "m"):
 		new_pos += 1
-		if (new_pos > screen_width):
+		if (new_pos >= screen_width):
 			new_pos = player_xpos
 
 	elif (action.lower() == "n"):
@@ -101,7 +127,7 @@ def process_action(action,player_xpos,have_file,score):
 			new_pos = player_xpos
 
 	#Checks if the player has made it to the edge of the screen
-	if ((new_pos == screen_width) and (have_file == 0)):
+	if ((new_pos == screen_width-1) and (have_file == 0)):
 		have_file = 1
 	elif ((new_pos == 0) and (have_file == 1)):
 		have_file = 2
@@ -155,9 +181,9 @@ def display_screen(map_level,player_xpos,light_on):
 *160 IF N<>NN THEN LET S=S+1
 *170 LET N=NN:LET G=G+1
 *180 GOSUB 400
-190 IF MID$(A$(A),N+1,1)=" " AND L=1 THEN GOTO 240
-200 FOR T=1 TO 50:NEXT T
-210 IF F<2  THEN GOTO 80
+*190 IF MID$(A$(A),N+1,1)=" " AND L=1 THEN GOTO 240
+*200 FOR T=1 TO 50:NEXT T
+*210 IF F<2  THEN GOTO 80
 220 LET A=1;IF A=8 THEN LET A=7
 230 GOTO 30
 240 LET X=4:LET Y=1:LET B$="YOU HAVE BEEN SEEN"
