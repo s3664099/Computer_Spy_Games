@@ -51,10 +51,15 @@ def main_game():
 	have_file = 0
 	player_xpos = 0	
 	timer=0
-	map_level  = gameMap[game_level]
+	map_level = set_graphics(gameMap[game_level])
 	light_on = False
 	light_counter = 0
 	light_timer = 0
+
+	#Build board
+	#When level is revealed, create random positioning of trees, rocks, and buildings
+	#The board will be placed in the display board
+	#The timer increases by one every second (or half-second - depends). This includes the light turning on and off.
 
 	#Main Game loop
 	while (have_file < 3):
@@ -80,6 +85,19 @@ def main_game():
 
 	return True
 
+#Creates a random allocation for the cover types
+def set_graphics(map_level):
+
+	new_map = ""
+
+	for x in range(len(map_level)):
+		
+		if (map_level[x] == "="):
+			new_map = "{}{}".format(new_map,randint(0,3))
+		else:
+			new_map = "{}{}".format(new_map," ")
+
+	return new_map
 
 #Moves the player to the next level
 def next_level():
@@ -90,7 +108,7 @@ def next_level():
 	if (game_level == 8):
 		game_level = 7
 
-	map_level = gameMap[game_level]
+	map_level = set_graphics(gameMap[game_level])
 	have_file = 0
 
 	return have_file,map_level

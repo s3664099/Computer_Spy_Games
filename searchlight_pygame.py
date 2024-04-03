@@ -25,6 +25,16 @@ tree = pygame.transform.scale(pygame.image.load("icons/tree.png"),(cell_size,cel
 spotlight = pygame.transform.scale(pygame.image.load("icons/hole.png"),(cell_size,cell_size))
 white = (255,255,255)
 
+def display_screen():
+
+	gameDisplay = pygame.display.set_mode((display_width,display_height))
+	return gameDisplay
+
+#Sets the caption of the screen
+def set_caption(title):
+	pygame.display.set_caption(title)
+
+
 """
 <a href="https://www.flaticon.com/free-icons/tree" title="tree icons">Tree icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/resources" title="resources icons">Resources icons created by Smashicons - Flaticon</a>
