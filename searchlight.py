@@ -4,6 +4,7 @@ import loader
 import sys
 import util
 from random import randint
+import searchlight_pygame as graphics
 
 """
 Title: Searchlight
@@ -30,8 +31,8 @@ instructions = "{}Use key M to move right and N to move left. To complete one mi
 instructions = "{}must go right across from left to right and back again.".format(instructions)
 
 game_level = 1
-map_pos = 12
-player_ypos = 13
+map_pos = 7
+player_ypos = 8
 screen_size = 15
 screen_width = 20
 
@@ -56,15 +57,16 @@ def main_game():
 	light_counter = 0
 	light_timer = 0
 
-	#Build board
-	#When level is revealed, create random positioning of trees, rocks, and buildings
-	#The board will be placed in the display board
+	graphics.set_caption("Searchlight")
+	display = graphics.display_screen()
+
 	#The timer increases by one every second (or half-second - depends). This includes the light turning on and off.
 
 	#Main Game loop
 	while (have_file < 3):
 		util.clear_screen()
-		display_screen(map_level,player_xpos,light_on)
+		display = graphics.clear_screen(display)
+		display_screen(map_level,player_xpos,light_on,display)
 		action = util.input_with_timeout_no_comment("",1)
 		player_xpos,have_file,score = process_action(action,player_xpos,have_file,score)
 
@@ -166,7 +168,7 @@ def process_action(action,player_xpos,have_file,score):
 
 	return player_xpos,have_file,score
 
-def display_screen(map_level,player_xpos,light_on):
+def display_screen(map_level,player_xpos,light_on,graphics_display):
 
 	display = ""
 
@@ -174,7 +176,9 @@ def display_screen(map_level,player_xpos,light_on):
 
 		if (i == map_pos):
 			display = "{}{}\n".format(display,map_level)
+			graphics_display = graphics.display_map(map_level,graphics_display,i)
 		elif (i == player_ypos):
+			graphics_display = graphics.display_player(graphics_display,player_xpos,i)
 			for j in range(screen_width):
 				if (j==player_xpos):
 					display = "{}{}".format(display,'X')
@@ -182,10 +186,12 @@ def display_screen(map_level,player_xpos,light_on):
 					display = "{} ".format(display)
 			display = "{}\n".format(display)
 		elif ((i == 3) and (light_on == True)):
+			graphics_display = graphics.display_spotlight(graphics_display,i)
 			display = "{}          *           \n".format(display)
 		else:
 			display = "{}\n".format(display)
 
+	graphics.update_display(graphics_display)
 	print(display)
 
 """
