@@ -71,22 +71,6 @@ def display_player(display,player_ypos,player_xpos):
 
 	return display
 
-
-"""
-
-			if board[row][col] == "*":
-				display.blit(player, (col * cell_size, row * cell_size))
-			elif board[row][col] == "+":
-				display.blit(stone, (col * cell_size, row * cell_size))
-			elif board[row][col] == "O":
-				display.blit(hole, (col * cell_size, row * cell_size))
-			elif board[row][col] == "X":
-				display.blit(skeleton, (col * cell_size, row * cell_size))
-			elif board[row][col] == ":":
-				display.blit(wall, (col * cell_size, row * cell_size))
-"""
-
-
 """
 <a href="https://www.flaticon.com/free-icons/tree" title="tree icons">Tree icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/resources" title="resources icons">Resources icons created by Smashicons - Flaticon</a>

@@ -15,8 +15,9 @@ Date: 29 Marc 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 4 of Computer Spy Games, and it a python3 translation.
 
+- Add movement function for player (namely that it only operates on the board)
+- Make sure the timer works
 - Add Alarm when player spotted
-- Graphics - bush, tree, building, boulder (Randomised)
 """
 
 instructions = "A mission most secret and desperately dangerous must be undertaken this\n"
@@ -170,41 +171,16 @@ def process_action(action,player_xpos,have_file,score):
 
 def display_screen(map_level,player_xpos,light_on,graphics_display):
 
-	display = ""
-
 	for i in range(screen_size):
 
 		if (i == map_pos):
-			display = "{}{}\n".format(display,map_level)
 			graphics_display = graphics.display_map(map_level,graphics_display,i)
 		elif (i == player_ypos):
 			graphics_display = graphics.display_player(graphics_display,player_xpos,i)
-			for j in range(screen_width):
-				if (j==player_xpos):
-					display = "{}{}".format(display,'X')
-				else:
-					display = "{} ".format(display)
-			display = "{}\n".format(display)
 		elif ((i == 3) and (light_on == True)):
 			graphics_display = graphics.display_spotlight(graphics_display,i)
-			display = "{}          *           \n".format(display)
-		else:
-			display = "{}\n".format(display)
 
 	graphics.update_display(graphics_display)
-	print(display)
-
-"""
-
-240 LET X=4:LET Y=1:LET B$="YOU HAVE BEEN SEEN"
-250 GOSUB 380:PRINT
-260 PRINT "YOU SCORE ";INT((A-1+S/G)*100)
-270 PRINT:PRINT "ANOTHER GO? (Y/N)"
-280 INPUT C$:IF C$="Y" THEN RUN
-290 PRINT "BYE.....":STOP
-
-"""
-
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
