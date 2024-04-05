@@ -67,7 +67,6 @@ def main_game():
 	while (have_file < 3):
 
 		# Displays the screen
-		util.clear_screen()
 		display = graphics.clear_screen(display)
 		display_screen(map_level,player_xpos,light_on,display)
 		

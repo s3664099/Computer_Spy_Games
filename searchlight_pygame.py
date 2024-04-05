@@ -79,9 +79,10 @@ def get_keypress(player_xpos):
 
 	for event in events:
 		if event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_LEFT or pygame.K_n:
+			if event.key == pygame.K_LEFT or event.key ==  pygame.K_n:
 				player_xpos -=1
-			elif event.key == pygame.K_RIGHT or pygame.K_m:
+
+			elif event.key == pygame.K_RIGHT or event.key ==  pygame.K_m:
 				player_xpos +=1
 
 	return player_xpos
