@@ -5,6 +5,7 @@ import sys
 import util
 from random import randint
 import searchlight_pygame as graphics
+import time
 
 """
 Title: Searchlight
@@ -15,9 +16,8 @@ Date: 29 Marc 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 4 of Computer Spy Games, and it a python3 translation.
 
-- Add movement function for player (namely that it only operates on the board)
-- Make sure the timer works
 - Add Alarm when player spotted
+- Add display and then close screen
 """
 
 instructions = "A mission most secret and desperately dangerous must be undertaken this\n"
@@ -57,6 +57,7 @@ def main_game():
 	light_on = False
 	light_counter = 0
 	light_timer = 0
+	starttime = time.time()
 
 	graphics.set_caption("Searchlight")
 	display = graphics.display_screen()
@@ -75,8 +76,10 @@ def main_game():
 		player_xpos,have_file,score = process_action(player_xpos,new_pos,have_file,score)
 
 		#Checks if player has been spotted
-		timer += 1
-		light_on,light_counter,light_timer = search_light(light_on,light_counter,light_timer,game_level)
+		if (time.time()-starttime>0.5):
+			timer += 1
+			light_on,light_counter,light_timer = search_light(light_on,light_counter,light_timer,game_level)
+			starttime = time.time()
 
 		if (light_on):
 			have_file = check_light(map_level[player_xpos],have_file)
