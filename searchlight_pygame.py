@@ -71,6 +71,23 @@ def display_player(display,player_ypos,player_xpos):
 
 	return display
 
+#Movement function
+def get_keypress(player_xpos):
+
+	events = pygame.event.get()
+	key = ""
+
+	for event in events:
+		if event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_LEFT or pygame.K_n:
+				player_xpos -=1
+			elif event.key == pygame.K_RIGHT or pygame.K_m:
+				player_xpos +=1
+
+	return player_xpos
+
+
+
 """
 <a href="https://www.flaticon.com/free-icons/tree" title="tree icons">Tree icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/resources" title="resources icons">Resources icons created by Smashicons - Flaticon</a>

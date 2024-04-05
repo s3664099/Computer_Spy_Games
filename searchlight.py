@@ -65,11 +65,15 @@ def main_game():
 
 	#Main Game loop
 	while (have_file < 3):
+
+		# Displays the screen
 		util.clear_screen()
 		display = graphics.clear_screen(display)
 		display_screen(map_level,player_xpos,light_on,display)
-		action = util.input_with_timeout_no_comment("",1)
-		player_xpos,have_file,score = process_action(action,player_xpos,have_file,score)
+		
+		#Processes action
+		new_pos = graphics.get_keypress(player_xpos)
+		player_xpos,have_file,score = process_action(player_xpos,new_pos,have_file,score)
 
 		#Checks if player has been spotted
 		timer += 1
@@ -140,20 +144,14 @@ def search_light(light_on,light_counter,light_timer,level):
 
 	return light_on,light_counter,light_timer
 
-def process_action(action,player_xpos,have_file,score):
+#Processes the results of the action
+def process_action(player_xpos,new_pos,have_file,score):
 
-	new_pos = player_xpos
-
-	#moves player, and sets the boundaries that the player cannot move beyond
-	if (action.lower() == "m"):
-		new_pos += 1
-		if (new_pos >= screen_width):
-			new_pos = player_xpos
-
-	elif (action.lower() == "n"):
-		new_pos -=1
-		if (new_pos<0):
-			new_pos = player_xpos
+	#Sets boundaries for the screen
+	if new_pos > screen_width-1:
+		new_pos = screen_width -1
+	elif new_pos < 0:
+		new_pos = 0
 
 	#Checks if the player has made it to the edge of the screen
 	if ((new_pos == screen_width-1) and (have_file == 0)):
