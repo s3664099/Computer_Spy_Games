@@ -40,7 +40,8 @@ and reloads it whenever a new game is started.
 **Searchlight**: In this game the player has to travel from one side of the
 board to the other and avoid being spotted. A searchlight will turn on and off.
 If the player is not behind cover when the searchlight is on, the then player
-is spotted and loses. 
+is spotted and loses. Due to the complexity of this game, a graphical interface
+has been added.
 
 ## Updates
 **20 March 2024**
@@ -55,3 +56,6 @@ Completed Spy Eyes with the suggested added functions
 
 **1 April 2024**
 Completed the command line version of Searchlight
+
+**6 April 2024**
+Completed the graphical interface for Searchlight and added sound
