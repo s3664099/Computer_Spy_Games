@@ -94,7 +94,7 @@ def message_display(text,display,size,textPosition):
 	display_height = 600
 
 	#Sets the text font	
-	largeText = pygame.font.SysFont('freesansbold.ttf',size)
+	largeText = pygame.font.Font('freesansbold.ttf',size)
 
 	#Creates the text objects
 	TextSurf, TextRect = text_objects(text, largeText)

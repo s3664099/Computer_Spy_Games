@@ -6,13 +6,15 @@ import util
 from random import randint
 import searchlight_pygame as graphics
 import time
+from playsound import playsound
 
 """
 Title: Searchlight
 Author: Jenny Tyler & Chris Oxlade
 Translator: David Sarkies
 Version: 0.1
-Date: 29 Marc 2024
+Date: 29 March 2024
+Updated: 6 April 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 4 of Computer Spy Games, and it a python3 translation.
 
@@ -57,22 +59,18 @@ def main_game():
 	light_counter = 0
 	light_timer = 0
 	starttime = time.time()
+	got_file = False
 
 	graphics.set_caption("Searchlight")
 	display = graphics.display_screen()
 
-	#The timer increases by one every second (or half-second - depends). This includes the light turning on and off.
-
 	#Main Game loop
 	while (have_file < 3):
-
-		# Displays the screen
-		display = graphics.clear_screen(display)
-		display_screen(map_level,player_xpos,light_on,display)
 		
 		#Processes action
 		new_pos = graphics.get_keypress(player_xpos)
-		player_xpos,have_file,score = process_action(player_xpos,new_pos,have_file,score)
+		player_xpos,have_file,score,got_file = process_action(player_xpos,new_pos,have_file,score)
+		prev_file = have_file
 
 		#Checks if player has been spotted
 		if (time.time()-starttime>0.5):
@@ -80,17 +78,28 @@ def main_game():
 			light_on,light_counter,light_timer = search_light(light_on,light_counter,light_timer,game_level)
 			starttime = time.time()
 
+		# Displays the screen
+		display = graphics.clear_screen(display)
+		display_screen(map_level,player_xpos,light_on,display)
+
 		if (light_on):
-			prev_file = have_file
 			have_file = check_light(map_level[player_xpos],have_file)
+
+		if (got_file == True):
+			comment = "You got the file"
+			graphics.message_display(comment,display,30,"centre")
+			got_file = False
 
 		#Checks to see if player moves up a level
 		if (have_file == 2):
+			comment = "You successfully returned the file"
+			graphics.message_display(comment,display,30,"centre")
 			have_file,map_level = next_level()
 
 	#End game
 	end_response = "You have been seen! You score: {}".format(game_level+(score/timer))
-	graphics.message_display(end_response,display,40,"centre")
+	playsound('./sounds/siren.wav')
+	graphics.message_display(end_response,display,30,"centre")
 	graphics.close_screen()
 
 	return True
@@ -150,6 +159,8 @@ def search_light(light_on,light_counter,light_timer,level):
 #Processes the results of the action
 def process_action(player_xpos,new_pos,have_file,score):
 
+	got_file = False
+
 	#Sets boundaries for the screen
 	if new_pos > screen_width-1:
 		new_pos = screen_width -1
@@ -159,6 +170,7 @@ def process_action(player_xpos,new_pos,have_file,score):
 	#Checks if the player has made it to the edge of the screen
 	if ((new_pos == screen_width-1) and (have_file == 0)):
 		have_file = 1
+		got_file = True
 	elif ((new_pos == 0) and (have_file == 1)):
 		have_file = 2
 
@@ -168,7 +180,7 @@ def process_action(player_xpos,new_pos,have_file,score):
 
 	player_xpos = new_pos
 
-	return player_xpos,have_file,score
+	return player_xpos,have_file,score, got_file
 
 def display_screen(map_level,player_xpos,light_on,graphics_display):
 
