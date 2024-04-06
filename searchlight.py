@@ -17,7 +17,6 @@ Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 4 of Computer Spy Games, and it a python3 translation.
 
 - Add Alarm when player spotted
-- Add display and then close screen
 """
 
 instructions = "A mission most secret and desperately dangerous must be undertaken this\n"
@@ -89,8 +88,8 @@ def main_game():
 			have_file,map_level = next_level()
 
 	#End game
-	print("You have been seen!")
-	print("You score: ".format(game_level+(score/timer)))
+	end_response = "You have been seen! You score: {}".format(game_level+(score/timer))
+	graphics.message_display(end_response,display,40,"centre")
 
 	return True
 

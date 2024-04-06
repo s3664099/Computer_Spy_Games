@@ -25,6 +25,7 @@ building = pygame.transform.scale(pygame.image.load("icons/building.png"),(cell_
 tree = pygame.transform.scale(pygame.image.load("icons/tree.png"),(cell_size,cell_size))
 spotlight = pygame.transform.scale(pygame.image.load("icons/spotlight.png"),(cell_size,cell_size))
 white = (255,255,255)
+pygame.init()
 
 def display_screen():
 
@@ -86,6 +87,34 @@ def get_keypress(player_xpos):
 				player_xpos +=1
 
 	return player_xpos
+
+#Displays a message on the screen
+def message_display(text,display,size,textPosition):
+	display_width = 800
+	display_height = 600
+
+	#Sets the text font	
+	largeText = pygame.font.SysFont('freesansbold.ttf',size)
+
+	#Creates the text objects
+	TextSurf, TextRect = text_objects(text, largeText)
+
+	if textPosition == "centre":
+		#centers the text
+		TextRect.center = ((display_width/2),(display_height/2))
+	elif textPosition == "bottom":
+		TextRect.center = ((display_width/2),display_height-100)
+
+	#This updates the screen, and sleeps for two seconds
+	display.blit(TextSurf, TextRect)
+	pygame.display.update()
+	pygame.time.wait(4000)
+	pygame.quit()
+
+#These creates and displays a text object
+def text_objects(text, font):
+	textSurface = font.render(text, True, white)
+	return textSurface, textSurface.get_rect()
 
 
 
