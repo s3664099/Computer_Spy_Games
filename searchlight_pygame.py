@@ -109,12 +109,14 @@ def message_display(text,display,size,textPosition):
 	display.blit(TextSurf, TextRect)
 	pygame.display.update()
 	pygame.time.wait(4000)
-	pygame.quit()
-
+	
 #These creates and displays a text object
 def text_objects(text, font):
 	textSurface = font.render(text, True, white)
 	return textSurface, textSurface.get_rect()
+
+def close_screen():
+	pygame.quit()
 
 
 

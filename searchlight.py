@@ -81,6 +81,7 @@ def main_game():
 			starttime = time.time()
 
 		if (light_on):
+			prev_file = have_file
 			have_file = check_light(map_level[player_xpos],have_file)
 
 		#Checks to see if player moves up a level
@@ -90,6 +91,7 @@ def main_game():
 	#End game
 	end_response = "You have been seen! You score: {}".format(game_level+(score/timer))
 	graphics.message_display(end_response,display,40,"centre")
+	graphics.close_screen()
 
 	return True
 
@@ -101,7 +103,7 @@ def set_graphics(map_level):
 	for x in range(len(map_level)):
 		
 		if (map_level[x] == "="):
-			new_map = "{}{}".format(new_map,randint(0,3))
+			new_map = "{}{}".format(new_map,randint(0,2))
 		else:
 			new_map = "{}{}".format(new_map," ")
 
