@@ -40,8 +40,7 @@ and reloads it whenever a new game is started.
 **Searchlight**: In this game the player has to travel from one side of the
 board to the other and avoid being spotted. A searchlight will turn on and off.
 If the player is not behind cover when the searchlight is on, the then player
-is spotted and loses. Due to the complexity of this game, a graphical interface
-will be added.
+is spotted and loses. 
 
 ## Updates
 **20 March 2024**

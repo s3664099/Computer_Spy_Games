@@ -6,7 +6,6 @@ import util
 from random import randint
 import searchlight_pygame as graphics
 import time
-from playsound import playsound
 
 """
 Title: Searchlight
@@ -17,8 +16,6 @@ Date: 29 March 2024
 Updated: 6 April 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 4 of Computer Spy Games, and it a python3 translation.
-
-- Add Alarm when player spotted
 """
 
 instructions = "A mission most secret and desperately dangerous must be undertaken this\n"
@@ -98,7 +95,7 @@ def main_game():
 
 	#End game
 	end_response = "You have been seen! You score: {}".format(game_level+(score/timer))
-	playsound('./sounds/siren.wav')
+	graphics.play_sound('./sounds/siren.wav')
 	graphics.message_display(end_response,display,30,"centre")
 	graphics.close_screen()
 
