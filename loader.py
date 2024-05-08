@@ -31,8 +31,10 @@ def select_game():
 
 		elif response == "1":
 			start_game("Spy Eyes",spy_eyes)
-		elif response == "1":
+		elif response == "2":
 			start_game("Searchlight",searchlight)
+		elif response == "3":
+			start_game("Robospy",robospy)	
 		else:
 			print("You have entered an incorrect option")
 			time.sleep(5)
