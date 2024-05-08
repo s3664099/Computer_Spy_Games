@@ -6,14 +6,13 @@ import util
 from random import randint
 
 """
-Title: 
-Author: 
+Title: Robospy
+Author: Adrian Hall
 Translator: David Sarkies
-Version: 
-Date: 
+Version: 0.0
+Date: 8 May 2024
 Source: https://archive.org/details/Computer_Spy_Games
-This game can be found on page {} of Computer Spy Games, and it a python3 translation.
-
+This game can be found on page 6 of Computer Spy Games, and it a python3 translation.
 """
 
 instructions = "You are in control of Robospy - a unique remote-operation tracking device which\n"
