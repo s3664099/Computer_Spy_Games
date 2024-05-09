@@ -26,10 +26,43 @@ instructions = "{}signalling device, re-arranging the keys in an attempt to conf
 instructions = "{}means that you press L (for left) with your right hand and R (for right) with\n".format(instructions)
 instructions = "{}your left. Can you stick with him, or will he shake you off?\n".format(instructions)
 
+speed = 0.3
+h = 0
+s = 0
+
 def main_game():
-	
-	print("Main Game")
+
+	no_words = 1
+	no_words_printed = 12
+
+	util.clear_screen()
+	print(">>> Robospy <<<")
+	input("Press Enter to continue")
+	util.clear_screen()
+	print("\n\n")
+
+	#Updates the Score
+	if (no_words == 5):
+		no_words_printed += 1
+		no_words = 0
+
+	moves = ""
+	movement = ""
+
+	#Builds the moves
+	for i in range(no_words):
+		move = randint(0,1)
+
+		if (move == 0):
+			moves+= "L"
+		else:
+			moves+= "R"
+
+	#Display Moves
+	#Get Moves
+
+
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
-	loader.start_game("Spy Eyes",sys.modules[__name__])
+	loader.start_game(">>> Robospy <<<",sys.modules[__name__])
