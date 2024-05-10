@@ -4,6 +4,7 @@ import loader
 import sys
 import util
 from random import randint
+import time
 
 """
 Title: Robospy
@@ -33,7 +34,7 @@ s = 0
 def main_game():
 
 	no_words = 1
-	no_words_printed = 12
+	no_words_printed = 0
 
 	util.clear_screen()
 	print(">>> Robospy <<<")
@@ -42,23 +43,30 @@ def main_game():
 	print("\n\n")
 
 	#Updates the Score
-	if (no_words == 5):
-		no_words_printed += 1
-		no_words = 0
+	if (no_words_printed == 5):
+		no_words += 1
+		no_words_printed = 0
 
 	moves = ""
 	movement = ""
 
-	#Builds the moves
+	#Build and display the moves
 	for i in range(no_words):
 		move = randint(0,1)
 
 		if (move == 0):
+			print("Left\n")
 			moves+= "L"
 		else:
+			print("Right\n")
 			moves+= "R"
 
-	#Display Moves
+	no_words_printed +=1
+	time.sleep(50*speed*no_words)
+	
+	#Get the directions
+	util.clear_screen()
+
 	#Get Moves
 
 
