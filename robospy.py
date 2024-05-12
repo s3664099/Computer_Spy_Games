@@ -5,6 +5,7 @@ import sys
 import util
 from random import randint
 import time
+from sshkeyboard import listen_keyboard,stop_listening
 
 """
 Title: Robospy
@@ -47,8 +48,21 @@ def main_game():
 		no_words += 1
 		no_words_printed = 0
 
-	moves = ""
 	movement = ""
+
+	moves = display_moves(no_words)
+	no_words_printed +=1
+	time.sleep(10*speed*no_words)
+	
+	#Get the directions
+	util.clear_screen()
+
+	#Get Moves
+	move = get_player_moves()
+
+def display_moves(no_words):
+
+	moves = ""
 
 	#Build and display the moves
 	for i in range(no_words):
@@ -59,17 +73,30 @@ def main_game():
 			moves+= "L"
 		else:
 			print("Right\n")
-			moves+= "R"
+			moves+= "R"	
 
-	no_words_printed +=1
-	time.sleep(50*speed*no_words)
-	
-	#Get the directions
-	util.clear_screen()
+	return moves
 
-	#Get Moves
+#Get player moves
+def get_player_moves():
 
+	global key_pressed
+	key_pressed = ""
 
+	listen_keyboard(
+		on_press=press,
+		sequential=True,
+	)
+
+	return key_pressed
+
+def press(key):
+
+	global key_pressed
+	key_pressed = ""
+	if key == "r" or key == "l":
+		key_pressed = key
+		stop_listening()
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
