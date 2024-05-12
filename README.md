@@ -26,9 +26,14 @@ games run only on Linux, you will need to go to the directory on the command lin
 
 However, a loader program has been included, so that is the only one that theoretically needs to be
 executed as all of the other programs can be executed from that one.
+To run the games you will need to install sshkeyboard (see below).
 
 ## Issues
 The issue regarding getting the INKEY to work properly is still present.
+
+I have since found a solution to this, using sshkeyboard. However it is a separate library and has to be added. To add it you type:
+
+pip install sshkeyboard
 
 ## Games
 
@@ -59,3 +64,7 @@ Completed the command line version of Searchlight
 
 **6 April 2024**
 Completed the graphical interface for Searchlight and added sound
+
+**12 May 2024**
+Started building Robospy, and have found a way of taking a key press without
+using pygame. This one uses sshkeyboard.
