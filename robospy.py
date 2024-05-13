@@ -29,12 +29,13 @@ instructions = "{}means that you press L (for left) with your right hand and R (
 instructions = "{}your left. Can you stick with him, or will he shake you off?\n".format(instructions)
 
 speed = 0.3
-h = 0
-s = 0
+high_score = 0
+
 
 def main_game():
 
-	no_words = 1
+	score = 0
+	no_moves = 1
 	no_words_printed = 0
 
 	util.clear_screen()
@@ -45,20 +46,29 @@ def main_game():
 
 	#Updates the Score
 	if (no_words_printed == 5):
-		no_words += 1
+		no_moves += 1
 		no_words_printed = 0
 
 	movement = ""
 
-	moves = display_moves(no_words)
+	moves = display_moves(no_moves)
 	no_words_printed +=1
-	time.sleep(10*speed*no_words)
-	
+	print(5*speed*no_moves)
+	time.sleep(5*speed*no_moves)
+
 	#Get the directions
 	util.clear_screen()
 
 	#Get Moves
-	move = get_player_moves()
+	error = get_player_moves(no_moves,moves)
+
+	#If the guess was correct, score increases
+	if (error == False):
+		score += no_moves
+
+		#Checks if high score beaten
+		if score>high_score:
+			high_score = score
 
 def display_moves(no_words):
 
@@ -70,25 +80,42 @@ def display_moves(no_words):
 
 		if (move == 0):
 			print("Left\n")
-			moves+= "L"
+			moves+= "l"
 		else:
 			print("Right\n")
-			moves+= "R"	
+			moves+= "r"	
 
 	return moves
 
-#Get player moves
-def get_player_moves():
+#Get player moves and determines whether they were correct
+def get_player_moves(no_words,moves):
 
 	global key_pressed
-	key_pressed = ""
+	error = False
+	print("What were the moves?\n")
 
-	listen_keyboard(
-		on_press=press,
-		sequential=True,
-	)
+	for i in range(no_words):
 
-	return key_pressed
+		correct_move = False
+		
+		#Loop continues unless correct key pressed
+		while not correct_move:	
+			key_pressed = ""
+
+			listen_keyboard(
+				on_press=press,
+				sequential=True,
+			)
+
+			#Checks if the correct button pressed
+			if ((key_pressed == "l") or (key_pressed == "r")):
+				correct_move = True
+
+				#Checks if it matches the direction
+				if (key_pressed != moves[1]):
+					error = True
+
+	return error
 
 def press(key):
 
