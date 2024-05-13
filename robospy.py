@@ -31,44 +31,65 @@ instructions = "{}your left. Can you stick with him, or will he shake you off?\n
 speed = 0.3
 high_score = 0
 
-
 def main_game():
 
-	score = 0
-	no_moves = 1
-	no_words_printed = 0
+	playing = True
 
-	util.clear_screen()
-	print(">>> Robospy <<<")
-	input("Press Enter to continue")
-	util.clear_screen()
-	print("\n\n")
+	while(playing):
 
-	#Updates the Score
-	if (no_words_printed == 5):
-		no_moves += 1
-		no_words_printed = 0
+		score = 0
+		no_moves = 1
+		no_moves_printed = 0
+		error = False
 
-	movement = ""
+		util.clear_screen()
+		print(">>> Robospy <<<")
+		input("Press Enter to continue")
 
-	moves = display_moves(no_moves)
-	no_words_printed +=1
-	print(5*speed*no_moves)
-	time.sleep(5*speed*no_moves)
+		playing = game_loop(score,no_moves,no_moves_printed)
 
-	#Get the directions
-	util.clear_screen()
 
-	#Get Moves
-	error = get_player_moves(no_moves,moves)
+#Main Loop
+def game_loop(score,no_moves,no_moves_printed):
 
-	#If the guess was correct, score increases
-	if (error == False):
-		score += no_moves
+	answer = True
 
-		#Checks if high score beaten
-		if score>high_score:
-			high_score = score
+	while (!error):
+		util.clear_screen()
+		print("\n\n")
+
+		#Updates the Score
+		if (no_moves_printed == 5):
+			no_moves += 1
+			no_words_printed = 0
+
+		movement = ""
+
+		moves = display_moves(no_moves)
+		no_words_printed +=1
+		time.sleep(5*speed*no_moves)
+
+		#Get the directions
+		util.clear_screen()
+
+		#Get Moves
+		error = get_player_moves(no_moves,moves)
+
+		#If the guess was correct, score increases
+		if (error == False):
+			score += no_moves
+
+			#Checks if high score beaten
+			if score>high_score:
+				high_score = score
+		else:
+			print("You lost him! Some Spy!")
+			print("Score = {}".format(score))
+			print("High Score = {}".format(high_score))
+			print("\n\nDo you want to play again: ")
+			answer = util.yes_or_no()
+
+	return answer
 
 def display_moves(no_words):
 

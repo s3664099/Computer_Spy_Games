@@ -68,3 +68,6 @@ Completed the graphical interface for Searchlight and added sound
 **12 May 2024**
 Started building Robospy, and have found a way of taking a key press without
 using pygame. This one uses sshkeyboard.
+
+**13 May 2024**
+Finished Robospy. All need to do is test it.
