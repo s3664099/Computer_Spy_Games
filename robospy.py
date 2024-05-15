@@ -11,8 +11,8 @@ from sshkeyboard import listen_keyboard,stop_listening
 Title: Robospy
 Author: Adrian Hall
 Translator: David Sarkies
-Version: 0.0
-Date: 8 May 2024
+Version: 1.0
+Date: 15 May 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 6 of Computer Spy Games, and it a python3 translation.
 """
@@ -28,46 +28,48 @@ instructions = "{}signalling device, re-arranging the keys in an attempt to conf
 instructions = "{}means that you press L (for left) with your right hand and R (for right) with\n".format(instructions)
 instructions = "{}your left. Can you stick with him, or will he shake you off?\n".format(instructions)
 
-speed = 0.3
-high_score = 0
-
 def main_game():
 
 	playing = True
+	high_score = 0
 
 	while(playing):
 
 		score = 0
 		no_moves = 1
-		no_moves_printed = 0
+		turn = 0
 		error = False
 
 		util.clear_screen()
 		print(">>> Robospy <<<")
 		input("Press Enter to continue")
 
-		playing = game_loop(score,no_moves,no_moves_printed)
+		playing,high_score = game_loop(score,no_moves,turn,error,high_score)
 
 
 #Main Loop
-def game_loop(score,no_moves,no_moves_printed):
+def game_loop(score,no_moves,turn,error,high_score):
 
 	answer = True
 
-	while (!error):
+	while (not error):
 		util.clear_screen()
 		print("\n\n")
 
 		#Updates the Score
-		if (no_moves_printed == 5):
+		if (turn == 5):
 			no_moves += 1
-			no_words_printed = 0
+			turn = 0
 
-		movement = ""
+		#Sets the time the moves are displayed
+		turn_speed = 5-(no_moves*0.5)
+
+		if (turn_speed<0.5):
+			turn_speed = 0.5
 
 		moves = display_moves(no_moves)
-		no_words_printed +=1
-		time.sleep(5*speed*no_moves)
+		turn +=1
+		time.sleep(turn_speed)
 
 		#Get the directions
 		util.clear_screen()
@@ -87,9 +89,9 @@ def game_loop(score,no_moves,no_moves_printed):
 			print("Score = {}".format(score))
 			print("High Score = {}".format(high_score))
 			print("\n\nDo you want to play again: ")
-			answer = util.yes_or_no()
+			answer = util.yes_or_no(answer)
 
-	return answer
+	return answer,high_score
 
 def display_moves(no_words):
 
@@ -133,7 +135,7 @@ def get_player_moves(no_words,moves):
 				correct_move = True
 
 				#Checks if it matches the direction
-				if (key_pressed != moves[1]):
+				if (key_pressed != moves[i]):
 					error = True
 
 	return error
