@@ -48,6 +48,11 @@ If the player is not behind cover when the searchlight is on, the then player
 is spotted and loses. Due to the complexity of this game, a graphical interface
 has been added.
 
+**Robospy**: This game displays directions and you need to remember them, and then repeat them once
+they disappear. Every five moves another direction is added, and the game speeds up a bit making it
+more difficult. I have managed to find a library for python that will take a key input. However the
+library seems to be rather new, and a global variable is required to take the value out of the function.
+
 ## Updates
 **20 March 2024**
 Created the initial folder to hold the contents on the game and configured the loader program.
@@ -71,3 +76,6 @@ using pygame. This one uses sshkeyboard.
 
 **13 May 2024**
 Finished Robospy. All need to do is test it.
+
+**15 May 2025**
+Finished bug testing Robospy and it now works.
