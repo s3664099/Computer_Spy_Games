@@ -3,6 +3,9 @@
 import util
 import time
 import spy_eyes
+import searchlight
+import robospy
+import spyqtest
 
 #Function that displays the games available, and allows the user to select them
 def select_game():

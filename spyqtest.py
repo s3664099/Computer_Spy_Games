@@ -13,10 +13,19 @@ Version: 0.1
 Date: 17 July 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 8 of Computer Spy Games, and it a python3 translation.
-
 """
 
-instructions = ""
+instructions = "As a new recruit at Spy School, you've a lot of Spy Q tests to pass if you are\n"
+instructions = "{}to move up through the Grades. You start as lowest of the low - a Grade 5\n".format(instructions)
+instructions = "{}Trainee Spy. Your goal is to reach the top and become a Grade 1 VIS* and\n".format(instructions)
+instructions = "{}even achieve the ultimate accolade: the Super Spy Award.\n".format(instructions)
+instructions = "{}In each Spy Q Test, you are given ten positions on your computer screen.\n".format(instructions)
+instructions = "{}You are then given numbers between 1 and 100. Your aim is to put these\n".format(instructions)
+instructions = "{}numbers in order into the ten positions, with the lowest in position 1\n".format(instructions)
+instructions = "{} and the highest in 10.\n".format(instructions)
+instructions = "{}You are allowed to discard some numbers if they won't fit by pressing D.\n".format(instructions)
+instructions = "{}The number of numbers you are allowed to discard is the same as the number\n".format(instructions)
+instructions = "{}of your grade.\n\n*Very Important Spy\n".format(instructions)
 
 def main_game():
 	
