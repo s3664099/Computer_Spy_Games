@@ -15,7 +15,7 @@ def select_game():
 		print("1) Spy Eyes")
 		print("2) Searchlight")
 		print("3) Robospy")
-		print("4) Spy Q Test")
+		print("4) Spy-Q Test")
 		print("5) Secret Message Maker")
 		print("6) Rendezvous")
 		print("7) Morse Coder")
@@ -34,7 +34,9 @@ def select_game():
 		elif response == "2":
 			start_game("Searchlight",searchlight)
 		elif response == "3":
-			start_game("Robospy",robospy)	
+			start_game("Robospy",robospy)
+		elif response == "4":
+			start_game("Spy-Q Test",spyqtest)	
 		else:
 			print("You have entered an incorrect option")
 			time.sleep(5)
