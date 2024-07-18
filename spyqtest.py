@@ -29,22 +29,50 @@ instructions = "{}of your grade.\n\n*Very Important Spy\n".format(instructions)
 
 def main_game():
 	
-	print("Main Game")
+	grades = ["VIS","SPY","JUNIOR SPY","SPYING ASSISTANT","TRAINEE SPY"]
+	no_positions = 10
+	positions = [0,0,0,0,0,0,0,0,0,0]
+	level = 5
+	tries = 0
+	grade_comment = ""
+
+	util.clear_screen()
+	display_grade(grades[level-1],grade_comment,positions)
+
+	#Picks random number between 1 & 99
+	#Gets Positions
+	#If D, picks a new one
+	#Places the number in position
+	#Validates the position
+	#Checks if ended
+	#If end, checks if in order
+	#If so, advances to next grade
+	#Other wise fails.
+
+def display_grade(grade,comment,positions):
+
+	util.clear_screen()
+	print("You are {} a {}".format(comment,grade))
+
+	position_display = ""
+
+	for x in range (10):
+		position_display = "{}{}: ".format(position_display,x)
+
+		if (positions[x]>0):
+			position_display = "{}{} ".format(position_display,positions[x])
+
+	print(position_display)
+
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
 	loader.start_game("Spy Eyes",sys.modules[__name__])
 
 """
-10 DIM N(10):DIM N$(5)
-20 CLS
-30 GOSUB 510
-50 LET W$=""
-50 LET D=5
-60 LET G=0
-70 FOR I=1 TO 10:LET N(I)=0:NEXT I
+
 80 LET I=1
-90 GOSUB 430
+
 100 LET M=INT(RND(1)*99+1)
 110 PRINT:PRINT "WHERE WILL YOU PUT ";M
 120 PRINT:INPUT P$
@@ -77,17 +105,4 @@ if __name__ == '__main__':
 400 PRINT:PRINT "DO YOU WANT TO TRY AGAIN? (Y/N)"
 410 INPUT A$:IF A$="Y" THEN GOTO 60
 420 STOP
-430 CLS
-440 PRINT:PRINT "YOU ARE ";W$;" A ";N$(D)
-450 PRINT
-460 FOR J=1 TO 10
-470 PRINT J;
-480 IF N(J)>0 THEN PRINT N(J);
-490 PRINT:NEXT J
-500 RETURN
-510 FOR I=1 TO 5:READ N$(I)
-520 NEXT I
-530 RETURN
-540 DATA "VIS","SPY","JUNIOR SPY"
-550 DATA "SPYING ASSISTANT","TRAINEE SPY"
 """
