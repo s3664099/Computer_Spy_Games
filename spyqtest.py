@@ -27,45 +27,16 @@ instructions = "{}You are allowed to discard some numbers if they won't fit by p
 instructions = "{}The number of numbers you are allowed to discard is the same as the number\n".format(instructions)
 instructions = "{}of your grade.\n\n*Very Important Spy\n".format(instructions)
 
+grades = ["VIS","SPY","JUNIOR SPY","SPYING ASSISTANT","TRAINEE SPY"]
+
 def main_game():
 	
-	grades = ["VIS","SPY","JUNIOR SPY","SPYING ASSISTANT","TRAINEE SPY"]
-	no_positions = 10
 	positions = [0,0,0,0,0,0,0,0,0,0]
 	level = 5
-	tries = 0
-	grade_comment = ""
 	game_ended  = False
 
 	while (not game_ended):
-		util.clear_screen()
-		display_grade(grades[level-1],grade_comment,positions)
-
-		number = random.randint(1,99)
-		correct_input = False
-
-		while (not correct_input):
-			instructions = input("Where will you put {}.".format(number))
-
-			if (instructions == "d"):
-
-				if tries == level:
-					print("You can't")
-				else:
-					tries++
-					correct_input == True
-			else:
-
-
-
-	#Gets Positions
-	#If D, picks a new one
-	#Places the number in position
-	#Validates the position
-	#Checks if ended
-	#If end, checks if in order
-	#If so, advances to next grade
-	#Other wise fails.
+		game_ended = turn(positions,level)
 
 def display_grade(grade,comment,positions):
 
@@ -82,19 +53,72 @@ def display_grade(grade,comment,positions):
 
 	print(position_display)
 
+def get_input(tries,number,positions):
+
+	position = 100
+	correct_input = False
+
+	while (not correct_input):
+		instructions = input("Where will you put {}: ".format(number))
+
+		if (instructions == "d"):
+			if tries == level:
+				print("You have run out of swaps")
+			else:
+				tries+=1
+				correct_input == True
+		else:
+			try:
+				instructions = int(instructions)
+
+				if ((instructions<0) or (instructions>9)):
+					print("You have to enter an integer between 0 and 9")
+				else:
+					if (positions[instructions] != 0):
+						print("That position has already been taken")
+					else:
+						correct_input = True
+						position = instructions
+			except:
+				print("You have to enter an integer between 0 and 9")
+
+	return position
+
+def turn(positions,level):
+
+	tries = 0
+	no_positions = 10
+	grade_comment = ""
+
+	while(True):
+		util.clear_screen()
+		display_grade(grades[level-1],grade_comment,positions)
+
+		number = randint(1,99)
+		correct_input = False
+
+		position = get_input(tries,number,positions)
+
+		if (position != 100):
+			positions[position] = number
+
+	#Gets Positions
+	#Places the number in position
+	#Validates the position
+	#Checks if ended
+	#If end, checks if in order
+	#If so, advances to next grade
+	#Other wise fails.	
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
-	loader.start_game("Spy Eyes",sys.modules[__name__])
+	loader.start_game("Spy-Q Test",sys.modules[__name__])
 
 """
 
 80 LET I=1
 
-150 LET P=VAL(P$)
-160 IF P<1 OR P>10 THEN GOTO 120
-170 IF N(P)>0 THEN PRINT "ALREADY FULL":GOTO 120
-180 LET N(P)=M
+
 190 LET F=0
 200 FOR L=P TO 10
 210 IF N(L)<M AND N(L)<>0 THEN LET F=1
