@@ -35,11 +35,29 @@ def main_game():
 	level = 5
 	tries = 0
 	grade_comment = ""
+	game_ended  = False
 
-	util.clear_screen()
-	display_grade(grades[level-1],grade_comment,positions)
+	while (not game_ended):
+		util.clear_screen()
+		display_grade(grades[level-1],grade_comment,positions)
 
-	#Picks random number between 1 & 99
+		number = random.randint(1,99)
+		correct_input = False
+
+		while (not correct_input):
+			instructions = input("Where will you put {}.".format(number))
+
+			if (instructions == "d"):
+
+				if tries == level:
+					print("You can't")
+				else:
+					tries++
+					correct_input == True
+			else:
+
+
+
 	#Gets Positions
 	#If D, picks a new one
 	#Places the number in position
@@ -73,11 +91,6 @@ if __name__ == '__main__':
 
 80 LET I=1
 
-100 LET M=INT(RND(1)*99+1)
-110 PRINT:PRINT "WHERE WILL YOU PUT ";M
-120 PRINT:INPUT P$
-130 IF P$="D" AND G<D THEN LET G=G+1:GOTO 90
-140 IF P$="D" THEN PRINT "YOU CAN'T!":GOTO 120
 150 LET P=VAL(P$)
 160 IF P<1 OR P>10 THEN GOTO 120
 170 IF N(P)>0 THEN PRINT "ALREADY FULL":GOTO 120
