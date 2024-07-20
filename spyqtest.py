@@ -9,7 +9,7 @@ from random import randint
 Title: Spy-Q Test
 Author: Jenny Tyler & Chris Oxlade
 Translator: David Sarkies
-Version: 0.1
+Version: 1.0
 Date: 17 July 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 8 of Computer Spy Games, and it a python3 translation.
@@ -31,16 +31,21 @@ grades = ["VIS","SPY","JUNIOR SPY","SPYING ASSISTANT","TRAINEE SPY"]
 
 def main_game():
 	
+	#Sets up main functions
 	level = 5
 	game_continuing = True
 	grade_comment = ""
 
+	#Main game loops
 	while (game_continuing):
 		course_result = turn(level,grade_comment)
 
+		#Has the player Won?
 		if (not course_result):
+
 			level -= 1
 
+			#Has the player reached the highest level
 			if (level>0):
 				print("Well done, go to grade {}.".format(level))
 				print("You are now a {}.".format(grades[level-1]))
@@ -50,16 +55,21 @@ def main_game():
 				game_continuing = False
 
 		else:
+
+			#Failed
 			grade_comment = "still"
 			game_continuing = util.play_again(game_continuing)
 
+#Main display section of the game
 def display_grade(grade,comment,positions):
 
+	#Displays player level
 	util.clear_screen()
 	print("You are {} a {}".format(comment,grade))
 
 	position_display = ""
 
+	#Displays the positions and any contents
 	for x in range (10):
 		position_display = "{}\n({}: ".format(position_display,x)
 
@@ -68,24 +78,29 @@ def display_grade(grade,comment,positions):
 
 	print(position_display)
 
+#Retrieve's the player's input
 def get_input(tries,number,positions,level):
 
 	position = 100
 	correct_input = False
 
+	#Validation Loop
 	while (not correct_input):
 		instructions = input("Where will you put {}: ".format(number))
 
+		#Dropping the number
 		if (instructions.upper() == "D"):
+			
+			#Player run out of drops
 			if tries == level:
 				print("You have run out of swaps")
 			else:
-				#tries+=1
+				tries+=1
 				correct_input = True
 		else:
 			try:
+				#Validated input
 				instructions = int(instructions)
-
 				if ((instructions<0) or (instructions>9)):
 					print("You have to enter an integer between 0 and 9")
 				else:
@@ -99,31 +114,36 @@ def get_input(tries,number,positions,level):
 
 	return position,tries
 
+#Main turn function
 def turn(level,grade_comment):
 
+	#Set's variable for the turn
 	tries = 0
 	no_positions = 10
 	positions = [0,0,0,0,0,0,0,0,0,0]
 	failed_course = False
 	continuing_course = True
 
+	#Turn loop
 	while(continuing_course):
-		#util.clear_screen()
+
+		util.clear_screen()
 		display_grade(grades[level-1],grade_comment,positions)
 
+		#Gets random Number
 		number = randint(1,99)
 		position,tries = get_input(tries,number,positions,level)
 
+		#Actions the input
 		if (position != 100):
 			positions[position] = number
 			valid_move = validate_position(positions,position)
 
+			#Has the player succeeded or failed
 			if (valid_move):
-
 				if (not check_moves(positions)):
 					failed_course = False
 					continuing_course = False
-
 			else:
 				print("Wrong, not good enough {}.".format(grades[level-1]))
 				failed_course = True
@@ -131,11 +151,13 @@ def turn(level,grade_comment):
 
 	return failed_course
 
+#Checks How many moves the player has left
 def check_moves(positions):
 
 	moves_left = 0
 	continuing = True
 
+	#Counts the number of empty positions
 	for x in positions:
 		if x != 0:
 			moves_left += 1
@@ -145,14 +167,17 @@ def check_moves(positions):
 
 	return continuing
 
+#Validates the player's positioning
 def validate_position(positions,position):
 
 	valid_position = True
 
+	#Higher positions should have bigger numbers
 	for x in range(position,10):
 		if ((positions[x]<positions[position]) and (positions[x] != 0)):
 			valid_position = False
 
+	#Lower positions should have smaller numbers
 	for x in range(0,position):
 		if ((positions[x]>positions[position]) and (positions[x] != 0)):
 			valid_position = False
