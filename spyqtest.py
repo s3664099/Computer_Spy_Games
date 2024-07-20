@@ -31,12 +31,20 @@ grades = ["VIS","SPY","JUNIOR SPY","SPYING ASSISTANT","TRAINEE SPY"]
 
 def main_game():
 	
-	positions = [0,0,0,0,0,0,0,0,0,0]
 	level = 5
-	game_ended  = False
+	game_continuing = True
+	grade_comment = ""
 
-	while (not game_ended):
-		game_ended = turn(positions,level)
+	while (game_continuing):
+		course_result = turn(level,grade_comment)
+
+		if (course_result):
+			#Increase level
+			print()
+		else:
+			grade_comment = "still"
+			game_continuing = util.play_again(game_continuing)
+
 
 def display_grade(grade,comment,positions):
 
@@ -46,14 +54,14 @@ def display_grade(grade,comment,positions):
 	position_display = ""
 
 	for x in range (10):
-		position_display = "{}{}: ".format(position_display,x)
+		position_display = "{}  ({}: ".format(position_display,x)
 
 		if (positions[x]>0):
 			position_display = "{}{} ".format(position_display,positions[x])
 
 	print(position_display)
 
-def get_input(tries,number,positions):
+def get_input(tries,number,positions,level):
 
 	position = 100
 	correct_input = False
@@ -82,29 +90,54 @@ def get_input(tries,number,positions):
 			except:
 				print("You have to enter an integer between 0 and 9")
 
-	return position
+	return position,tries
 
-def turn(positions,level):
+def turn(level,grade_comment):
 
 	tries = 0
 	no_positions = 10
-	grade_comment = ""
+	positions = [0,0,0,0,0,0,0,0,0,0]
+	failed_course = False
+	continuing_course = True
 
-	while(True):
+	while(continuing_course):
 		util.clear_screen()
 		display_grade(grades[level-1],grade_comment,positions)
 
 		number = randint(1,99)
 		correct_input = False
 
-		position = get_input(tries,number,positions)
+		position,tries = get_input(tries,number,positions,level)
 
 		if (position != 100):
 			positions[position] = number
+			valid_move = validate_position(positions,position)
 
-	#Gets Positions
-	#Places the number in position
-	#Validates the position
+			if (valid_move):
+				print()
+				#Count positions
+			else:
+				print("Wrong, not good enough {}.".format(grades[level-1]))
+				failed_course = True
+				continuing_course = False
+
+	return continuing_course
+
+
+def validate_position(positions,position):
+
+	valid_position = True
+
+	for x in range(position,10):
+		if ((positions[x]<positions[position]) and (positions[x] != 0)):
+			valid_position = False
+
+	for x in range(0,position):
+		if ((positions[x]>positions[position]) and (positions[x] != 0)):
+			valid_position = False
+
+	return valid_position
+
 	#Checks if ended
 	#If end, checks if in order
 	#If so, advances to next grade
@@ -116,17 +149,7 @@ if __name__ == '__main__':
 
 """
 
-80 LET I=1
 
-
-190 LET F=0
-200 FOR L=P TO 10
-210 IF N(L)<M AND N(L)<>0 THEN LET F=1
-220 NEXT L
-230 FOR L=1 TO P
-240 IF N(L)>M AND N(L)<>0 THEN LET F=1
-250 NEXT L
-260 IF F=1 THEN GOTO 360
 270 LET I=I+1:IF I<11 THEN GOTO 90
 280 LET D=D-1:IF D=0 THEN GOTO 330
 290 PRINT "WELL DONE, GO TO GRADE ";D
@@ -136,9 +159,7 @@ if __name__ == '__main__':
 330 PRINT "TERRIFIC - YOU HAVE REACHED"
 340 PRINT "THE GRADE OF SUPER SPY"
 350 STOP
-360 PRINT "WRONG! NOT GOOD ENOUGH"
-370 PRINT N$(D)
-390 LET W$="STILL"
+
 400 PRINT:PRINT "DO YOU WANT TO TRY AGAIN? (Y/N)"
 410 INPUT A$:IF A$="Y" THEN GOTO 60
 420 STOP
