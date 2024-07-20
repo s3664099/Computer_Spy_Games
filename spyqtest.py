@@ -38,13 +38,20 @@ def main_game():
 	while (game_continuing):
 		course_result = turn(level,grade_comment)
 
-		if (course_result):
-			#Increase level
-			print()
+		if (not course_result):
+			level -= 1
+
+			if (level>0):
+				print("Well done, go to grade {}.".format(level))
+				print("You are now a {}.".format(grades[level-1]))
+				input("Press enter")
+			else:
+				print("Congratulations, you are now a Super Spy!")
+				game_continuing = False
+
 		else:
 			grade_comment = "still"
 			game_continuing = util.play_again(game_continuing)
-
 
 def display_grade(grade,comment,positions):
 
@@ -54,7 +61,7 @@ def display_grade(grade,comment,positions):
 	position_display = ""
 
 	for x in range (10):
-		position_display = "{}  ({}: ".format(position_display,x)
+		position_display = "{}\n({}: ".format(position_display,x)
 
 		if (positions[x]>0):
 			position_display = "{}{} ".format(position_display,positions[x])
@@ -69,12 +76,12 @@ def get_input(tries,number,positions,level):
 	while (not correct_input):
 		instructions = input("Where will you put {}: ".format(number))
 
-		if (instructions == "d"):
+		if (instructions.upper() == "D"):
 			if tries == level:
 				print("You have run out of swaps")
 			else:
-				tries+=1
-				correct_input == True
+				#tries+=1
+				correct_input = True
 		else:
 			try:
 				instructions = int(instructions)
@@ -101,12 +108,10 @@ def turn(level,grade_comment):
 	continuing_course = True
 
 	while(continuing_course):
-		util.clear_screen()
+		#util.clear_screen()
 		display_grade(grades[level-1],grade_comment,positions)
 
 		number = randint(1,99)
-		correct_input = False
-
 		position,tries = get_input(tries,number,positions,level)
 
 		if (position != 100):
@@ -114,15 +119,31 @@ def turn(level,grade_comment):
 			valid_move = validate_position(positions,position)
 
 			if (valid_move):
-				print()
-				#Count positions
+
+				if (not check_moves(positions)):
+					failed_course = False
+					continuing_course = False
+
 			else:
 				print("Wrong, not good enough {}.".format(grades[level-1]))
 				failed_course = True
 				continuing_course = False
 
-	return continuing_course
+	return failed_course
 
+def check_moves(positions):
+
+	moves_left = 0
+	continuing = True
+
+	for x in positions:
+		if x != 0:
+			moves_left += 1
+
+	if (moves_left == 10):
+		continuing = False
+
+	return continuing
 
 def validate_position(positions,position):
 
@@ -138,29 +159,6 @@ def validate_position(positions,position):
 
 	return valid_position
 
-	#Checks if ended
-	#If end, checks if in order
-	#If so, advances to next grade
-	#Other wise fails.	
-
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
 	loader.start_game("Spy-Q Test",sys.modules[__name__])
-
-"""
-
-
-270 LET I=I+1:IF I<11 THEN GOTO 90
-280 LET D=D-1:IF D=0 THEN GOTO 330
-290 PRINT "WELL DONE, GO TO GRADE ";D
-300 PRINT:PRINT "YOU ARE NOW A ";N$(D)
-310 LET W$=""
-320 GOTO 400
-330 PRINT "TERRIFIC - YOU HAVE REACHED"
-340 PRINT "THE GRADE OF SUPER SPY"
-350 STOP
-
-400 PRINT:PRINT "DO YOU WANT TO TRY AGAIN? (Y/N)"
-410 INPUT A$:IF A$="Y" THEN GOTO 60
-420 STOP
-"""
