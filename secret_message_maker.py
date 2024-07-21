@@ -16,7 +16,10 @@ This game can be found on page 10 of Computer Spy Games, and it a python3 transl
 
 """
 
-instructions = ""
+instructions = "Use this program to send coded messages to your friends. They'll need a computer\n"
+instructions = "{}to decode them, but not necessarily the same type as yours. (They'll need a\n".format(instructions)
+instructions = "{}copy of the program too don't forget) They can decode your messages and \n".format(instructions)
+instructions = "{}then send coded messages back to you.\n".format(instructions)
 
 def main_game():
 	
