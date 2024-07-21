@@ -23,20 +23,41 @@ instructions = "{}then send coded messages back to you.\n".format(instructions)
 
 def main_game():
 	
-	print("Main Game")
+	running = True
+
+	util.clear_screen()
+	print("\nSecret Message Maker")
+	print("====================")
+
+	while(running):
+		correct_answer = False
+
+		while(not correct_answer):
+			print("Do you want to\n")
+			print("   1. Code a Message")
+			print("or 2. Decode a Message")
+			print("or 3. Quit\n")
+			option = input("Enter a number: ")
+
+			if (option == "3"):
+				correct_answer = True
+				running = False
+			elif (option == "2"):
+				decode()
+			elif (option == "1"):
+				code()
+			else:
+				print("Please enter 1,2 or 3")
+
+#line 120
+def code():
+	print("Code")
+
+#line 210
+def decode():
+	print("decode")
 
 """
-10 CLS:PRINT:PRINT "SECRET MESSAGE MAKER"
-20 PRINT "===================="
-30 PRINT:PRINT "DO YOU WANT TO:"
-40 PRINT
-50 PRINT "   1. CODE A MESSAGE"
-60 PRINT "OR 2. DECODE A MESSAGE"
-70 PRINT:PRINT
-80 PRINT "ENTER NUMBER":INPUT A
-90 IF A=1 THEN GOSUB 120
-100 IF A=2 THE GOSUB 210
-110 GOTO 30
 120 LET C$="CODED":GOSUB 400
 130 LET X=INT(RND(1)*25+1)
 140 LET M$="F"+M$
