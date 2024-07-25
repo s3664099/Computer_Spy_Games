@@ -53,7 +53,6 @@ def get_input(query):
 
 	return input(query)
 
-#310
 def code_forward(message,random_num):
 
 	coded_message = ""
@@ -64,6 +63,7 @@ def code_forward(message,random_num):
 		if (ascii_code != 32):
 			ascii_code += random_num
 
+
 			if (ascii_code>90):
 				ascii_code -=26
 			elif (ascii_code<65):
@@ -72,34 +72,45 @@ def code_forward(message,random_num):
 
 	return coded_message
 
-#line 120
+def code_backward(message):
+
+	coded_message = ""
+
+	for x in range(len(message)-1,0,-1):
+		coded_message = "{}{}".format(coded_message,message[x])
+
+	return coded_message
+
 def code():
 
 	message = get_input("What is your message: ")
 	message = "F{}".format(message)
 	random_num = randint(0,25)
 	message = code_forward(message,random_num)
-	print(message)
+	message = "{}{}".format(chr(random_num+64),code_backward(message))
 
+	if ((len(message)/2) == (int(len(message)/2))):
+		code_message(message)
 
+	print("The coded message is: {}".format(message))
 
+def code_message(message):
 
-	print("Code")
+	coded_message = ""
+	message_length = len(message)
+
+	for x in range(0,message_length-1,2):
+		coded_message = "{}{}".format(coded_message,message[x+1])
+		coded_message = "{}{}".format(coded_message,message[x])
+
+	return coded_message
 
 #line 210
 def decode():
 	print("decode")
 
 """
-120 LET C$="CODED":GOSUB 400
-130 LET X=INT(RND(1)*25+1)
-140 LET M$="F"+M$
-150 GOSUB 310:GOSUB 420
-160 LET M$=CHR$(X+64)+M$
-170 IF LEN(M$)/2=INT(LEN(M$)/2) THEN GOSUB 450
-180 PRINT "THE CODED MESSAGE IS":
-190 PRINT M$
-200 RETURN
+
 210 LET C$="DECODED":GOSUB 400
 220 IF LEN(M$)/2=INT(LEN(M$)/2) THEN GOSUB 450
 230 LET K$=LEFT$(M$,1)
@@ -111,18 +122,6 @@ def decode():
 290 PRINT M$
 300 RETURN
 
-
-
-
-
-420 LET N$="":FOR I=LEN(M$) TO 1 STEP -1:NEXT I
-430 LET N$=N$+MID$(M$,I,1):NEXT I
-440 LET M$=N$:RETURN
-450 LET N$="":LET L=LEN(M$)
-460 FOR I=1 TO LEN(M$)-1 STEP 2
-470 LET N$=N$+MID$(M$,I+1,1)
-480 LET N$=N$+MID$(M$,I,1)
-490 NEXT I:LET M$=N$:RETURN
 """
 
 #Passes the current file as a module to the loader
