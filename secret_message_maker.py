@@ -49,8 +49,41 @@ def main_game():
 			else:
 				print("Please enter 1,2 or 3")
 
+def get_input(query):
+
+	return input(query)
+
+#310
+def code_forward(message,random_num):
+
+	coded_message = ""
+	for x in range(len(message)):
+
+		ascii_code = ord(message[x])
+
+		if (ascii_code != 32):
+			ascii_code += random_num
+
+			if (ascii_code>90):
+				ascii_code -=26
+			elif (ascii_code<65):
+				ascii_code +=26
+		coded_message = "{}{}".format(coded_message,chr(ascii_code))
+
+	return coded_message
+
 #line 120
 def code():
+
+	message = get_input("What is your message: ")
+	message = "F{}".format(message)
+	random_num = randint(0,25)
+	message = code_forward(message,random_num)
+	print(message)
+
+
+
+
 	print("Code")
 
 #line 210
@@ -77,17 +110,11 @@ def decode():
 280 PRINT "THE DECODED MESSAGE IS:"
 290 PRINT M$
 300 RETURN
-310 LET N$=""
-320 FOR I=1 TO LEN(M$)
-330 LET Q$=MID$(M$,I,1):LET N=ASC(Q$)
-340 IF N=32 THEN GOTO 380
-350 LET N=N+X
-360 IF N>90 THEN LET N=N-26
-370 IF N<65 THEN LET N=N+26
-380 LET N$=N$+CHR$(N):NEXT I
-390 LET M$=N$:RETURN
-400 PRINT "WHAT IS THE MESSAGE TO BE ";C$
-410 INPUT M$:RETURN
+
+
+
+
+
 420 LET N$="":FOR I=LEN(M$) TO 1 STEP -1:NEXT I
 430 LET N$=N$+MID$(M$,I,1):NEXT I
 440 LET M$=N$:RETURN
