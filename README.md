@@ -53,6 +53,10 @@ they disappear. Every five moves another direction is added, and the game speeds
 more difficult. I have managed to find a library for python that will take a key input. However the
 library seems to be rather new, and a global variable is required to take the value out of the function.
 
+**Spy Q Test**:
+
+**Secret Message Maker**:
+
 ## Updates
 **20 March 2024**
 Created the initial folder to hold the contents on the game and configured the loader program.
@@ -77,5 +81,12 @@ using pygame. This one uses sshkeyboard.
 **13 May 2024**
 Finished Robospy. All need to do is test it.
 
-**15 May 2025**
+**15 May 2024**
 Finished bug testing Robospy and it now works.
+
+**17 July 2024**
+Added Spy Q Test
+
+**26 July 2024**
+Adding Secret Message Maker
+
