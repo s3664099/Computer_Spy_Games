@@ -53,7 +53,11 @@ they disappear. Every five moves another direction is added, and the game speeds
 more difficult. I have managed to find a library for python that will take a key input. However the
 library seems to be rather new, and a global variable is required to take the value out of the function.
 
-**Spy Q Test**:
+**Spy Q Test**: I won't call it a guess game, but rather a game where you need to arrange random numbers
+in order. However, the catch is that you don't know the numbers, and you only have 10 spots. Also, you
+only have a limited number of numbers that you can discard. So, when the numbers appear, you need to
+place them in a position, but also be aware that there are more numbers that will appear, and you don't
+know what they are. Further, the higher you go up levels, the less discards you get.
 
 **Secret Message Maker**:
 

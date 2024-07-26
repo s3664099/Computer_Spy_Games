@@ -83,14 +83,14 @@ def code_backward(message):
 
 def code():
 
-	message = get_input("What is your message: ")
+	message = get_input("What is your message to be coded: ")
 	message = "F{}".format(message)
 	random_num = randint(0,25)
 	message = code_forward(message,random_num)
 	message = "{}{}".format(chr(random_num+64),code_backward(message))
 
 	if ((len(message)/2) == (int(len(message)/2))):
-		code_message(message)
+		message = code_message(message)
 
 	print("The coded message is: {}".format(message))
 
@@ -105,24 +105,20 @@ def code_message(message):
 
 	return coded_message
 
-#line 210
 def decode():
-	print("decode")
+	message = get_input("What is your message to be decoded: ")
+	
+	if ((len(message)/2) == (int(len(message)/2))):
+		message = code_message(message)
 
-"""
+	key = message[0]
+	key = ord(key)-64
+	key = -key
 
-210 LET C$="DECODED":GOSUB 400
-220 IF LEN(M$)/2=INT(LEN(M$)/2) THEN GOSUB 450
-230 LET K$=LEFT$(M$,1)
-240 LET M$=RIGHT$(M$,LEN(M$)-1)
-250 LET X=ASC(K$)-64
-260 LET X=-X:GOSUB 420
-270 GOSUB 310:M$=RIGHT$(M$,LEN(M$)-1)
-280 PRINT "THE DECODED MESSAGE IS:"
-290 PRINT M$
-300 RETURN
-
-"""
+	message = code_backward(message)
+	message = code_forward(message,key)
+	message = message[:len(message)-1]
+	print("The decoded message is: {}".format(message))
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
