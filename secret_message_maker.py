@@ -56,6 +56,8 @@ def get_input(query):
 def code_forward(message,random_num):
 
 	coded_message = ""
+	print("fwd")
+	print(message)
 	for x in range(len(message)):
 
 		ascii_code = ord(message[x])
@@ -63,22 +65,21 @@ def code_forward(message,random_num):
 		if (ascii_code != 32):
 			ascii_code += random_num
 
-
 			if (ascii_code>90):
 				ascii_code -=26
 			elif (ascii_code<65):
 				ascii_code +=26
 		coded_message = "{}{}".format(coded_message,chr(ascii_code))
-
+	print(coded_message)
 	return coded_message
 
 def code_backward(message):
 
 	coded_message = ""
 
-	for x in range(len(message)-1,0,-1):
+	for x in range(len(message)-1,-1,-1):
 		coded_message = "{}{}".format(coded_message,message[x])
-
+	
 	return coded_message
 
 def code():
@@ -88,6 +89,8 @@ def code():
 	random_num = randint(0,25)
 	message = code_forward(message,random_num)
 	message = "{}{}".format(chr(random_num+64),code_backward(message))
+
+	print(random_num)
 
 	if ((len(message)/2) == (int(len(message)/2))):
 		message = code_message(message)
@@ -115,6 +118,7 @@ def decode():
 	key = ord(key)-64
 	key = -key
 
+	message = message[1:]
 	message = code_backward(message)
 	message = code_forward(message,key)
 	message = message[:len(message)-1]
