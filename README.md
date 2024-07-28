@@ -59,7 +59,11 @@ only have a limited number of numbers that you can discard. So, when the numbers
 place them in a position, but also be aware that there are more numbers that will appear, and you don't
 know what they are. Further, the higher you go up levels, the less discards you get.
 
-**Secret Message Maker**:
+**Secret Message Maker**: This is a simple encryption program that coverts a message to ASCII, changes the
+number by a random number, switches the letters and returns a coded message. To decode it, it reverses it.
+In a way it reminds me a bit of the encyrption course we did at university, though RSA encryption and the like
+is much, much more complicated. You could say this is like a Ceaser Cypher, though it does a bit more than that
+such as switching the letters around.
 
 ## Updates
 **20 March 2024**
@@ -94,3 +98,5 @@ Added Spy Q Test
 **26 July 2024**
 Adding Secret Message Maker
 
+**28 July 2024**
+Completed Secret Message Maker

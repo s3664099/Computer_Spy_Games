@@ -32,6 +32,7 @@ def main_game():
 	while(running):
 		correct_answer = False
 
+		#Main Menu
 		while(not correct_answer):
 			print("Do you want to\n")
 			print("   1. Code a Message")
@@ -53,18 +54,22 @@ def get_input(query):
 
 	return input(query)
 
+#Initial Encoder
 def code_forward(message,random_num):
 
 	coded_message = ""
-	print("fwd")
-	print(message)
+
+	#Goes through message
 	for x in range(len(message)):
 
+		#Encodes Message
 		ascii_code = ord(message[x])
 
+		#Adds Number
 		if (ascii_code != 32):
 			ascii_code += random_num
 
+			#If out of range
 			if (ascii_code>126):
 				ascii_code -=94
 			elif (ascii_code<33):
@@ -73,6 +78,7 @@ def code_forward(message,random_num):
 
 	return coded_message
 
+#Switches order
 def code_backward(message):
 
 	coded_message = ""
@@ -82,6 +88,7 @@ def code_backward(message):
 	
 	return coded_message
 
+#Main Encoder Loop
 def code():
 
 	message = get_input("What is your message to be coded: ")
@@ -90,13 +97,12 @@ def code():
 	message = code_forward(message,random_num)
 	message = "{}{}".format(chr(random_num+64),code_backward(message))
 
-	print(random_num)
-
 	if ((len(message)/2) == (int(len(message)/2))):
 		message = code_message(message)
 
 	print("The coded message is: {}".format(message))
 
+#Build's Message
 def code_message(message):
 
 	coded_message = ""
@@ -108,6 +114,7 @@ def code_message(message):
 
 	return coded_message
 
+#Main decoder loop
 def decode():
 	message = get_input("What is your message to be decoded: ")
 	
