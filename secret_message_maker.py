@@ -61,15 +61,18 @@ def code_forward(message,random_num):
 	for x in range(len(message)):
 
 		ascii_code = ord(message[x])
+		print(message[x])
+		print(ascii_code)
 
 		if (ascii_code != 32):
 			ascii_code += random_num
 
-			if (ascii_code>90):
-				ascii_code -=26
-			elif (ascii_code<65):
-				ascii_code +=26
+#			if (ascii_code>90):
+#				ascii_code -=26
+#			elif (ascii_code<65):
+#				ascii_code +=26
 		coded_message = "{}{}".format(coded_message,chr(ascii_code))
+		print(ascii_code)
 	print(coded_message)
 	return coded_message
 
@@ -121,7 +124,7 @@ def decode():
 	message = message[1:]
 	message = code_backward(message)
 	message = code_forward(message,key)
-	message = message[:len(message)-1]
+	message = message[1:len(message)]
 	print("The decoded message is: {}".format(message))
 
 #Passes the current file as a module to the loader
