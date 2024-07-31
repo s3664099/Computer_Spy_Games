@@ -7,6 +7,7 @@ import searchlight
 import robospy
 import spyqtest
 import secret_message_maker
+import rendezvous
 
 #Function that displays the games available, and allows the user to select them
 def select_game():
@@ -42,7 +43,9 @@ def select_game():
 		elif response == "4":
 			start_game("Spy-Q Test",spyqtest)
 		elif response == "5":
-			start_game("Secret Message Maker",secret_message_maker)				
+			start_game("Secret Message Maker",secret_message_maker)
+		elif response == "6":
+			start_game("Rendezvous",secret_message_maker)						
 		else:
 			print("You have entered an incorrect option")
 			time.sleep(5)
