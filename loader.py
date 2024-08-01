@@ -45,7 +45,7 @@ def select_game():
 		elif response == "5":
 			start_game("Secret Message Maker",secret_message_maker)
 		elif response == "6":
-			start_game("Rendezvous",secret_message_maker)						
+			start_game("Rendezvous",rendezvous)						
 		else:
 			print("You have entered an incorrect option")
 			time.sleep(5)
