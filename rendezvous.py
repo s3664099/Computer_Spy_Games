@@ -35,13 +35,31 @@ instructions = "{}the key (and of course that he won't see you).\n".format(instr
 instructions = "{}The map shows you the places you can go to and the lest below\n".format(instructions)
 instructions = "{}shows the words you can use in the game".format(instructions)
 
-#instructions = "{}{}".format(instructions,commands)
-
-#commands = "Commands\n========\n\n"
-#commands = ""
+commands = "Commands\n========\n\n"
+commands = "{}TIME: Tells you what time it is.\n".format(commands)
+commands = "{}MOVE: Ask you where to. You can go anywhere marked on the map.\n".format(commands)
+commands = "{}SAY: The password.\n".format(commands)
+commands = "{}EXAMINE: Anything. (Examine the key to get the number).\n".format(commands)
+commands = "{}READ: A message.\n".format(commands)
+commands = "{}OPEN: The locker.\n".format(commands)
+commands = "{}FOLLOW: An enemy Spy.\n".format(commands)
+commands = "{}WAIT: for any length of time.\n".format(commands)
+commands = "{}LEAVE: A message.\n".format(commands)
+commands = "{}SEARCH: Anywhere (to find the key).\n".format(commands)
+commands = "{}HELP: Reminds you of the time and places of the meeting.\n".format(commands)
+commands = "{}COMMANDS: Displays the commands available to you.\n".format(commands)
+commands = "{}MAP: Lists the locations on the map.\n\n".format(commands)
+commands = "{}You can also use any of the names on the map.".format(commands)
 
 
 def main_game():
+
+	print("Do you want a list of instructions?")
+	response = util.yes_or_no("")
+
+	if (response):
+		print(commands)
+
 	
 	print("Main Game")
 
