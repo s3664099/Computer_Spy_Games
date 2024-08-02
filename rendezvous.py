@@ -55,7 +55,53 @@ locations = ["Airport","Bus Stop","Bridge","Canal","Church","Park","Cafe","Bank"
 			 "Casino","Town Square","Post Office","Police Station","Fairground","Station","Town Hall",
 			 "Embassy","Gardens","Castle"]
 actions = ["MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH","TIME","HELP","COMMANDS","MAP"]
+passwords = ["CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"]
 
+def display_commands():
+	print(commands)
+
+def display_locations():
+
+	location_list = ""
+
+	for x in locations:
+		location_list = "{}{}\n".format(location_list,x)
+
+	print(location_list)
+
+def random_number(end,start=0):
+
+	return randint(start,end)
+
+def setup():
+
+	hour = random_number(10,8)
+	minute = 0
+	flightHour = random_number(16,14)
+	contactTime = random_number(hour,2)
+
+	ne = 0
+	nl = random_number(999,900)
+
+	messagePlace = random_number(18)
+	keyPlace = random_number(18)
+	enemyPlace = random_number(18)
+	contactPlace = random_number(18)
+	password = passwords[random_number(5)]
+
+"""
+1230 PRINT "RENDEZVOUS"
+1240 PRINT "==========":PRINT
+1250 PRINT "COLLECT MESSAGE FROM"
+1260 PRINT "THE ";R$(MP)
+1270 PRINT "CONTACT WILL COLLECT"
+1280 PRINT "FROM TEH ";R$(CP)
+1290 PRINT "AT ";CH;".00"
+1300 PRINT "LAST FLIGHT LEAVES"
+1310 PRINT "AT ";FH;".00"
+1320 PRINT:PRINT "PRESS RETURN TO CONTINUE"
+1330 INPUT Q$:RETURN	
+"""
 
 def main_game():
 
@@ -72,29 +118,12 @@ def main_game():
 	if(response):
 		util.clear_screen()
 		display_locations()
-
 	
-	print("Main Game")
-
-def display_commands():
-	print(commands)
-
-def display_locations():
-
-	location_list = ""
-
-	for x in locations:
-		location_list = "{}{}\n".format(location_list,x)
-
-	print(location_list)
+	util.clear_screen()
+	setup()
 
 """
 
-
-
-
-
-10 DEF FNA(X)=INT(RND(1)*X)+1
 20 GOSUB 1010:GOSUB 1130
 30 LET P=1:LET Y=0:LET X=1:LET EP=10
 40 LET U=0:LET NM=0
@@ -194,39 +223,39 @@ def display_locations():
 980 LET X=NX:LET Y=NY
 990 LET D=SQR(DX^2+DY^2)
 1000 LET DT=INT(5*D):RETURN
-1010 DIM R$(20),V$(11),F(7)
-1020 FOR I=1 TO 20:READ R$(I)
-1030 NEXT I
-1040 FOR I=1 TO 11:READ V$(I):NEXT I
-1050 RETURN
+#1010 DIM R$(20),V$(11),F(7)
+#1020 FOR I=1 TO 20:READ R$(I)
+#1030 NEXT I
+#1040 FOR I=1 TO 11:READ V$(I):NEXT I
+#1050 RETURN
 #1060 DATA "AIRPORT","BUS STOP","BRIDGE","CANAL","CHURCH"
 #1070 DATA "PARK","CAFE","BANK","CINEMA","HOTEL"
 #1080 DATA "CASINO","TOWN SQUARE","POST OFFICE","POLICE STATION","FAIRGROUND"
 #1090 DATA "STATION","TOWN HALL","EMBASSY","GARDENS","CASTLE"
 #1100 DATA "MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH"
 #1110 DATA "TIME","HELP"
-1120 DATA "CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"
-1130 LET H=FNA(2)+8:LET M=0
-1140 LEF FH=FNA(2)+14
-1150 LET CH=FNA(2)+H
-1160 CLS:PRINT:PRINT
-1170 LET NE=0:LET T$="CONTACT IS HERE"
-1180 LET MP=FNA(18):LET KP=FNA(18)
-1190 LET EP=FNA(18):LET CP=FNA(18)
-1200 FOR I=1 TO FNA(6)
-1210 READ P$:NEXT I
-1220 LET NL=FNA(900)+99
-1230 PRINT "RENDEZVOUS"
-1240 PRINT "==========":PRINT
-1250 PRINT "COLLECT MESSAGE FROM"
-1260 PRINT "THE ";R$(MP)
-1270 PRINT "CONTACT WILL COLLECT"
-1280 PRINT "FROM TEH ";R$(CP)
-1290 PRINT "AT ";CH;".00"
-1300 PRINT "LAST FLIGHT LEAVES"
-1310 PRINT "AT ";FH;".00"
-1320 PRINT:PRINT "PRESS RETURN TO CONTINUE"
-1330 INPUT Q$:RETURN
+#1120 DATA "CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"
+#1130 LET H=FNA(2)+8:LET M=0
+#1140 LEF FH=FNA(2)+14
+#1150 LET CH=FNA(2)+H
+#1160 CLS:PRINT:PRINT
+#1170 LET NE=0:LET T$="CONTACT IS HERE"
+#1180 LET MP=FNA(18):LET KP=FNA(18)
+#1190 LET EP=FNA(18):LET CP=FNA(18)
+#1200 FOR I=1 TO FNA(6)
+#1210 READ P$:NEXT I
+#1220 LET NL=FNA(900)+99
+#1230 PRINT "RENDEZVOUS"
+#1240 PRINT "==========":PRINT
+#1250 PRINT "COLLECT MESSAGE FROM"
+#1260 PRINT "THE ";R$(MP)
+#1270 PRINT "CONTACT WILL COLLECT"
+#1280 PRINT "FROM TEH ";R$(CP)
+#1290 PRINT "AT ";CH;".00"
+#1300 PRINT "LAST FLIGHT LEAVES"
+#1310 PRINT "AT ";FH;".00"
+#1320 PRINT:PRINT "PRESS RETURN TO CONTINUE"
+#1330 INPUT Q$:RETURN
 """
 
 #Passes the current file as a module to the loader
