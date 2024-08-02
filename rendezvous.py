@@ -89,19 +89,15 @@ def setup():
 	contactPlace = random_number(18)
 	password = passwords[random_number(5)]
 
-"""
-1230 PRINT "RENDEZVOUS"
-1240 PRINT "==========":PRINT
-1250 PRINT "COLLECT MESSAGE FROM"
-1260 PRINT "THE ";R$(MP)
-1270 PRINT "CONTACT WILL COLLECT"
-1280 PRINT "FROM TEH ";R$(CP)
-1290 PRINT "AT ";CH;".00"
-1300 PRINT "LAST FLIGHT LEAVES"
-1310 PRINT "AT ";FH;".00"
-1320 PRINT:PRINT "PRESS RETURN TO CONTINUE"
-1330 INPUT Q$:RETURN	
-"""
+	display_task(messagePlace,contactPlace,contactTime,flightHour)
+
+display_task(message,contactPlace,contactTime,flightTime):
+	
+	print("Redezvous\n=========")
+	print("\nCollect the message from the {}".format(locations[message]))
+	print("Contact will collect from the {} at {}.00".format(locations[contactPlace],contactTime))
+	print("The last flight leaves at {}.00\n".format(flightTime))
+	input("Press return to continue.")
 
 def main_game():
 
@@ -120,7 +116,9 @@ def main_game():
 		display_locations()
 	
 	util.clear_screen()
-	setup()
+
+	for x in range(10)
+		setup()
 
 """
 
