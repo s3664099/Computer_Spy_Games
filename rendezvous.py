@@ -49,21 +49,51 @@ commands = "{}SEARCH: Anywhere (to find the key).\n".format(commands)
 commands = "{}HELP: Reminds you of the time and places of the meeting.\n".format(commands)
 commands = "{}COMMANDS: Displays the commands available to you.\n".format(commands)
 commands = "{}MAP: Lists the locations on the map.\n\n".format(commands)
-commands = "{}You can also use any of the names on the map.".format(commands)
+commands = "{}You can also use any of the names on the map.\n\n".format(commands)
+
+locations = ["Airport","Bus Stop","Bridge","Canal","Church","Park","Cafe","Bank","Cinema","Hotel",
+			 "Casino","Town Square","Post Office","Police Station","Fairground","Station","Town Hall",
+			 "Embassy","Gardens","Castle"]
+actions = ["MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH","TIME","HELP","COMMANDS","MAP"]
 
 
 def main_game():
 
-	print("Do you want a list of instructions?")
+	util.clear_screen()
+	print("Do you want a list of commands?")
 	response = util.yes_or_no("")
 
 	if (response):
-		print(commands)
+		display_commands()
+
+	print("Do you want a list of locations?")
+	response = util.yes_or_no("")
+
+	if(response):
+		util.clear_screen()
+		display_locations()
 
 	
 	print("Main Game")
 
+def display_commands():
+	print(commands)
+
+def display_locations():
+
+	location_list = ""
+
+	for x in locations:
+		location_list = "{}{}\n".format(location_list,x)
+
+	print(location_list)
+
 """
+
+
+
+
+
 10 DEF FNA(X)=INT(RND(1)*X)+1
 20 GOSUB 1010:GOSUB 1130
 30 LET P=1:LET Y=0:LET X=1:LET EP=10
@@ -169,12 +199,12 @@ def main_game():
 1030 NEXT I
 1040 FOR I=1 TO 11:READ V$(I):NEXT I
 1050 RETURN
-1060 DATA "AIRPORT","BUS STOP","BRIDGE","CANAL","CHURCH"
-1070 DATA "PARK","CAFE","BANK","CINEMA","HOTEL"
-1080 DATA "CASINO","TOWN SQUARE","POST OFFICE","POLICE STATION","FAIRGROUND"
-1090 DATA "STATION","TOWN HALL","EMBASSY","GARDENS","CASTLE"
-1100 DATA "MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH"
-1110 DATA "TIME","HELP"
+#1060 DATA "AIRPORT","BUS STOP","BRIDGE","CANAL","CHURCH"
+#1070 DATA "PARK","CAFE","BANK","CINEMA","HOTEL"
+#1080 DATA "CASINO","TOWN SQUARE","POST OFFICE","POLICE STATION","FAIRGROUND"
+#1090 DATA "STATION","TOWN HALL","EMBASSY","GARDENS","CASTLE"
+#1100 DATA "MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH"
+#1110 DATA "TIME","HELP"
 1120 DATA "CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"
 1130 LET H=FNA(2)+8:LET M=0
 1140 LEF FH=FNA(2)+14
