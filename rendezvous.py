@@ -6,13 +6,13 @@ import util
 from random import randint
 
 """
-Title: 
-Author: 
+Title: Rendezvous
+Author: Jenny Tyler & Chris Oxlade
 Translator: David Sarkies
-Version: 
-Date: 
+Version: 0.0
+Date: 31 July 2024
 Source: https://archive.org/details/Computer_Spy_Games
-This game can be found on page {} of Computer Spy Games, and it a python3 translation.
+This game can be found on page 12 of Computer Spy Games, and it a python3 translation.
 
 """
 
@@ -73,14 +73,13 @@ def random_number(end,start=0):
 
 	return randint(start,end)
 
-def setup():
+def game_routine():
 
 	hour = random_number(10,8)
 	minute = 0
 	flightHour = random_number(16,14)
 	contactTime = random_number(hour,2)
 
-	ne = 0
 	nl = random_number(999,900)
 
 	messagePlace = random_number(18)
@@ -89,9 +88,38 @@ def setup():
 	contactPlace = random_number(18)
 	password = passwords[random_number(5)]
 
-	display_task(messagePlace,contactPlace,contactTime,flightHour)
+	player_position = 1
+	enemy_position = 10
+	near_enemy = 0
+	player_x = 0
+	player_y = 0
+	num_moves = 0
+	player_massage = ""
 
-display_task(message,contactPlace,contactTime,flightTime):
+	u = 0
+	unk_string = ""
+
+	display_task(messagePlace,contactPlace,contactTime,flightHour)
+	near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace)
+	num_moves +=1
+
+"""
+70 CLS:PRINT:PRINT "RENDEZVOUS"
+80 PRINT "=========="
+100 PRINT:PRINT
+110 PRINT B$:PRINT
+120 PRINT:PRINT "YOU ARE AT THE ";
+130 PRINT R$(P)
+140 IF EP=P THEN PRINT "ENEMY AGENT IS HERE": LET NE=NE+1
+150 IF EP<>P THEN LET NE=0
+160 IF P=MP AND F(1)=0 THEN PRINT "MESSAGE FOR YOU HERE"
+170 LET F(3)=0
+180 LET T1=H+M/100
+190 IF F(4)=1 AND R$(P)=S$ AND U<=T1 AND U+.15>T1 THEN PRINT T$:LET F(3)=1
+200 IF P=1 AND H<FH AND F(7)=1 THEN GOTO 890
+"""
+
+def display_task(message,contactPlace,contactTime,flightTime):
 	
 	print("Redezvous\n=========")
 	print("\nCollect the message from the {}".format(locations[message]))
@@ -113,34 +141,16 @@ def main_game():
 
 	if(response):
 		util.clear_screen()
+		print("Locations\n=========")
 		display_locations()
 	
 	util.clear_screen()
-
-	for x in range(10)
-		setup()
+	game_routine()
 
 """
 
-20 GOSUB 1010:GOSUB 1130
-30 LET P=1:LET Y=0:LET X=1:LET EP=10
-40 LET U=0:LET NM=0
-50 LET S$=""
-60 LET B$=""
-70 CLS:PRINT:PRINT "RENDEZVOUS"
-80 PRINT "=========="
-90 LET NM=NM+1
-100 PRINT:PRINT
-110 PRINT B$:PRINT
-120 PRINT:PRINT "YOU ARE AT THE ";
-130 PRINT R$(P)
-140 IF EP=P THEN PRINT "ENEMY AGENT IS HERE": LET NE=NE+1
-150 IF EP<>P THEN LET NE=0
-160 IF P=MP AND F(1)=0 THEN PRINT "MESSAGE FOR YOU HERE"
-170 LET F(3)=0
-180 LET T1=H+M/100
-190 IF F(4)=1 AND R$(P)=S$ AND U<=T1 AND U+.15>T1 THEN PRINT T$:LET F(3)=1
-200 IF P=1 AND H<FH AND F(7)=1 THEN GOTO 890
+
+
 210 PRINT:PRINT:PRINT "WHAT NEXT"
 220 LET B$=""
 230 INPUT I$
@@ -221,6 +231,12 @@ def main_game():
 980 LET X=NX:LET Y=NY
 990 LET D=SQR(DX^2+DY^2)
 1000 LET DT=INT(5*D):RETURN
+
+
+
+
+
+
 #1010 DIM R$(20),V$(11),F(7)
 #1020 FOR I=1 TO 20:READ R$(I)
 #1030 NEXT I
