@@ -130,14 +130,31 @@ def game_routine():
 		else:
 			request = get_input()
 
+			#Are you spotted by the enemy agent
+			spotted = randint(10)
+			if ((near_enemy==3) and (spotted>3) and (request != 1)):
+				player_massage = "The Enemy Agent Sees You"
+			elif (near_enemy ==4):
+				game_condition = 2
+			else:
+
+
+	if (game_condition == 2):
+		print("You have been captured.")
+
+
 
 
 
 
 
 """
-280 IF NE=3 AND FNA(10)>3 AND V<>1 THEN LET B$="ENEMY AGENT SEES YOU!":GOTO 70
-290 IF NE=4 THNE PRINT "YOU ARE CAPTURED":STOP
+300 ON V GOSUB 360,420,540,570,640,710,730,780,810,820,870
+310 LET M=M+DT:IF M>59 THEN LET M=M-60:LET H=H+1
+320 IF F(2)=1 ANF H>=CH THEN LET F(4)=1
+330 IF H=FJ THEN GOTO 880
+340 IF FNA(10)>9 THEN LET EP=10
+350 GOTO 70
 """
 
 #Retrieves player command
@@ -215,12 +232,6 @@ def main_game():
 	game_routine()
 
 """
-300 ON V GOSUB 360,420,540,570,640,710,730,780,810,820,870
-310 LET M=M+DT:IF M>59 THEN LET M=M-60:LET H=H+1
-320 IF F(2)=1 ANF H>=CH THEN LET F(4)=1
-330 IF H=FJ THEN GOTO 880
-340 IF FNA(10)>9 THEN LET EP=10
-350 GOTO 70
 360 PRINT:PRINT "WHERE TO":INPUT N$
 370 LET NP=0:FOR I=1 TO 20
 380 IF N$=R$(I) THEN LET NP=I
