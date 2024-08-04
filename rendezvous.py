@@ -56,6 +56,7 @@ locations = ["Airport","Bus Stop","Bridge","Canal","Church","Park","Cafe","Bank"
 			 "Embassy","Gardens","Castle"]
 actions = ["MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH","TIME","HELP","COMMANDS","MAP"]
 passwords = ["CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"]
+game_header = "Redezvous\n========="
 
 def display_commands():
 	print(commands)
@@ -87,7 +88,15 @@ def game_routine():
 	enemyPlace = random_number(18)
 	contactPlace = random_number(18)
 	password = passwords[random_number(5)]
+	have_message = False #flag 1
+	flag2 = 0
+	contact_met = False #flag 3
+	flag4 = 0
+	flag5 = 0
+	flag6 = 0
+	flag7 = 0
 
+	game_condition = 0
 	player_position = 1
 	enemy_position = 10
 	near_enemy = 0
@@ -95,33 +104,83 @@ def game_routine():
 	player_y = 0
 	num_moves = 0
 	player_massage = ""
-
-	u = 0
-	unk_string = ""
+	meeting_time = 0
+	meeting_place = -1
+	
 
 	display_task(messagePlace,contactPlace,contactTime,flightHour)
-	near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace)
-	num_moves +=1
+
+	while (game_condition == 0):
+		near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace,have_message)
+		num_moves +=1
+		contactMet = False
+		print(player_massage)
+
+		#Is the player with the contact
+		time = hour+(minute/100)
+		if ((flag4 == 1) && (player_position == meeting_place) && (meeting_time<=time) && (meeting_time+.15>=time)):
+			print("Contact is here")
+			contactMet = True
+
+		if ((player_position == 1) && (hour<flightHour) && (flag7 == 1)):
+			game_condition = 1
+		else:
+			request = get_input()
+
+
+
+
+
 
 """
-70 CLS:PRINT:PRINT "RENDEZVOUS"
-80 PRINT "=========="
-100 PRINT:PRINT
-110 PRINT B$:PRINT
-120 PRINT:PRINT "YOU ARE AT THE ";
-130 PRINT R$(P)
-140 IF EP=P THEN PRINT "ENEMY AGENT IS HERE": LET NE=NE+1
-150 IF EP<>P THEN LET NE=0
-160 IF P=MP AND F(1)=0 THEN PRINT "MESSAGE FOR YOU HERE"
-170 LET F(3)=0
-180 LET T1=H+M/100
-190 IF F(4)=1 AND R$(P)=S$ AND U<=T1 AND U+.15>T1 THEN PRINT T$:LET F(3)=1
-200 IF P=1 AND H<FH AND F(7)=1 THEN GOTO 890
+280 IF NE=3 AND FNA(10)>3 AND V<>1 THEN LET B$="ENEMY AGENT SEES YOU!":GOTO 70
+290 IF NE=4 THNE PRINT "YOU ARE CAPTURED":STOP
 """
+
+#Retrieves player command
+def get_input():
+
+	correct = False
+
+	#Validation loop
+	while(!correct):
+
+		#Requests player input
+		request = input("\nWhat Next: ")
+		command = 0
+
+		#Confirms command is valid
+		while((request.upper() != actions[command]) && (command<len(actions))):
+			command += 1
+
+		if (command==len(actions)):
+			print("I'm sorry, I don't understand")
+		else:
+			correct = True
+
+	return command
+
+
+def display_location(player_position,enemy_position,near_enemy,messagePlace,have_message):
+
+	util.clear_screen()
+	print(game_header)
+	print("\nYou are at the {}".format(locations[player_position]))
+
+	if (enemy_position == player_position):
+		print("The enemy agent is here")
+		near_enemy += 1
+	else:
+		near_enemy = 0
+
+	if ((player_position == messagePlace) && (have_message == False)):
+		print("Message for you here")
+
+	return near_enemy
 
 def display_task(message,contactPlace,contactTime,flightTime):
 	
-	print("Redezvous\n=========")
+	print(game_header)
 	print("\nCollect the message from the {}".format(locations[message]))
 	print("Contact will collect from the {} at {}.00".format(locations[contactPlace],contactTime))
 	print("The last flight leaves at {}.00\n".format(flightTime))
@@ -148,18 +207,6 @@ def main_game():
 	game_routine()
 
 """
-
-
-
-210 PRINT:PRINT:PRINT "WHAT NEXT"
-220 LET B$=""
-230 INPUT I$
-240 LET V=0:FOR I=1 TO 11
-250 IF I$=V$(I) THEN LET V=1
-260 NEXT I
-270 IF V=0 THEN LET V=12
-280 IF NE=3 AND FNA(10)>3 AND V<>1 THEN LET B$="ENEMY AGENT SEES YOU!":GOTO 70
-290 IF NE=4 THNE PRINT "YOU ARE CAPTURED":STOP
 300 ON V GOSUB 360,420,540,570,640,710,730,780,810,820,870
 310 LET M=M+DT:IF M>59 THEN LET M=M-60:LET H=H+1
 320 IF F(2)=1 ANF H>=CH THEN LET F(4)=1
