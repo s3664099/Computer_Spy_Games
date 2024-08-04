@@ -48,13 +48,15 @@ commands = "{}LEAVE: A message.\n".format(commands)
 commands = "{}SEARCH: Anywhere (to find the key).\n".format(commands)
 commands = "{}HELP: Reminds you of the time and places of the meeting.\n".format(commands)
 commands = "{}COMMANDS: Displays the commands available to you.\n".format(commands)
-commands = "{}MAP: Lists the locations on the map.\n\n".format(commands)
+commands = "{}MAP: Lists the locations on the map.\n".format(commands)
+commands = "{}QUIT: Ends the game\n\n".format(commands)
 commands = "{}You can also use any of the names on the map.\n\n".format(commands)
 
 locations = ["Airport","Bus Stop","Bridge","Canal","Church","Park","Cafe","Bank","Cinema","Hotel",
 			 "Casino","Town Square","Post Office","Police Station","Fairground","Station","Town Hall",
 			 "Embassy","Gardens","Castle"]
-actions = ["MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH","TIME","HELP","COMMANDS","MAP"]
+actions = ["MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH","TIME","HELP","COMMANDS","MAP",
+			"QUIT"]
 passwords = ["CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"]
 game_header = "Redezvous\n========="
 
@@ -118,11 +120,12 @@ def game_routine():
 
 		#Is the player with the contact
 		time = hour+(minute/100)
-		if ((flag4 == 1) && (player_position == meeting_place) && (meeting_time<=time) && (meeting_time+.15>=time)):
+		meeting_end = meeting_time + 0.15
+		if ((flag4 == 1) and (player_position == meeting_place) and (meeting_time<=time) and (meeting_end>=time)):
 			print("Contact is here")
 			contactMet = True
 
-		if ((player_position == 1) && (hour<flightHour) && (flag7 == 1)):
+		if ((player_position == 1) and (hour<flightHour) and (flag7 == 1)):
 			game_condition = 1
 		else:
 			request = get_input()
@@ -143,27 +146,32 @@ def get_input():
 	correct = False
 
 	#Validation loop
-	while(!correct):
+	while(not correct):
 
 		#Requests player input
 		request = input("\nWhat Next: ")
 		command = 0
+		action_number = -1
 
-		#Confirms command is valid
-		while((request.upper() != actions[command]) && (command<len(actions))):
+		#Cycles through commands and locates what player typed
+		while(command<len(actions)):
+
+			if ((request.upper() == actions[command])):
+				action_number = command
 			command += 1
 
-		if (command==len(actions)):
+		#No such command exists
+		if (action_number==-1):
 			print("I'm sorry, I don't understand")
 		else:
 			correct = True
 
-	return command
+	return action_number
 
 
 def display_location(player_position,enemy_position,near_enemy,messagePlace,have_message):
 
-	util.clear_screen()
+	#util.clear_screen()
 	print(game_header)
 	print("\nYou are at the {}".format(locations[player_position]))
 
@@ -173,7 +181,7 @@ def display_location(player_position,enemy_position,near_enemy,messagePlace,have
 	else:
 		near_enemy = 0
 
-	if ((player_position == messagePlace) && (have_message == False)):
+	if ((player_position == messagePlace) and (have_message == False)):
 		print("Message for you here")
 
 	return near_enemy
