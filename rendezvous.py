@@ -128,17 +128,17 @@ def game_routine():
 		if ((player_position == 1) and (hour<flightHour) and (flag7 == 1)):
 			game_condition = 1
 		else:
-			request = get_input()
+			request = get_input("\nWhat Next: ",actions,"I'm sorry, I don't understand")
 
 			#Are you spotted by the enemy agent
-			spotted = randint(10)
+			spotted = random_number(10)
 			if ((near_enemy==3) and (spotted>3) and (request != 1)):
 				player_massage = "The Enemy Agent Sees You"
 			elif (near_enemy ==4):
 				game_condition = 2
 			else:
-
-
+				if (request == 0):
+					player_position = move()
 	if (game_condition == 2):
 		print("You have been captured.")
 
@@ -155,10 +155,22 @@ def game_routine():
 330 IF H=FJ THEN GOTO 880
 340 IF FNA(10)>9 THEN LET EP=10
 350 GOTO 70
+
+
+360 PRINT:PRINT "WHERE TO":INPUT N$
+370 LET NP=0:FOR I=1 TO 20
+380 IF N$=R$(I) THEN LET NP=I
+390 NEXT I:IF NP=0 THE GOTO 360
+400 GOSUB 950
+410 LET P=NP:RETURN
 """
 
+def move():
+
+	return get_input("\nWhere To: ",locations,"I don't know that place")
+
 #Retrieves player command
-def get_input():
+def get_input(query,actions,error):
 
 	correct = False
 
@@ -166,20 +178,20 @@ def get_input():
 	while(not correct):
 
 		#Requests player input
-		request = input("\nWhat Next: ")
+		request = input(query)
 		command = 0
 		action_number = -1
 
 		#Cycles through commands and locates what player typed
 		while(command<len(actions)):
 
-			if ((request.upper() == actions[command])):
+			if ((request.upper() == actions[command].upper())):
 				action_number = command
 			command += 1
 
 		#No such command exists
 		if (action_number==-1):
-			print("I'm sorry, I don't understand")
+			print(error)
 		else:
 			correct = True
 
@@ -232,12 +244,7 @@ def main_game():
 	game_routine()
 
 """
-360 PRINT:PRINT "WHERE TO":INPUT N$
-370 LET NP=0:FOR I=1 TO 20
-380 IF N$=R$(I) THEN LET NP=I
-390 NEXT I:IF NP=0 THE GOTO 360
-400 GOSUB 950
-410 LET P=NP:RETURN
+
 420 LET DT=5
 430 PRINT:PRINT "SAY WHAT":INPUT Q$
 440 IF EP=P THEN LET B$="YOU ATTRACTED THE ENEMY AGENT!":RETURN
