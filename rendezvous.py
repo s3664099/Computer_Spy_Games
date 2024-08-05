@@ -3,6 +3,7 @@
 import loader
 import sys
 import util
+import math
 from random import randint
 
 """
@@ -137,8 +138,21 @@ def game_routine():
 			elif (near_enemy ==4):
 				game_condition = 2
 			else:
+
+				time_taken = 0
+
 				if (request == 0):
-					player_position = move()
+					new_position = move()
+					player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
+					player_position = new_position
+
+				#Updates the current time
+				minute += time_taken
+				if (minute>59):
+					minute -= 60
+					hour += 1
+
+
 	if (game_condition == 2):
 		print("You have been captured.")
 
@@ -150,24 +164,32 @@ def game_routine():
 
 """
 300 ON V GOSUB 360,420,540,570,640,710,730,780,810,820,870
-310 LET M=M+DT:IF M>59 THEN LET M=M-60:LET H=H+1
+
 320 IF F(2)=1 ANF H>=CH THEN LET F(4)=1
 330 IF H=FJ THEN GOTO 880
 340 IF FNA(10)>9 THEN LET EP=10
 350 GOTO 70
 
 
-360 PRINT:PRINT "WHERE TO":INPUT N$
-370 LET NP=0:FOR I=1 TO 20
-380 IF N$=R$(I) THEN LET NP=I
-390 NEXT I:IF NP=0 THE GOTO 360
-400 GOSUB 950
-410 LET P=NP:RETURN
+
+
 """
 
 def move():
 
 	return get_input("\nWhere To: ",locations,"I don't know that place")
+
+#Calculates the time to move to a new place
+def calculate_time(new_position,player_x,player_y):
+
+	new_y = int((new_position-1)/5)
+	new_x = new_position-5*new_y
+	dx = abs(player_x-new_x)
+	dy = abs(player_y-new_y)
+	d = math.sqrt((dx*dx)+(dy*dy))
+	time_taken = int(5*d)
+
+	return new_x,new_y,time_taken
 
 #Retrieves player command
 def get_input(query,actions,error):
@@ -298,12 +320,7 @@ def main_game():
 920 PRINT:PRINT "YOUR SPY RATING"
 930 PRINT "IS ";S
 940 STOP
-950 LET NY=INT((NP-1)/5)
-960 LET NX=NP-5*NY
-970 LET DX=ABS(X-NI):LET DY=ABS(Y-NY)
-980 LET X=NX:LET Y=NY
-990 LET D=SQR(DX^2+DY^2)
-1000 LET DT=INT(5*D):RETURN
+
 
 
 
