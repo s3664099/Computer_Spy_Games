@@ -97,7 +97,7 @@ def game_routine():
 	flag4 = 0
 	flag5 = 0
 	flag6 = 0
-	flag7 = 0
+	caseGiven = False #Flag 7
 
 	game_condition = 0
 	player_position = 1
@@ -114,10 +114,13 @@ def game_routine():
 	display_task(messagePlace,contactPlace,contactTime,flightHour)
 
 	while (game_condition == 0):
+		
 		near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace,have_message)
 		num_moves +=1
 		contactMet = False
+
 		print(player_massage)
+		player_massage = ""
 
 		#Is the player with the contact
 		time = hour+(minute/100)
@@ -126,7 +129,7 @@ def game_routine():
 			print("Contact is here")
 			contactMet = True
 
-		if ((player_position == 1) and (hour<flightHour) and (flag7 == 1)):
+		if ((player_position == 1) and (hour<flightHour) and (caseGiven == True)):
 			game_condition = 1
 		else:
 			request = get_input("\nWhat Next: ",actions,"I'm sorry, I don't understand")
@@ -145,6 +148,10 @@ def game_routine():
 					new_position = move()
 					player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
 					player_position = new_position
+				elif (request == 1):
+					time_taken = 5
+					player_massage,success = speak(enemy_position,player_position,contact_met,flag6,password)
+
 
 				#Updates the current time
 				minute += time_taken
@@ -172,8 +179,37 @@ def game_routine():
 
 
 
+490 LET DT=5
+500 PRINT "WHAT DO YOU WANT TO EXAMINE":INPUT Q$
+510 IF Q$="CASE" THEN LET B$="TOP SECRET!":RETURN
+520 IF Q$="KEY" THEN LET B$="a NUMBER = "+STR$(NL):RETURN
+530 LET B$="NOTHING SPECIAL!":RETURN
+540 IF P<>MP OR F(1)=1 THEN LET B$="NOTHING TO READ!":RETURN
+550 LET B$="A WORD - '"+P$+"'"
+560 LET F(1)=1:RETURN
+
 
 """
+
+def speak(enemy_position,player_position,contact_met,flag6,password):
+
+	player_massage = ""
+	success = False
+	word_spoken = input("\nSay What: ")
+
+	if (enemy_position == player_position):
+		player_massage = "You attracted the enemy agent!"
+	elif (contact_met == False):
+		player_massage = "Nobody hears you"
+	elif (word_spoken.upper() != password.upper()):
+		player_massage = "Contact ignores you"
+	elif (flag6 == True):
+		player_massage = "You made contact - he takes the case"
+		success = True
+
+	return player_massage,success
+
+
 
 def move():
 
@@ -267,21 +303,8 @@ def main_game():
 
 """
 
-420 LET DT=5
-430 PRINT:PRINT "SAY WHAT":INPUT Q$
-440 IF EP=P THEN LET B$="YOU ATTRACTED THE ENEMY AGENT!":RETURN
-450 IF F(3)=0 THEN LET B$="NOBODY HEARS YOU":RETURN
-460 IF Q$<>P$ THEN LET B$="CONTACT IGNORES YOU!":RETURN
-470 IF F(6)=1 TREN LET B$="YOU MADE CONTACT - HE TAKES THE CASE!"
-480 LET F(7)=1:RETURN
-490 LET DT=5
-500 PRINT "WHAT DO YOU WANT TO EXAMINE":INPUT Q$
-510 IF Q$="CASE" THEN LET B$="TOP SECRET!":RETURN
-520 IF Q$="KEY" THEN LET B$="a NUMBER = "+STR$(NL):RETURN
-530 LET B$="NOTHING SPECIAL!":RETURN
-540 IF P<>MP OR F(1)=1 THEN LET B$="NOTHING TO READ!":RETURN
-550 LET B$="A WORD - '"+P$+"'"
-560 LET F(1)=1:RETURN
+
+
 570 LET DT=5
 580 IF P<>16 THEN LET B$="NOTHING TO OPEN":RETURN
 590 IF F(5)=0 THEN LET B$="YOU HAVE NO KEY":RETURN
