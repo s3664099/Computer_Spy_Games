@@ -84,19 +84,19 @@ def game_routine():
 	flightHour = random_number(16,14)
 	contactTime = random_number(hour,2)
 
-	nl = random_number(999,900)
+	locker_number = random_number(999,900)
 
 	messagePlace = random_number(18)
 	keyPlace = random_number(18)
 	enemyPlace = random_number(18)
 	contactPlace = random_number(18)
 	password = passwords[random_number(5)]
-	have_message = False #flag 1
+	haveMessage = False #flag 1
 	flag2 = 0
 	contact_met = False #flag 3
 	flag4 = 0
-	flag5 = 0
-	flag6 = 0
+	haveKey = False #Flag 5
+	haveCase = False #Flag 6
 	caseGiven = False #Flag 7
 
 	game_condition = 0
@@ -106,7 +106,7 @@ def game_routine():
 	player_x = 0
 	player_y = 0
 	num_moves = 0
-	player_massage = ""
+	player_message = ""
 	meeting_time = 0
 	meeting_place = -1
 	
@@ -115,12 +115,12 @@ def game_routine():
 
 	while (game_condition == 0):
 		
-		near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace,have_message)
+		near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace,haveMessage)
 		num_moves +=1
 		contactMet = False
 
-		print(player_massage)
-		player_massage = ""
+		print(player_message)
+		player_message = ""
 
 		#Is the player with the contact
 		time = hour+(minute/100)
@@ -137,7 +137,7 @@ def game_routine():
 			#Are you spotted by the enemy agent
 			spotted = random_number(10)
 			if ((near_enemy==3) and (spotted>3) and (request != 1)):
-				player_massage = "The Enemy Agent Sees You"
+				player_message = "The Enemy Agent Sees You"
 			elif (near_enemy ==4):
 				game_condition = 2
 			else:
@@ -150,8 +150,13 @@ def game_routine():
 					player_position = new_position
 				elif (request == 1):
 					time_taken = 5
-					player_massage,success = speak(enemy_position,player_position,contact_met,flag6,password)
+					player_message,success = speak(enemy_position,player_position,contact_met,haveCase,password)
 				elif (request == 2):
+					time_taken = 5
+					player_message = examine(haveCase,haveKey,locker_number)
+				elif (request == 3):
+					player_message = read(haveMessage,messagePlace,player_position,password)
+				elif (request == 4):
 					time_taken = 5
 				elif (request == 11):
 					display_commands()
@@ -173,11 +178,6 @@ def game_routine():
 		print("You have been captured.")
 
 
-
-
-
-
-
 """
 300 ON V GOSUB 360,420,540,570,640,710,730,780,810,820,870
 
@@ -186,39 +186,59 @@ def game_routine():
 340 IF FNA(10)>9 THEN LET EP=10
 350 GOTO 70
 
-
-
-490 LET DT=5
-500 PRINT "WHAT DO YOU WANT TO EXAMINE":INPUT Q$
-510 IF Q$="CASE" THEN LET B$="TOP SECRET!":RETURN
-520 IF Q$="KEY" THEN LET B$="a NUMBER = "+STR$(NL):RETURN
-530 LET B$="NOTHING SPECIAL!":RETURN
-540 IF P<>MP OR F(1)=1 THEN LET B$="NOTHING TO READ!":RETURN
-550 LET B$="A WORD - '"+P$+"'"
-560 LET F(1)=1:RETURN
-
-
+570 LET DT=5
+580 IF P<>16 THEN LET B$="NOTHING TO OPEN":RETURN
+590 IF F(5)=0 THEN LET B$="YOU HAVE NO KEY":RETURN
+600 PRINT:PRINT "WHAT NUMBER LOCKER":INPUT YN
+610 IF NL<>YN THEN LET B$="THE KEY DOES NOT FIT":RETURN
+620 LET B$="LOCKER IS OPEN - YOU HAVE THE CASE!":LET F(6)=1
+630 RETURN
 """
 
-def speak(enemy_position,player_position,contact_met,flag6,password):
+def read(haveMessage,messagePlace,player_position,password):
 
-	player_massage = ""
+	player_message = "Nothing to read."
+
+	if ((player_position == messagePlace) or (haveMessage == True)):
+		player_message = "A Word: '{}'".format(password)
+		haveMessage = True
+
+	return player_message,haveMessage
+
+
+def examine(haveCase,haveKey,locker_number):
+
+	object_examined = input("What do you want to examine: ")
+	player_message = ""
+
+	if ((object_examined.upper() == "CASE") and (haveCase)):
+		player_message = "Top secret!"
+	elif ((object_examined.upper() == "KEY") and (haveKey)):
+		player_message = "A number: {}".format(locker_number)
+	else:
+		player_message = "Nothing Specials"
+
+	return player_message
+
+def speak(enemy_position,player_position,contact_met,haveCase,password):
+
+	player_message = ""
 	success = False
 	word_spoken = input("\nSay What: ")
 
 	if (enemy_position == player_position):
-		player_massage = "You attracted the enemy agent!"
+		player_message = "You attracted the enemy agent!"
 	elif (contact_met == False):
-		player_massage = "Nobody hears you"
+		player_message = "Nobody hears you"
 	elif (word_spoken.upper() != password.upper()):
-		player_massage = "Contact ignores you"
-	elif (flag6 == True):
-		player_massage = "You made contact - he takes the case"
+		player_message = "Contact ignores you"
+	elif (haveCase == True):
+		player_message = "You made contact - he takes the case"
 		success = True
+	else:
+		player_message = "'{}'".format(word_spoken) 
 
-	return player_massage,success
-
-
+	return player_message,success
 
 def move():
 
@@ -265,7 +285,7 @@ def get_input(query,actions,error):
 	return action_number
 
 
-def display_location(player_position,enemy_position,near_enemy,messagePlace,have_message):
+def display_location(player_position,enemy_position,near_enemy,messagePlace,haveMessage):
 
 	#util.clear_screen()
 	print(game_header)
@@ -277,7 +297,7 @@ def display_location(player_position,enemy_position,near_enemy,messagePlace,have
 	else:
 		near_enemy = 0
 
-	if ((player_position == messagePlace) and (have_message == False)):
+	if ((player_position == messagePlace) and (haveMessage == False)):
 		print("Message for you here")
 
 	return near_enemy
@@ -314,13 +334,7 @@ def main_game():
 
 
 
-570 LET DT=5
-580 IF P<>16 THEN LET B$="NOTHING TO OPEN":RETURN
-590 IF F(5)=0 THEN LET B$="YOU HAVE NO KEY":RETURN
-600 PRINT:PRINT "WHAT NUMBER LOCKER":INPUT YN
-610 IF NL<>YN THEN LET B$="THE KEY DOES NOT FIT":RETURN
-620 LET B$="LOCKER IS OPEN - YOU HAVE THE CASE!":LET F(6)=1
-630 RETURN
+
 640 LET DT=5
 650 IF EP<>P THEN LET B$="FOLLOW WHO?":RETURN
 660 LET NP=FNA(20):GOSUB 950:LET P=NP
