@@ -151,7 +151,16 @@ def game_routine():
 				elif (request == 1):
 					time_taken = 5
 					player_massage,success = speak(enemy_position,player_position,contact_met,flag6,password)
-
+				elif (request == 2):
+					time_taken = 5
+				elif (request == 11):
+					display_commands()
+					input("Press Enter")
+				elif (request == 12):
+					display_locations()
+					input("Press Enter")
+				elif (request == 13):
+					game_condition = 3
 
 				#Updates the current time
 				minute += time_taken
