@@ -169,6 +169,13 @@ def game_routine():
 					time_taken = 5
 					player_message,haveCase = open_command(player_position,haveKey,locker_number)
 
+				#Follow
+				elif (request == 5):
+					
+					player_message,player_position,enemy_position,player_x,player_y = follow(
+						player_position,enemy_position,player_x,player_y,keyPlace)
+
+
 				#Map
 				elif (request == 11):
 					display_commands()
@@ -204,8 +211,44 @@ def game_routine():
 
 
 
+650 IF EP<>P THEN LET B$="FOLLOW WHO?":RETURN
+660 LET NP=FNA(20):GOSUB 950:LET P=NP
+670 IF FNA(10)>8 THEN LET P=KP
+680 IF FNA(10)>7 THEN B$="YOU LOST HIM AFTER A WHILE!":RETURN
+690 LET EP=P
+700 LET B$="YOU KEPT HIM IN SIGHT":RETURN
+710 PRINT:PRINT "HOW MANY MINUTES":INPUT S$
+720 RETURN
 
 """
+
+def follow(player_position,enemy_position,player_x,player_y,keyPlace):
+
+	player_message = ""
+
+	if (enemy_position != player_position):
+		player_message = "Follow Who?"
+		time_taken = 5
+	else:
+		new_position = random_number(20)
+		player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
+		player_position = new_position
+
+		random_follow = random_number(10)
+
+		if (random_follow>7):
+	
+			player_message = "You lost him after a while"
+
+			if (random_follow>8):
+				player_position = keyPlace
+		else:
+			player_message = "You kept him in sight."
+			enemy_position = player_position
+
+	return player_message,player_position,enemy_position,player_x,player_y
+
+
 
 def open_command(player_position,haveKey,locker_number):
 
