@@ -144,26 +144,42 @@ def game_routine():
 
 				time_taken = 0
 
+				#Move
 				if (request == 0):
 					new_position = move()
 					player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
 					player_position = new_position
+
+				#Speak
 				elif (request == 1):
 					time_taken = 5
 					player_message,success = speak(enemy_position,player_position,contact_met,haveCase,password)
+
+				#Examine
 				elif (request == 2):
 					time_taken = 5
 					player_message = examine(haveCase,haveKey,locker_number)
+
+				#Read
 				elif (request == 3):
 					player_message = read(haveMessage,messagePlace,player_position,password)
+
+				#Open
 				elif (request == 4):
 					time_taken = 5
+					player_message,haveCase = open_command(player_position,haveKey,locker_number)
+
+				#Map
 				elif (request == 11):
 					display_commands()
 					input("Press Enter")
+
+				#Locations
 				elif (request == 12):
 					display_locations()
 					input("Press Enter")
+
+				#Quit
 				elif (request == 13):
 					game_condition = 3
 
@@ -186,14 +202,30 @@ def game_routine():
 340 IF FNA(10)>9 THEN LET EP=10
 350 GOTO 70
 
-570 LET DT=5
-580 IF P<>16 THEN LET B$="NOTHING TO OPEN":RETURN
-590 IF F(5)=0 THEN LET B$="YOU HAVE NO KEY":RETURN
-600 PRINT:PRINT "WHAT NUMBER LOCKER":INPUT YN
-610 IF NL<>YN THEN LET B$="THE KEY DOES NOT FIT":RETURN
-620 LET B$="LOCKER IS OPEN - YOU HAVE THE CASE!":LET F(6)=1
-630 RETURN
+
+
+
 """
+
+def open_command(player_position,haveKey,locker_number):
+
+	haveCase = False
+	player_message = ""
+
+	if (player_position != 16):
+		player_message = "Nothing to open"
+	elif (not haveKey):
+		player_message = "You have no key"
+	else:
+		number = input("What number locker: ")
+
+		if number != str(locker_number):
+			player_message = "The key does not fit"
+		else:
+			player_message = "Locker is open - you have the case"
+			haveCase = True
+
+	return player_message,haveCase
 
 def read(haveMessage,messagePlace,player_position,password):
 
@@ -335,15 +367,7 @@ def main_game():
 
 
 
-640 LET DT=5
-650 IF EP<>P THEN LET B$="FOLLOW WHO?":RETURN
-660 LET NP=FNA(20):GOSUB 950:LET P=NP
-670 IF FNA(10)>8 THEN LET P=KP
-680 IF FNA(10)>7 THEN B$="YOU LOST HIM AFTER A WHILE!":RETURN
-690 LET EP=P
-700 LET B$="YOU KEPT HIM IN SIGHT":RETURN
-710 PRINT:PRINT "HOW MANY MINUTES":INPUT S$
-720 RETURN
+
 730 PRINT:PRINT "WHERE DO YOU WANT TO MEET":INPUT S$
 740 PRINT:PRINT "WHAT TIME (HH.MM)"
 750 INPUT U
