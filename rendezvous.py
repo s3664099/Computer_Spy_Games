@@ -179,7 +179,8 @@ def game_routine():
 
 				#Leave
 				elif (request == 7):
-					leave_message()
+					messageLeft,messagePlace,meeting_time = leave_message(
+						player_position,contactPlace,contactTime,hour)
 				#Map
 				elif (request == 11):
 					display_commands()
@@ -222,6 +223,34 @@ def game_routine():
 
 
 """
+
+def leave_message(player_position,contactPlace,contactTime,hour):
+
+	correct = False
+	meeting_place = -1
+
+
+	#Gets location of meeting and checks if it is a valid location
+	while (not correct):
+
+		suggested_place = input("Where do you want to meet: ")
+		place_count = 0
+
+		for x in locations:
+			if (suggested_place.upper() == x.upper()):
+				correct = True
+				meeting_place = place_count
+			else:
+				place_count +=1
+
+		if (not correct):
+			print("Sorry, I don't know that place")
+
+	correct = False
+
+	#Asks for hour to meet (between 0 and 23)
+	#Asks for minute (between 0 and 59)
+	#
 
 def wait():
 
