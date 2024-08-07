@@ -83,7 +83,6 @@ def game_routine():
 	minute = 0
 	flightHour = random_number(16,14)
 	contactTime = random_number(hour,2)
-
 	locker_number = random_number(999,900)
 
 	messagePlace = random_number(18)
@@ -92,7 +91,7 @@ def game_routine():
 	contactPlace = random_number(18)
 	password = passwords[random_number(5)]
 	haveMessage = False #flag 1
-	flag2 = 0
+	messageLeft = False #flag 2
 	contact_met = False #flag 3
 	flag4 = 0
 	haveKey = False #Flag 5
@@ -110,7 +109,6 @@ def game_routine():
 	meeting_time = 0
 	meeting_place = -1
 	
-
 	display_task(messagePlace,contactPlace,contactTime,flightHour)
 
 	while (game_condition == 0):
@@ -136,7 +134,7 @@ def game_routine():
 
 			#Are you spotted by the enemy agent
 			spotted = random_number(10)
-			if ((near_enemy==3) and (spotted>3) and (request != 1)):
+			if ((near_enemy==3) and (spotted>3) and (request != 0)):
 				player_message = "The Enemy Agent Sees You"
 			elif (near_enemy ==4):
 				game_condition = 2
@@ -179,6 +177,9 @@ def game_routine():
 				elif (request == 6):
 					time_taken = wait()
 
+				#Leave
+				elif (request == 7):
+					leave_message()
 				#Map
 				elif (request == 11):
 					display_commands()
@@ -213,7 +214,11 @@ def game_routine():
 
 
 
-
+730 PRINT:PRINT "WHERE DO YOU WANT TO MEET":INPUT S$
+740 PRINT:PRINT "WHAT TIME (HH.MM)"
+750 INPUT U
+760 IF P=CP AND T1<U AND H<CH THEN LET F(2)=1
+770 LET DT=5:RETURN
 
 
 """
@@ -412,11 +417,7 @@ def main_game():
 
 
 
-730 PRINT:PRINT "WHERE DO YOU WANT TO MEET":INPUT S$
-740 PRINT:PRINT "WHAT TIME (HH.MM)"
-750 INPUT U
-760 IF P=CP AND T1<U AND H<CH THEN LET F(2)=1
-770 LET DT=5:RETURN
+
 780 LET B$="NOTHING HERE":LET DT=10
 790 IF P=KP THEN LET B$="YOU FOUND A KEY":LET F(5)=1
 800 RETURN
