@@ -172,9 +172,12 @@ def game_routine():
 				#Follow
 				elif (request == 5):
 					
-					player_message,player_position,enemy_position,player_x,player_y = follow(
+					player_message,player_position,enemy_position,player_x,player_y,time_taken = follow(
 						player_position,enemy_position,player_x,player_y,keyPlace)
 
+				#Wait
+				elif (request == 6):
+					time_taken = wait()
 
 				#Map
 				elif (request == 11):
@@ -192,10 +195,9 @@ def game_routine():
 
 				#Updates the current time
 				minute += time_taken
-				if (minute>59):
+				while (minute>59):
 					minute -= 60
 					hour += 1
-
 
 	if (game_condition == 2):
 		print("You have been captured.")
@@ -211,20 +213,21 @@ def game_routine():
 
 
 
-650 IF EP<>P THEN LET B$="FOLLOW WHO?":RETURN
-660 LET NP=FNA(20):GOSUB 950:LET P=NP
-670 IF FNA(10)>8 THEN LET P=KP
-680 IF FNA(10)>7 THEN B$="YOU LOST HIM AFTER A WHILE!":RETURN
-690 LET EP=P
-700 LET B$="YOU KEPT HIM IN SIGHT":RETURN
-710 PRINT:PRINT "HOW MANY MINUTES":INPUT S$
-720 RETURN
+
+
 
 """
+
+def wait():
+
+	time_taken = util.get_num_input("How many minutes ",1,10000)
+
+	return time_taken
 
 def follow(player_position,enemy_position,player_x,player_y,keyPlace):
 
 	player_message = ""
+	time_taken = 0
 
 	if (enemy_position != player_position):
 		player_message = "Follow Who?"
@@ -246,9 +249,7 @@ def follow(player_position,enemy_position,player_x,player_y,keyPlace):
 			player_message = "You kept him in sight."
 			enemy_position = player_position
 
-	return player_message,player_position,enemy_position,player_x,player_y
-
-
+	return player_message,player_position,enemy_position,player_x,player_y,time_taken
 
 def open_command(player_position,haveKey,locker_number):
 
