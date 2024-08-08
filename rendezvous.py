@@ -93,7 +93,7 @@ def game_routine():
 	haveMessage = False #flag 1
 	messageLeft = False #flag 2
 	contact_met = False #flag 3
-	flag4 = 0
+	messageRecieve = False #flag 4
 	haveKey = False #Flag 5
 	haveCase = False #Flag 6
 	caseGiven = False #Flag 7
@@ -123,12 +123,14 @@ def game_routine():
 		#Is the player with the contact
 		time = hour+(minute/100)
 		meeting_end = meeting_time + 0.15
-		if ((flag4 == 1) and (player_position == meeting_place) and (meeting_time<=time) and (meeting_end>=time)):
+		if ((messageRecieve) and (player_position == meeting_place) and (meeting_time<=time) and (meeting_end>=time)):
 			print("Contact is here")
 			contactMet = True
 
 		if ((player_position == 1) and (hour<flightHour) and (caseGiven == True)):
 			game_condition = 1
+		elif (hour == flightHour):
+			game_condition = 4
 		else:
 			request = get_input("\nWhat Next: ",actions,"I'm sorry, I don't understand")
 
@@ -214,23 +216,31 @@ def game_routine():
 
 				#Updates the current time
 				minute += time_taken
+
 				while (minute>59):
 					minute -= 60
 					hour += 1
 
+				if ((messageLeft) and (hour>contactTime)):
+					messageRecieve = True
+
+				if (random_number(10)>9):
+					enemy_position = 10
+
 	if (game_condition == 2):
 		print("You have been captured.")
-
-
+	elif (game_condition == 4):
+		print("Too late - you missed the last flight")
+	elif (game_condition == 1):
+		print("Well done, your mission was a success!")
+		time_left
 """
-300 ON V GOSUB 360,420,540,570,640,710,730,780,810,820,870
-
-320 IF F(2)=1 ANF H>=CH THEN LET F(4)=1
-330 IF H=FJ THEN GOTO 880
-340 IF FNA(10)>9 THEN LET EP=10
-350 GOTO 70
-
-
+890 PRINT:PRINT "WELL DONE, YOUR MISSING WAS A SUCCESS!"
+900 LET TL=(FH-H)*60-M
+910 LET S=INT((20/NM+TL/120)*50)
+920 PRINT:PRINT "YOUR SPY RATING"
+930 PRINT "IS ";S
+940 STOP
 """
 
 def help(meeting_place,meeting_time,flightTime):
@@ -240,7 +250,6 @@ def help(meeting_place,meeting_time,flightTime):
 
 	print("The last flight leaves at {}.00\n".format(flightTime))
 	input("Press return to continue.")
-
 
 def get_time(hour,minute):
 
@@ -256,7 +265,6 @@ def search(player_position,keyPlace):
 		haveKey = True
 
 	return player_message,haveKey
-
 
 def leave_message(player_position,contactPlace,contactTime,hour,time):
 
@@ -479,23 +487,6 @@ def main_game():
 	
 	util.clear_screen()
 	game_routine()
-
-"""
-
-
-
-
-
-
-
-880 PRINT "TOO LATE ":STOP
-890 PRINT:PRINT "WELL DONE, YOUR MISSING WAS A SUCCESS!"
-900 LET TL=(FH-H)*60-M
-910 LET S=INT((20/NM+TL/120)*50)
-920 PRINT:PRINT "YOUR SPY RATING"
-930 PRINT "IS ";S
-940 STOP
-"""
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
