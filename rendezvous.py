@@ -179,8 +179,9 @@ def game_routine():
 
 				#Leave
 				elif (request == 7):
+					time_taken = 5
 					messageLeft,messagePlace,meeting_time = leave_message(
-						player_position,contactPlace,contactTime,hour)
+						player_position,contactPlace,contactTime,hour,time)
 				#Map
 				elif (request == 11):
 					display_commands()
@@ -213,22 +214,24 @@ def game_routine():
 340 IF FNA(10)>9 THEN LET EP=10
 350 GOTO 70
 
-
-
-730 PRINT:PRINT "WHERE DO YOU WANT TO MEET":INPUT S$
-740 PRINT:PRINT "WHAT TIME (HH.MM)"
-750 INPUT U
-760 IF P=CP AND T1<U AND H<CH THEN LET F(2)=1
-770 LET DT=5:RETURN
-
-
+780 LET B$="NOTHING HERE":LET DT=10
+790 IF P=KP THEN LET B$="YOU FOUND A KEY":LET F(5)=1
+800 RETURN
+810 LET DT=0:LET B$="TIME IS NOW "+STR$(H)+"."+STR$(M):RETURN
+820 LET DT=5
+830 IF U=0 THEN GOTO 860
+840 PRINT:PRINT "MEETING PLACE IS"
+850 PRINT S$;" AT ";U
+860 GOSUB 1300:RETURN
+870 LET DT=0:LET B$="PARDON?":RETURN
 """
 
-def leave_message(player_position,contactPlace,contactTime,hour):
+def leave_message(player_position,contactPlace,contactTime,hour,time):
 
 	correct = False
 	meeting_place = -1
-
+	meeting_time = 0
+	messageLeft = False
 
 	#Gets location of meeting and checks if it is a valid location
 	while (not correct):
@@ -248,9 +251,14 @@ def leave_message(player_position,contactPlace,contactTime,hour):
 
 	correct = False
 
-	#Asks for hour to meet (between 0 and 23)
-	#Asks for minute (between 0 and 59)
-	#
+	contact_hour = util.get_num_input("What Hour ",0,23)
+	contact_minute = util.get_num_input("What Minute ",0,59)
+	meeting_time = contact_hour+(contact_minute/100)
+
+	if ((player_position == contactPlace) and (time<contactTime) and (hour<contactTime)):
+		messageLeft = True
+
+	return messageLeft,messagePlace,meeting_time
 
 def wait():
 
@@ -447,16 +455,7 @@ def main_game():
 
 
 
-780 LET B$="NOTHING HERE":LET DT=10
-790 IF P=KP THEN LET B$="YOU FOUND A KEY":LET F(5)=1
-800 RETURN
-810 LET DT=0:LET B$="TIME IS NOW "+STR$(H)+"."+STR$(M):RETURN
-820 LET DT=5
-830 IF U=0 THEN GOTO 860
-840 PRINT:PRINT "MEETING PLACE IS"
-850 PRINT S$;" AT ";U
-860 GOSUB 1300:RETURN
-870 LET DT=0:LET B$="PARDON?":RETURN
+
 880 PRINT "TOO LATE ":STOP
 890 PRINT:PRINT "WELL DONE, YOUR MISSING WAS A SUCCESS!"
 900 LET TL=(FH-H)*60-M
