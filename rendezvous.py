@@ -182,6 +182,19 @@ def game_routine():
 					time_taken = 5
 					messageLeft,messagePlace,meeting_time = leave_message(
 						player_position,contactPlace,contactTime,hour,time)
+				#Search
+				elif (request == 8):
+					time_taken = 10
+					player_message,haveKey = search(player_position,keyPlace)
+
+				#Get Time
+				elif (request == 9):
+					player_message  = get_time(hour,minute)
+
+				#Help
+				elif (request == 10):
+					help(meeting_place,meeting_time,flightTime)
+
 				#Map
 				elif (request == 11):
 					display_commands()
@@ -195,6 +208,9 @@ def game_routine():
 				#Quit
 				elif (request == 13):
 					game_condition = 3
+
+				else:
+					player_message = "Pardon?"
 
 				#Updates the current time
 				minute += time_taken
@@ -214,17 +230,33 @@ def game_routine():
 340 IF FNA(10)>9 THEN LET EP=10
 350 GOTO 70
 
-780 LET B$="NOTHING HERE":LET DT=10
-790 IF P=KP THEN LET B$="YOU FOUND A KEY":LET F(5)=1
-800 RETURN
-810 LET DT=0:LET B$="TIME IS NOW "+STR$(H)+"."+STR$(M):RETURN
-820 LET DT=5
-830 IF U=0 THEN GOTO 860
-840 PRINT:PRINT "MEETING PLACE IS"
-850 PRINT S$;" AT ";U
-860 GOSUB 1300:RETURN
-870 LET DT=0:LET B$="PARDON?":RETURN
+
 """
+
+def help(meeting_place,meeting_time,flightTime):
+
+	if (meeting_time != 0):
+		print("\nThe Meeting Place is {} at {}.".format(meeting_place,meeting_time))
+
+	print("The last flight leaves at {}.00\n".format(flightTime))
+	input("Press return to continue.")
+
+
+def get_time(hour,minute):
+
+	return "The time is now {}:{}".format(hour,minute)
+
+def search(player_position,keyPlace):
+
+	player_message = "Nothing here"
+	haveKey = False
+
+	if (player_position == keyPlace):
+		player_message = "You found a key"
+		haveKey = True
+
+	return player_message,haveKey
+
 
 def leave_message(player_position,contactPlace,contactTime,hour,time):
 
@@ -463,46 +495,6 @@ def main_game():
 920 PRINT:PRINT "YOUR SPY RATING"
 930 PRINT "IS ";S
 940 STOP
-
-
-
-
-
-
-
-#1010 DIM R$(20),V$(11),F(7)
-#1020 FOR I=1 TO 20:READ R$(I)
-#1030 NEXT I
-#1040 FOR I=1 TO 11:READ V$(I):NEXT I
-#1050 RETURN
-#1060 DATA "AIRPORT","BUS STOP","BRIDGE","CANAL","CHURCH"
-#1070 DATA "PARK","CAFE","BANK","CINEMA","HOTEL"
-#1080 DATA "CASINO","TOWN SQUARE","POST OFFICE","POLICE STATION","FAIRGROUND"
-#1090 DATA "STATION","TOWN HALL","EMBASSY","GARDENS","CASTLE"
-#1100 DATA "MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH"
-#1110 DATA "TIME","HELP"
-#1120 DATA "CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"
-#1130 LET H=FNA(2)+8:LET M=0
-#1140 LEF FH=FNA(2)+14
-#1150 LET CH=FNA(2)+H
-#1160 CLS:PRINT:PRINT
-#1170 LET NE=0:LET T$="CONTACT IS HERE"
-#1180 LET MP=FNA(18):LET KP=FNA(18)
-#1190 LET EP=FNA(18):LET CP=FNA(18)
-#1200 FOR I=1 TO FNA(6)
-#1210 READ P$:NEXT I
-#1220 LET NL=FNA(900)+99
-#1230 PRINT "RENDEZVOUS"
-#1240 PRINT "==========":PRINT
-#1250 PRINT "COLLECT MESSAGE FROM"
-#1260 PRINT "THE ";R$(MP)
-#1270 PRINT "CONTACT WILL COLLECT"
-#1280 PRINT "FROM TEH ";R$(CP)
-#1290 PRINT "AT ";CH;".00"
-#1300 PRINT "LAST FLIGHT LEAVES"
-#1310 PRINT "AT ";FH;".00"
-#1320 PRINT:PRINT "PRESS RETURN TO CONTINUE"
-#1330 INPUT Q$:RETURN
 """
 
 #Passes the current file as a module to the loader
