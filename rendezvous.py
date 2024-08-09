@@ -15,6 +15,13 @@ Date: 31 July 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 12 of Computer Spy Games, and it a python3 translation.
 
+Collect the message from the Town Hall
+Contact will collect from the Town Hall at 10.00
+The last flight leaves at 14.00
+
+Crumpet
+959
+
 """
 
 instructions = "Your mission is a complicated one, so read these instructions\n"
@@ -30,7 +37,7 @@ instructions = "{}You must find out the password before you meet him, and make s
 instructions = "{}you are not more than 15 minutes late.\n".format(instructions)
 instructions = "{}Before you can get the case, you must find the key to the locker\n".format(instructions)
 instructions = "{}and also its number. Unfortunately the key is in the hands of\n".format(instructions)
-instructions = "{}enemy agenst. whose HQ is at the Hotel. You must find an enemy\n".format(instructions)
+instructions = "{}enemy agent. whose HQ is at the Hotel. You must find an enemy\n".format(instructions)
 instructions = "{}spy and follow him, hoping he will be careless enough to drop\n".format(instructions)
 instructions = "{}the key (and of course that he won't see you).\n".format(instructions)
 instructions = "{}The map shows you the places you can go to and the lest below\n".format(instructions)
@@ -141,13 +148,14 @@ def game_routine():
 		elif (hour == flightHour):
 			game_condition = 4
 		else:
+			print(keyPlace)
 			request = get_input("\nWhat Next: ",actions,"I'm sorry, I don't understand")
 
 			#Are you spotted by the enemy agent
 			spotted = random_number(10)
 			if ((near_enemy==3) and (spotted>3) and (request != 0)):
 				player_message = "The Enemy Agent Sees You"
-			elif (near_enemy ==4):
+			elif ((near_enemy ==4) and (request !=0)):
 				game_condition = 2
 			else:
 
@@ -191,7 +199,7 @@ def game_routine():
 				#Leave
 				elif (request == 7):
 					time_taken = 5
-					messageLeft,messagePlace,meeting_time = leave_message(
+					messageLeft,meeting_place,meeting_time = leave_message(
 						player_position,contactPlace,contactTime,hour,time)
 				#Search
 				elif (request == 8):
@@ -249,9 +257,15 @@ def game_routine():
 def help(meeting_place,meeting_time,flightTime):
 
 	if (meeting_time != 0):
-		print("\nThe Meeting Place is {} at {}.".format(meeting_place,meeting_time))
 
-	print("The last flight leaves at {}.00\n".format(flightTime))
+		meeting_time = str(meeting_time).split(".")
+
+		if (len(meeting_time[1])<0):
+			meeting_time[1]="0{}".format(meeting_time[1])
+
+		print("\nThe Meeting Place is {} at {}:{}.".format(locations[meeting_place],meeting_time[0],meeting_time[1]))
+
+	print("The last flight leaves at {}:00\n".format(flightTime))
 	input("Press return to continue.")
 
 def get_time(hour,minute):
@@ -304,7 +318,7 @@ def leave_message(player_position,contactPlace,contactTime,hour,time):
 	if ((player_position == contactPlace) and (time<contactTime) and (hour<contactTime)):
 		messageLeft = True
 
-	return messageLeft,messagePlace,meeting_time
+	return messageLeft,meeting_place,meeting_time
 
 def wait():
 
@@ -325,14 +339,11 @@ def follow(player_position,enemy_position,player_x,player_y,keyPlace):
 		player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
 		player_position = new_position
 
-		random_follow = random_number(10)
-
-		if (random_follow>7):
-	
-			player_message = "You lost him after a while"
-
-			if (random_follow>8):
+		if (random_number(10)>8):
 				player_position = keyPlace
+
+		if (random_number(10)>7):
+			player_message = "You lost him after a while"
 		else:
 			player_message = "You kept him in sight."
 			enemy_position = player_position
@@ -344,7 +355,7 @@ def open_command(player_position,haveKey,locker_number):
 	haveCase = False
 	player_message = ""
 
-	if (player_position != 16):
+	if (player_position != 15):
 		player_message = "Nothing to open"
 	elif (not haveKey):
 		player_message = "You have no key"
