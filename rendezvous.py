@@ -91,7 +91,7 @@ def game_routine():
 	hour = random_number(10,8)
 	minute = 0
 	flightHour = random_number(16,14)
-	contactTime = random_number(hour,2)
+	contactTime = random_number(hour+2,hour+1)
 	locker_number = random_number(999,900)
 
 	messagePlace = random_number(18)
@@ -171,7 +171,7 @@ def game_routine():
 
 				#Read
 				elif (request == 3):
-					player_message = read(haveMessage,messagePlace,player_position,password)
+					player_message,haveMessage = read(haveMessage,messagePlace,player_position,password)
 
 				#Open
 				elif (request == 4):
@@ -255,6 +255,9 @@ def help(meeting_place,meeting_time,flightTime):
 	input("Press return to continue.")
 
 def get_time(hour,minute):
+
+	if (minute<10):
+		minute = "0{}".format(minute)
 
 	return "The time is now {}:{}".format(hour,minute)
 
@@ -448,7 +451,7 @@ def get_input(query,actions,error):
 
 def display_location(player_position,enemy_position,near_enemy,messagePlace,haveMessage):
 
-	#util.clear_screen()
+	util.clear_screen()
 	print(game_header)
 	print("\nYou are at the {}".format(locations[player_position]))
 
