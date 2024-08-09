@@ -61,21 +61,30 @@ actions = ["MOVE","SAY","EXAMINE","READ","OPEN","FOLLOW","WAIT","LEAVE","SEARCH"
 passwords = ["CUSTARD","KIPPER","KOALA","CRUMPET","CROSSWORD","KANGAROO"]
 game_header = "Redezvous\n========="
 
-def display_commands():
-	print(commands)
+def main_game():
 
-def display_locations():
+	playing = True
 
-	location_list = ""
+	util.clear_screen()
+	print("Do you want a list of commands?")
+	response = util.yes_or_no("")
 
-	for x in locations:
-		location_list = "{}{}\n".format(location_list,x)
+	if (response):
+		display_commands()
 
-	print(location_list)
+	print("Do you want a list of locations?")
+	response = util.yes_or_no("")
 
-def random_number(end,start=0):
+	if(response):
+		util.clear_screen()
+		print("Locations\n=========")
+		display_locations()
+	
+	util.clear_screen()
 
-	return randint(start,end)
+	while(playing):
+		game_routine()
+		playing = util.play_again(playing)
 
 def game_routine():
 
@@ -195,7 +204,7 @@ def game_routine():
 
 				#Help
 				elif (request == 10):
-					help(meeting_place,meeting_time,flightTime)
+					help(meeting_place,meeting_time,flightHour)
 
 				#Map
 				elif (request == 11):
@@ -233,15 +242,9 @@ def game_routine():
 		print("Too late - you missed the last flight")
 	elif (game_condition == 1):
 		print("Well done, your mission was a success!")
-		time_left
-"""
-890 PRINT:PRINT "WELL DONE, YOUR MISSING WAS A SUCCESS!"
-900 LET TL=(FH-H)*60-M
-910 LET S=INT((20/NM+TL/120)*50)
-920 PRINT:PRINT "YOUR SPY RATING"
-930 PRINT "IS ";S
-940 STOP
-"""
+		time_left = (flightHour - hour) * 60 - minute
+		score = int((20/num_moves)+(time_left/120)*50)
+		print("Your Spy Rating is: {}".format(score))
 
 def help(meeting_place,meeting_time,flightTime):
 
@@ -468,25 +471,20 @@ def display_task(message,contactPlace,contactTime,flightTime):
 	print("The last flight leaves at {}.00\n".format(flightTime))
 	input("Press return to continue.")
 
-def main_game():
+def display_commands():
+	print(commands)
 
-	util.clear_screen()
-	print("Do you want a list of commands?")
-	response = util.yes_or_no("")
+def display_locations():
 
-	if (response):
-		display_commands()
+	location_list = ""
 
-	print("Do you want a list of locations?")
-	response = util.yes_or_no("")
+	for x in locations:
+		location_list = "{}{}\n".format(location_list,x)
 
-	if(response):
-		util.clear_screen()
-		print("Locations\n=========")
-		display_locations()
-	
-	util.clear_screen()
-	game_routine()
+	print(location_list)
+
+def random_number(end,start=0):
+	return randint(start,end)
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
