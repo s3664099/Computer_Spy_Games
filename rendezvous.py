@@ -141,8 +141,8 @@ def game_routine():
 		elif (hour >= flightHour):
 			game_condition = 4
 		else:
-			print(keyPlace)
-			request = get_input("\nWhat Next: ",actions,"I'm sorry, I don't understand")
+			command = get_input("\nWhat Next: ",actions,"I'm sorry, I don't understand",True)
+			request = command[0]
 
 			#Are you spotted by the enemy agent
 			spotted = random_number(10)
@@ -156,7 +156,7 @@ def game_routine():
 
 				#Move
 				if (request == 0):
-					new_position = move()
+					new_position = move(command[1])
 					player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
 					player_position = new_position
 
@@ -328,7 +328,7 @@ def follow(player_position,enemy_position,player_x,player_y,keyPlace):
 		player_message = "Follow Who?"
 		time_taken = 5
 	else:
-		new_position = random_number(20)
+		new_position = random_number(len(locations)-1)
 		player_x,player_y,time_taken = calculate_time(new_position,player_x,player_y)
 		player_position = new_position
 
@@ -408,9 +408,28 @@ def speak(enemy_position,player_position,contact_met,haveCase,password):
 
 	return player_message,success
 
-def move():
+def move(place):
 
-	return get_input("\nWhere To: ",locations,"I don't know that place")
+	new_place = -1
+
+	if (len(place)>0):
+
+		command = 0
+
+		#Cycles through commands and locates what player typed
+		while(command<len(locations)):
+
+			if ((place.upper() == locations[command].upper())):
+				new_place = command
+			command += 1
+
+		#No such command exists
+		if (new_place==-1):
+			print(error)
+	else:
+		new_place = get_input("\nWhere To: ",locations,"I don't know that place")
+
+	return new_place
 
 #Calculates the time to move to a new place
 def calculate_time(new_position,player_x,player_y):
@@ -425,7 +444,7 @@ def calculate_time(new_position,player_x,player_y):
 	return new_x,new_y,time_taken
 
 #Retrieves player command
-def get_input(query,actions,error):
+def get_input(query,actions,error,main_input = False):
 
 	correct = False
 
@@ -436,6 +455,15 @@ def get_input(query,actions,error):
 		request = input(query)
 		command = 0
 		action_number = -1
+		subject = ""
+
+		#Checks if it is the main input and allows for multiple words
+		if (main_input):
+			commands = request.split(" ")
+			
+			if (len(commands)>1):
+				subject = request[len(commands[0]):].strip()
+			request = commands[0]
 
 		#Cycles through commands and locates what player typed
 		while(command<len(actions)):
@@ -449,6 +477,9 @@ def get_input(query,actions,error):
 			print(error)
 		else:
 			correct = True
+
+		if(main_input):
+			action_number = [action_number,subject]
 
 	return action_number
 
