@@ -15,13 +15,6 @@ Date: 31 July 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 12 of Computer Spy Games, and it a python3 translation.
 
-Collect the message from the Town Hall
-Contact will collect from the Town Hall at 10.00
-The last flight leaves at 14.00
-
-Crumpet
-959
-
 """
 
 instructions = "Your mission is a complicated one, so read these instructions\n"
@@ -131,7 +124,7 @@ def game_routine():
 		
 		near_enemy = display_location(player_position,enemy_position,near_enemy,messagePlace,haveMessage)
 		num_moves +=1
-		contactMet = False
+		contact_met = False
 
 		print(player_message)
 		player_message = ""
@@ -141,11 +134,11 @@ def game_routine():
 		meeting_end = meeting_time + 0.15
 		if ((messageRecieve) and (player_position == meeting_place) and (meeting_time<=time) and (meeting_end>=time)):
 			print("Contact is here")
-			contactMet = True
+			contact_met = True
 
-		if ((player_position == 1) and (hour<flightHour) and (caseGiven == True)):
+		if ((player_position == 0) and (hour<flightHour) and (caseGiven == True)):
 			game_condition = 1
-		elif (hour == flightHour):
+		elif (hour >= flightHour):
 			game_condition = 4
 		else:
 			print(keyPlace)
@@ -170,7 +163,7 @@ def game_routine():
 				#Speak
 				elif (request == 1):
 					time_taken = 5
-					player_message,success = speak(enemy_position,player_position,contact_met,haveCase,password)
+					player_message,caseGiven = speak(enemy_position,player_position,contact_met,haveCase,password)
 
 				#Examine
 				elif (request == 2):
