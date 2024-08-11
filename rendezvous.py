@@ -163,21 +163,22 @@ def game_routine():
 				#Speak
 				elif (request == 1):
 					time_taken = 5
-					player_message,caseGiven = speak(enemy_position,player_position,contact_met,haveCase,password)
+					player_message,caseGiven = speak(enemy_position,player_position,contact_met,haveCase,
+						password,command[1])
 
 				#Examine
 				elif (request == 2):
 					time_taken = 5
-					player_message = examine(haveCase,haveKey,locker_number)
+					player_message = examine(haveCase,haveKey,locker_number,command[1])
 
 				#Read
 				elif (request == 3):
-					player_message,haveMessage = read(haveMessage,messagePlace,player_position,password)
+					player_message,haveMessage = read(haveMessage,messagePlace,player_position,password,command[1])
 
 				#Open
 				elif (request == 4):
 					time_taken = 5
-					player_message,haveCase = open_command(player_position,haveKey,locker_number)
+					player_message,haveCase = open_command(player_position,haveKey,locker_number,command[1])
 
 				#Follow
 				elif (request == 5):
@@ -343,7 +344,7 @@ def follow(player_position,enemy_position,player_x,player_y,keyPlace):
 
 	return player_message,player_position,enemy_position,player_x,player_y,time_taken
 
-def open_command(player_position,haveKey,locker_number):
+def open_command(player_position,haveKey,locker_number,number):
 
 	haveCase = False
 	player_message = ""
@@ -353,7 +354,9 @@ def open_command(player_position,haveKey,locker_number):
 	elif (not haveKey):
 		player_message = "You have no key"
 	else:
-		number = input("What number locker: ")
+
+		if (number==""):
+			number = input("What number locker: ")
 
 		if number != str(locker_number):
 			player_message = "The key does not fit"
@@ -374,9 +377,11 @@ def read(haveMessage,messagePlace,player_position,password):
 	return player_message,haveMessage
 
 
-def examine(haveCase,haveKey,locker_number):
+def examine(haveCase,haveKey,locker_number,object_examined):
 
-	object_examined = input("What do you want to examine: ")
+	if (object_examined==""):
+		object_examined = input("What do you want to examine: ")
+
 	player_message = ""
 
 	if ((object_examined.upper() == "CASE") and (haveCase)):
@@ -384,15 +389,17 @@ def examine(haveCase,haveKey,locker_number):
 	elif ((object_examined.upper() == "KEY") and (haveKey)):
 		player_message = "A number: {}".format(locker_number)
 	else:
-		player_message = "Nothing Specials"
+		player_message = "Nothing Special"
 
 	return player_message
 
-def speak(enemy_position,player_position,contact_met,haveCase,password):
+def speak(enemy_position,player_position,contact_met,haveCase,password,word_spoken):
 
 	player_message = ""
 	success = False
-	word_spoken = input("\nSay What: ")
+
+	if (word_spoken==""):
+		word_spoken = input("\nSay What: ")
 
 	if (enemy_position == player_position):
 		player_message = "You attracted the enemy agent!"
