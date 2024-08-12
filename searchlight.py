@@ -11,7 +11,7 @@ import time
 Title: Searchlight
 Author: Jenny Tyler & Chris Oxlade
 Translator: David Sarkies
-Version: 0.1
+Version: 2.0
 Date: 29 March 2024
 Updated: 6 April 2024
 Source: https://archive.org/details/Computer_Spy_Games

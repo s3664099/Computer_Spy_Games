@@ -133,4 +133,4 @@ def decode():
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
-	loader.start_game("Spy Eyes",sys.modules[__name__])
+	loader.start_game("Secret Message Maker",sys.modules[__name__])

@@ -10,8 +10,8 @@ from random import randint
 Title: Rendezvous
 Author: Jenny Tyler & Chris Oxlade
 Translator: David Sarkies
-Version: 0.0
-Date: 31 July 2024
+Version: 2.0
+Date: 11 August 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 12 of Computer Spy Games, and it a python3 translation.
 
@@ -533,4 +533,4 @@ def random_number(end,start=0):
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
-	loader.start_game("Spy Eyes",sys.modules[__name__])
+	loader.start_game("Rendezvous",sys.modules[__name__])
