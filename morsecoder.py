@@ -16,7 +16,23 @@ This game can be found on page 16 of Computer Spy Games, and it a python3 transl
 
 """
 
-instructions = ""
+instructions = "If you want to be a really successful spy, you need to\n"
+instructions = "{}know how to send, recieve and, of course, intercept\n".format(instructions)
+instructions = "{}messages in Morse Code. This program will help you\n".format(instructions)
+instructions = "{}learn. If you have never used Morse Code before, you\n".format(instructions)
+instructions = "{}will need to make yourself a chart of letters and their\n",format(instructions)
+instructions = "{}Morse equivalents. Use lines 400-450 of the program to\n".format(instructions)
+instructions = "{}do this. They show the Morse code for each letter of the\n".format(instructions)
+instructions = "{}alphabet in order.\n".format(instructions)
+instructions = "{}\nWhat you have to do\n\n".format(instructions)
+instructions = "{}In Morse Code, each letter is represented by a series of\n".format(instructions)
+instructions = "{}long and short sounds or flashes. This program uses a\n".format(instructions)
+instructions = "{}flashing star. it will give you the code for a letter and\n".format(instructions)
+instructions = "{}then ask you which it was. You will have to watch carefully\n".format(instructions)
+instructions = "{}to pick out the long and short flashes and remember them.\n".format(instructions)
+instructions = "{}You will see the cursor flashing too at the left of the screen.\n".format(instructions)
+instructions = "{}Ignore this it has nothing to do with the code.".format(instructions)
+
 
 def main_game():
 	
