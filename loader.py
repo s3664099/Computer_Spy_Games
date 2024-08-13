@@ -8,6 +8,7 @@ import robospy
 import spyqtest
 import secret_message_maker
 import rendezvous
+import morsecoder
 
 #Function that displays the games available, and allows the user to select them
 def select_game():
@@ -45,7 +46,9 @@ def select_game():
 		elif response == "5":
 			start_game("Secret Message Maker",secret_message_maker)
 		elif response == "6":
-			start_game("Rendezvous",rendezvous)						
+			start_game("Rendezvous",rendezvous)
+		elif response == "7":
+			start_game("Morse Coder",morsecoder)				
 		else:
 			print("You have entered an incorrect option")
 			time.sleep(5)
