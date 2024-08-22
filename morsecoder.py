@@ -3,6 +3,7 @@
 import loader
 import sys
 import util
+import time
 from random import randint
 
 """
@@ -28,24 +29,23 @@ instructions = "{}or flashes. This program uses a flashing star. it will give yo
 instructions = "{}a letter and then ask you which it was. You will have to watch carefully\n".format(instructions)
 instructions = "{}to pick out the long and short flashes and remember them.You will see the\n".format(instructions)
 instructions = "{}cursor flashing too at the left of the screen. Ignore this it has nothing\n".format(instructions)
-instructions = "{}to do with the code.".format(instructions)
+instructions = "{}to do with the code.\n".format(instructions)
 
+morse_code = [".-","-...","-.-","-..",".","..-","--.","....","..",".---","-.-",".-..","--","-.","---",
+			  ".--","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
 
 def main_game():
 	
-	print("Main Game")
+	util.clear_screen()
+	speed = 3
+	print("Morse Tester\n----- ------\n\n")
+	player_speed = util.get_num_input("What Level? (1=fast, 5=slow)",1,5)
+	player_speed *= speed
+	util.clear_screen()
+	print("Get Ready")
+	time.sleep(player_speed)
 
 """
-10 GOSUB 370
-20 CLS
-30 LET S=30
-40 PRINT:PRINT "MORSE TESTER"
-50 PRINT:PRINT "WHAT LEVEL?"
-60 PRINT:PRINT "(1=FAST)"
-70 PRINT:PRINT "(5=SLOW)"
-80 INPUT P:LET P=P*S
-90 CLS
-100 PRINT:PRINT "GET READY"
 110 FOR T=1 TO 20*S:NEXT T
 120 GOSUB 310
 130 LET F$=M$(ASC(Q$)-64)
@@ -72,16 +72,6 @@ def main_game():
 340 FOR T=1 TO P*K:NEXT T
 350 PRINT TAB(10,10);" "
 360 RETURN
-370 DIM M$(26)
-380 FOR I=1 TO 26:READ M$(I):NEXT I
-390 RETURN
-400 DATA ".-","-...","-.-","-..","."
-410 DATA "..-","--.","....","..",".---"
-420 DATA "-.-",".-..","--","-.","---"
-430 DATA ".--","--.-",".-.","...","-"
-440 DATA "..-","...-",".--","-..-"
-450 DATA "-.--","--.."
-
 """
 
 #Passes the current file as a module to the loader
