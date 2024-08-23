@@ -40,10 +40,13 @@ def main_game():
 	print("Morse Tester\n----- ------\n\n")
 	player_speed = util.get_num_input("What Level? (1=fast, 5=slow)",1,5)
 	player_speed *= speed
+	score = 0
 	playing = True
 
 	while(playing):
+
 		util.clear_screen()
+		print("Score: {}\n\n".format(score))
 		print("Get Ready")
 		time.sleep(player_speed)
 
@@ -53,6 +56,7 @@ def main_game():
 
 		if (guess.upper() == letter):
 			print("Correct")
+			score += 1
 		else:
 			print("No, the answer is {}".format(letter))
 
