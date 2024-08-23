@@ -10,11 +10,10 @@ from random import randint
 Title: Morse Coder
 Author: Jenny Tyler & Chris Oxlande
 Translator: David Sarkies
-Version: 0.1
+Version: 1.0
 Date: 13 August 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 16 of Computer Spy Games, and it a python3 translation.
-
 """
 
 instructions = "If you want to be a really successful spy, you need to know how to send, recieve\n"
@@ -37,19 +36,31 @@ morse_code = [".-","-...","-.-","-..",".","..-","--.","....","..",".---","-.-","
 def main_game():
 	
 	util.clear_screen()
-	speed = 3
+	speed = 1
 	print("Morse Tester\n----- ------\n\n")
 	player_speed = util.get_num_input("What Level? (1=fast, 5=slow)",1,5)
 	player_speed *= speed
-	util.clear_screen()
-	print("Get Ready")
-	time.sleep(player_speed)
+	playing = True
 
-	#Selects the letter and the morse equivalent
-	letter_no = randint(65,90)
-	letter = chr(letter_no)
-	morse_letter = morse_code[letter_no-65]
+	while(playing):
+		util.clear_screen()
+		print("Get Ready")
+		time.sleep(player_speed)
 
+		letter,morse_letter = select_letter()
+		display_letter(morse_letter,player_speed)
+		guess = input("Type in your answer: ")
+
+		if (guess.upper() == letter):
+			print("Correct")
+		else:
+			print("No, the answer is {}".format(letter))
+
+		if (not util.play_again(True)):
+			playing = False
+
+#displays the letter
+def display_letter(morse_letter,player_speed):
 	for x in morse_letter:
 
 		if x==".":
@@ -57,13 +68,25 @@ def main_game():
 		elif x=="-":
 			display_code(3,player_speed)
 
+#Selects the letter
+def select_letter():
+
+	#Selects the letter and the morse equivalent
+	letter_no = randint(65,90)
+	letter = chr(letter_no)
+	morse_letter = morse_code[letter_no-65]
+
+	return letter,morse_letter
+
 #Displays the star which represents a dot/dash
 def display_code(speed,player_speed):
 
+	#sets the position
 	util.clear_screen()
-	code = position(" ","/n")
+	code = position(" ","\n")
 	code = position(code," ")
 	code = "{}*".format(code)
+	code = position(code,"\n")
 	print(code)
 
 	#Sets the amount of time the star will be displayed
@@ -71,41 +94,13 @@ def display_code(speed,player_speed):
 	util.clear_screen()
 	time.sleep(player_speed)
 
+#Positions the character on the screen
 def position(code,character):
 
 	for x in range(10):
 		code = "{}{}".format(code,character)
 
 	return code
-
-
-
-		
-
-
-"""
-
-130 LET F$=M$(ASC(Q$)-64)
-140 GOSUB 220
-150 CLS:PRINT
-160 PRINT "TYPE IN YOUR ANSWER"
-170 INPUT X$
-180 IF X$=Q$ THEN PRINT "CORRECT"
-190 IF X$<>Q$ THEN PRINT "NO. THE ANSWER IS :";Q$
-200 FOR T=1 TO 30*S:NEXT T
-210 GOTO 90
-
-260 GOSUB 330: LET K=1
-270 GOSUB 340
-280 NEXT J
-290 RETURN
-300 PRINT
-
-330 PRINT TAB(10,10);"*"
-340 FOR T=1 TO P*K:NEXT T
-350 PRINT TAB(10,10);" "
-360 RETURN
-"""
 
 #Passes the current file as a module to the loader
 if __name__ == '__main__':
