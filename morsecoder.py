@@ -49,6 +49,37 @@ def main_game():
 	letter_no = randint(65,90)
 	letter = chr(letter_no)
 	morse_letter = morse_code[letter_no-65]
+
+	for x in morse_letter:
+
+		if x==".":
+			display_code(1,player_speed)
+		elif x=="-":
+			display_code(3,player_speed)
+
+#Displays the star which represents a dot/dash
+def display_code(speed,player_speed):
+
+	util.clear_screen()
+	code = position(" ","/n")
+	code = position(code," ")
+	code = "{}*".format(code)
+	print(code)
+
+	#Sets the amount of time the star will be displayed
+	time.sleep(speed*player_speed)
+	util.clear_screen()
+	time.sleep(player_speed)
+
+def position(code,character):
+
+	for x in range(10):
+		code = "{}{}".format(code,character)
+
+	return code
+
+
+
 		
 
 
@@ -63,10 +94,7 @@ def main_game():
 190 IF X$<>Q$ THEN PRINT "NO. THE ANSWER IS :";Q$
 200 FOR T=1 TO 30*S:NEXT T
 210 GOTO 90
-220 FOR J=1 TO LEN(F$)
-230 LET W$=MID$(F$,J,1)
-240 IF W$="." THEN LET K=1
-250 IF W$="-" THEN LET K=3
+
 260 GOSUB 330: LET K=1
 270 GOSUB 340
 280 NEXT J
