@@ -45,9 +45,15 @@ def main_game():
 	print("Get Ready")
 	time.sleep(player_speed)
 
+	#Selects the letter and the morse equivalent
+	letter_no = randint(65,90)
+	letter = chr(letter_no)
+	morse_letter = morse_code[letter_no-65]
+		
+
+
 """
-110 FOR T=1 TO 20*S:NEXT T
-120 GOSUB 310
+
 130 LET F$=M$(ASC(Q$)-64)
 140 GOSUB 220
 150 CLS:PRINT
@@ -66,8 +72,7 @@ def main_game():
 280 NEXT J
 290 RETURN
 300 PRINT
-310 LET Q$=CHR$(INT(RND(1)*26+65))
-320 RETURN
+
 330 PRINT TAB(10,10);"*"
 340 FOR T=1 TO P*K:NEXT T
 350 PRINT TAB(10,10);" "
