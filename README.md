@@ -67,9 +67,9 @@ such as switching the letters around.
 
 **Rendezvous**: This game seems to be a really basic style of adventure game. Basically you are in a town and
 have to perform a number of tasks before the last flight leaves. This includes finding a password, a key, and
-arranging a meeting time for your agent all the while avoiding the enemy agent. Initially there is only a single
-word parser, but I made some modifications to add a multi word one. Also, I added some extra commands including
-displaying valid commands, the locations, and also the ability to quit the game.
+arranging a meeting time for your agent all the while avoiding the enemy agent. Initially there is only a 
+single word parser, but I made some modifications to add a multi word one. Also, I added some extra commands 
+including displaying valid commands, the locations, and also the ability to quit the game.
 
 
 ## Updates
@@ -113,3 +113,8 @@ Completed and tested Rendezvous
 
 **11 August 2024**
 Added multi word parser to Rendezvous
+
+**23 August 2024**
+Completed Morse Encoder
+
+

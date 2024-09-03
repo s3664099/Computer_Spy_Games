@@ -4,13 +4,14 @@ import loader
 import sys
 import util
 import time
+import os
 from random import randint
 
 """
 Title: Morse Coder
 Author: Jenny Tyler & Chris Oxlande
 Translator: David Sarkies
-Version: 1.0
+Version: 2.0
 Date: 13 August 2024
 Source: https://archive.org/details/Computer_Spy_Games
 This game can be found on page 16 of Computer Spy Games, and it a python3 translation.
@@ -36,9 +37,11 @@ morse_code = [".-","-...","-.-","-..",".","..-","--.","....","..",".---","-.-","
 def main_game():
 	
 	util.clear_screen()
+
 	speed = 1
 	print("Morse Tester\n----- ------\n\n")
 	player_speed = util.get_num_input("What Level? (1=fast, 5=slow)",1,5)
+	display_style = util.get_num_input("What Style (1=visual,2=sound)",1,2)
 	player_speed *= speed
 	score = 0
 	playing = True
@@ -51,7 +54,12 @@ def main_game():
 		time.sleep(player_speed)
 
 		letter,morse_letter = select_letter()
-		display_letter(morse_letter,player_speed)
+
+		if display_style == 1:
+			display_letter(morse_letter,player_speed)
+		else:
+			sound_letter(morse_letter,player_speed)
+
 		guess = input("Type in your answer: ")
 
 		if (guess.upper() == letter):
@@ -63,6 +71,11 @@ def main_game():
 		if (not util.play_again(True)):
 			playing = False
 
+#Plays a beep
+def beep(duration=0.2):
+
+	beep = os.system(f"play -n synth {duration} sine 1000 vol 0.5 > /dev/null 2>&1")
+
 #displays the letter
 def display_letter(morse_letter,player_speed):
 	for x in morse_letter:
@@ -71,6 +84,15 @@ def display_letter(morse_letter,player_speed):
 			display_code(1,player_speed)
 		elif x=="-":
 			display_code(3,player_speed)
+
+def sound_letter(morse_letter,player_speed):
+
+	for x in morse_letter:
+		if x==".":
+			beep()
+		elif x=="-":
+			beep(0.4)
+		time.sleep(player_speed)
 
 #Selects the letter
 def select_letter():
