@@ -28,6 +28,10 @@ However, a loader program has been included, so that is the only one that theore
 executed as all of the other programs can be executed from that one.
 To run the games you will need to install sshkeyboard (see below).
 
+For the sound you will need to install the sox dependency. In order to do that you need to do the following:
+
+*sudo apt-get install sox*
+
 ## Issues
 The issue regarding getting the INKEY to work properly is still present.
 
@@ -71,6 +75,13 @@ arranging a meeting time for your agent all the while avoiding the enemy agent. 
 single word parser, but I made some modifications to add a multi word one. Also, I added some extra commands 
 including displaying valid commands, the locations, and also the ability to quit the game.
 
+**Morse Encoder**: This game tests your knowledge of morse code. It will produce a letter using morse code and 
+you will need to guess which letter it happens to be. At the start of the game you will be offered a speed, 
+which is the amount of time between when the letters are displayed.
+
+You can also choose whether it will be visual or not. Visual will display a star for a length of time depending
+on whether it is a dot or a dash. However, the sound option will produce a beep, with a length depending on
+whether it is a dot or a dash.
 
 ## Updates
 **20 March 2024**
@@ -117,4 +128,5 @@ Added multi word parser to Rendezvous
 **23 August 2024**
 Completed Morse Encoder
 
-
+**3 September 2024**
+Added sound for Morse Encoder
